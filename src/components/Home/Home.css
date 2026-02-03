@@ -1,0 +1,356 @@
+.tax-hub {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tax-hub-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tax-hub-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.tax-hub-dropdown-icon {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+}
+
+.tax-hub-actions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.tax-hub-btn-primary {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tax-hub-btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.tax-hub-btn-secondary {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tax-hub-btn-secondary:hover {
+  background-color: var(--color-background-secondary);
+  border-color: var(--color-primary);
+}
+
+.tax-hub-tabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tax-hub-tab {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: -1px;
+}
+
+.tax-hub-tab:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-background-secondary);
+}
+
+.tax-hub-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tax-hub-status-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.tax-hub-status-card {
+  background-color: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.tax-hub-status-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.tax-hub-status-card.active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.status-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.status-card-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.status-card-type {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-secondary);
+}
+
+.status-card-count {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.status-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-stat {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.status-number {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-right: 4px;
+}
+
+.tax-hub-table-section {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.tax-hub-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-background-tertiary);
+}
+
+.tax-hub-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.tax-hub-filter-label {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.tax-hub-filter-input {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  width: 200px;
+}
+
+.tax-hub-table-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.tax-hub-icon-btn {
+  background: none;
+  border: none;
+  padding: var(--spacing-xs);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.tax-hub-icon-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.tax-hub-table-wrapper {
+  overflow-x: auto;
+}
+
+.tax-hub-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tax-hub-table thead th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: var(--color-background-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tax-hub-table tbody td {
+  padding: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.tax-hub-table tbody tr:hover {
+  background-color: var(--color-background-tertiary);
+}
+
+.tax-hub-cell-name {
+  font-weight: var(--font-weight-medium);
+}
+
+.tax-hub-cell-link {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.tax-hub-cell-link:hover {
+  text-decoration: underline;
+}
+
+.tax-hub-cell-status {
+  color: var(--color-text-secondary);
+}
+
+.tax-hub-cell-muted {
+  color: var(--color-text-tertiary);
+}
+
+.tax-hub-assignee {
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.tax-hub-action-link {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.tax-hub-action-link:hover {
+  color: var(--color-primary-hover);
+}
+
+.tax-hub-btn-view {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tax-hub-btn-view:hover {
+  background-color: var(--color-background-secondary);
+  border-color: var(--color-primary);
+}
+
+.tax-hub-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-background-tertiary);
+}
+
+.tax-hub-pagination-info {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.tax-hub-pagination-controls {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+.tax-hub-pagination-btn {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  min-width: 32px;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.tax-hub-pagination-btn:hover {
+  background-color: var(--color-background-secondary);
+  border-color: var(--color-primary);
+}
+
+.tax-hub-pagination-btn.active {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+
+.tax-hub-pagination-ellipsis {
+  padding: 0 var(--spacing-xs);
+  color: var(--color-text-tertiary);
+}

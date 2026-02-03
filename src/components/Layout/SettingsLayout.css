@@ -1,0 +1,19 @@
+.settings-layout {
+  min-height: 100vh;
+  display: flex;
+}
+
+.settings-layout-container {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.settings-layout-main {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--color-background);
+  padding: var(--spacing-xl);
+}

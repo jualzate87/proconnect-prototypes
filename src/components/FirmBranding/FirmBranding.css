@@ -1,0 +1,93 @@
+.firm-branding {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.firm-branding-success-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  color: #155724;
+  margin-bottom: 24px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.firm-branding-success-banner svg {
+  flex-shrink: 0;
+  color: #28a745;
+}
+
+.firm-branding-header {
+  margin-bottom: 32px;
+}
+
+.firm-branding-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+}
+
+.firm-branding-subtitle {
+  font-size: 16px;
+  color: #6c757d;
+  margin: 0;
+}
+
+.firm-branding-tabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 32px;
+}
+
+.firm-branding-tab {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  color: #6c757d;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.firm-branding-tab:hover {
+  color: #2c3e50;
+}
+
+.firm-branding-tab-active {
+  color: #0077c5;
+}
+
+.firm-branding-tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #0077c5;
+}
+
+.firm-branding-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

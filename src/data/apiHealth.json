@@ -1,0 +1,145 @@
+{
+  "metrics": [
+    {
+      "apiName": "Tax Returns API",
+      "uptime": 99.9,
+      "successRate": 98.5,
+      "latency": 120,
+      "status": "healthy"
+    },
+    {
+      "apiName": "Diagnostics API",
+      "uptime": 99.8,
+      "successRate": 97.2,
+      "latency": 450,
+      "status": "healthy"
+    },
+    {
+      "apiName": "E-file API",
+      "uptime": 99.7,
+      "successRate": 96.8,
+      "latency": 280,
+      "status": "healthy"
+    },
+    {
+      "apiName": "Client Sync API",
+      "uptime": 99.6,
+      "successRate": 98.1,
+      "latency": 95,
+      "status": "healthy"
+    },
+    {
+      "apiName": "Document Bridge API",
+      "uptime": 98.5,
+      "successRate": 95.3,
+      "latency": 320,
+      "status": "degraded"
+    },
+    {
+      "apiName": "Payments API",
+      "uptime": 99.9,
+      "successRate": 99.1,
+      "latency": 150,
+      "status": "healthy"
+    },
+    {
+      "apiName": "Forms API",
+      "uptime": 99.4,
+      "successRate": 97.8,
+      "latency": 210,
+      "status": "healthy"
+    }
+  ],
+  "trafficLogs": [
+    {
+      "id": "log-1",
+      "timestamp": "2024-02-01T18:45:23Z",
+      "endpoint": "/v2/returns",
+      "method": "GET",
+      "statusCode": 200,
+      "clientName": "Karbon",
+      "responseTime": 125
+    },
+    {
+      "id": "log-2",
+      "timestamp": "2024-02-01T18:44:15Z",
+      "endpoint": "/v2/clients/12345",
+      "method": "PUT",
+      "statusCode": 200,
+      "clientName": "Salesforce",
+      "responseTime": 89
+    },
+    {
+      "id": "log-3",
+      "timestamp": "2024-02-01T18:43:52Z",
+      "endpoint": "/v2/documents/upload",
+      "method": "POST",
+      "statusCode": 201,
+      "clientName": "Document Management",
+      "responseTime": 312
+    },
+    {
+      "id": "log-4",
+      "timestamp": "2024-02-01T18:42:30Z",
+      "endpoint": "/v2/returns/67890",
+      "method": "GET",
+      "statusCode": 200,
+      "clientName": "Karbon",
+      "responseTime": 98
+    },
+    {
+      "id": "log-5",
+      "timestamp": "2024-02-01T18:41:18Z",
+      "endpoint": "/v2/efile/submit",
+      "method": "POST",
+      "statusCode": 202,
+      "clientName": "Automation Script",
+      "responseTime": 275
+    },
+    {
+      "id": "log-6",
+      "timestamp": "2024-02-01T18:40:05Z",
+      "endpoint": "/v2/clients",
+      "method": "GET",
+      "statusCode": 200,
+      "clientName": "Salesforce",
+      "responseTime": 112
+    },
+    {
+      "id": "log-7",
+      "timestamp": "2024-02-01T18:39:42Z",
+      "endpoint": "/v2/diagnostics/run",
+      "method": "POST",
+      "statusCode": 200,
+      "clientName": "Quality Check",
+      "responseTime": 467
+    },
+    {
+      "id": "log-8",
+      "timestamp": "2024-02-01T18:38:20Z",
+      "endpoint": "/v2/payments/process",
+      "method": "POST",
+      "statusCode": 200,
+      "clientName": "Payment Gateway",
+      "responseTime": 142
+    },
+    {
+      "id": "log-9",
+      "timestamp": "2024-02-01T18:37:10Z",
+      "endpoint": "/v2/returns/11111",
+      "method": "PUT",
+      "statusCode": 400,
+      "clientName": "Karbon",
+      "responseTime": 78
+    },
+    {
+      "id": "log-10",
+      "timestamp": "2024-02-01T18:36:45Z",
+      "endpoint": "/v2/forms/generate",
+      "method": "POST",
+      "statusCode": 200,
+      "clientName": "Report Generator",
+      "responseTime": 198
+    }
+  ]
+}

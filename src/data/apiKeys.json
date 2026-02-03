@@ -1,0 +1,46 @@
+[
+  {
+    "id": "key-1",
+    "name": "Production - Karbon Integration",
+    "description": "Main API key for Karbon practice management sync",
+    "key": "pk_live_51H8k2mN3vP9xY4zQ7wR5tL6mN8pK2j",
+    "status": "active",
+    "scopes": ["read:returns", "read:clients", "write:clients"],
+    "createdAt": "2024-01-15T10:30:00Z",
+    "lastUsed": "2024-02-01T14:22:00Z",
+    "clientName": "Karbon"
+  },
+  {
+    "id": "key-2",
+    "name": "Development - Testing",
+    "description": "Test API key for development environment",
+    "key": "pk_test_72J9l3oP4wQ0yZ5aR8xS6uM7nO9qL3k",
+    "status": "active",
+    "scopes": ["read:returns", "read:clients", "write:returns", "read:documents"],
+    "createdAt": "2024-01-20T09:15:00Z",
+    "lastUsed": "2024-02-01T16:45:00Z",
+    "clientName": "Development"
+  },
+  {
+    "id": "key-3",
+    "name": "Salesforce CRM Sync",
+    "description": "API key for Salesforce integration",
+    "key": "pk_live_83K0m4oQ5xR1zA6bS9yT7vN8pP0mL4l",
+    "status": "active",
+    "scopes": ["read:clients", "write:clients", "read:returns"],
+    "createdAt": "2024-01-10T11:00:00Z",
+    "lastUsed": "2024-01-31T09:30:00Z",
+    "clientName": "Salesforce"
+  },
+  {
+    "id": "key-4",
+    "name": "Revoked - Old Integration",
+    "description": "Revoked key from previous integration",
+    "key": "pk_live_REVOKED_94L1n5pR6yS2B7cT0zU8wO9qQ1nM5m",
+    "status": "revoked",
+    "scopes": ["read:returns", "write:returns"],
+    "createdAt": "2023-12-01T08:00:00Z",
+    "lastUsed": "2024-01-15T12:00:00Z",
+    "clientName": "Legacy System"
+  }
+]

@@ -1,0 +1,201 @@
+[
+  {
+    "id": "tax-returns",
+    "name": "Tax Returns API",
+    "description": "Access and manage tax return data programmatically. Retrieve return details, update client information, and track return status.",
+    "category": "Tax Returns",
+    "icon": "📄",
+    "useCase": "Automatically sync tax return data with your practice management system. When a return is accepted, trigger notifications to clients via SMS or email.",
+    "logicFlow": "1. Authenticate with API key → 2. Query return by client ID → 3. Retrieve return data → 4. Process updates → 5. Monitor status changes",
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "/v2/returns",
+        "description": "List all tax returns with optional filtering",
+        "parameters": [
+          {
+            "name": "clientId",
+            "type": "string",
+            "required": false,
+            "description": "Filter returns by client ID"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": false,
+            "description": "Filter by return status (draft, filed, accepted)"
+          }
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v2/returns/{returnId}",
+        "description": "Get detailed information about a specific tax return"
+      },
+      {
+        "method": "PUT",
+        "path": "/v2/returns/{returnId}",
+        "description": "Update tax return information"
+      }
+    ]
+  },
+  {
+    "id": "diagnostics",
+    "name": "Diagnostics API",
+    "description": "Run diagnostic checks on tax returns to identify errors, warnings, and optimization opportunities before filing.",
+    "category": "Diagnostics",
+    "icon": "🔍",
+    "useCase": "Automatically run diagnostics on all returns before the filing deadline. Generate reports highlighting common issues across your client base.",
+    "logicFlow": "1. Submit return ID → 2. Run diagnostic checks → 3. Receive diagnostic results → 4. Process errors/warnings → 5. Generate report",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/v2/diagnostics/run",
+        "description": "Run diagnostics on a tax return",
+        "parameters": [
+          {
+            "name": "returnId",
+            "type": "string",
+            "required": true,
+            "description": "The ID of the return to diagnose"
+          }
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v2/diagnostics/{diagnosticId}",
+        "description": "Get diagnostic results"
+      }
+    ]
+  },
+  {
+    "id": "efile",
+    "name": "E-file API",
+    "description": "Submit tax returns for electronic filing and track their status through the entire e-filing process.",
+    "category": "E-file",
+    "icon": "📤",
+    "useCase": "Automate the e-filing process for bulk submissions. Get real-time status updates when returns are accepted or rejected by the IRS.",
+    "logicFlow": "1. Prepare return → 2. Submit for e-filing → 3. Receive acknowledgment → 4. Monitor status → 5. Handle acceptance/rejection",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/v2/efile/submit",
+        "description": "Submit a tax return for e-filing"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/efile/status/{submissionId}",
+        "description": "Check the status of an e-file submission"
+      }
+    ]
+  },
+  {
+    "id": "client-sync",
+    "name": "Client Sync API",
+    "description": "Synchronize client data between ProConnect and your CRM or practice management system.",
+    "category": "Client Sync",
+    "icon": "👥",
+    "useCase": "Keep client information synchronized across systems. When a client updates their address in your CRM, automatically sync to ProConnect.",
+    "logicFlow": "1. Detect client data changes → 2. Push updates to ProConnect → 3. Pull latest client data → 4. Resolve conflicts → 5. Update both systems",
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "/v2/clients",
+        "description": "List all clients"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/clients/{clientId}",
+        "description": "Get client details"
+      },
+      {
+        "method": "PUT",
+        "path": "/v2/clients/{clientId}",
+        "description": "Update client information"
+      },
+      {
+        "method": "POST",
+        "path": "/v2/clients",
+        "description": "Create a new client"
+      }
+    ]
+  },
+  {
+    "id": "document-bridge",
+    "name": "Document Bridge API",
+    "description": "Upload, retrieve, and manage documents associated with tax returns and clients.",
+    "category": "Document Bridge",
+    "icon": "📎",
+    "useCase": "Automatically route documents from your document management system to ProConnect. Attach W-2s, 1099s, and other tax documents to returns.",
+    "logicFlow": "1. Upload document → 2. Associate with return/client → 3. Process document → 4. Extract data (optional) → 5. Store in ProConnect",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/v2/documents/upload",
+        "description": "Upload a document"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/documents/{documentId}",
+        "description": "Retrieve a document"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/documents",
+        "description": "List documents with filtering options"
+      }
+    ]
+  },
+  {
+    "id": "payments",
+    "name": "Payments API",
+    "description": "Process payments, view payment history, and manage payment methods for tax preparation fees.",
+    "category": "Payments",
+    "icon": "💳",
+    "useCase": "Integrate payment processing with your billing system. Automatically record payments and send receipts to clients.",
+    "logicFlow": "1. Initiate payment → 2. Process payment → 3. Record transaction → 4. Update return status → 5. Send confirmation",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/v2/payments/process",
+        "description": "Process a payment"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/payments/{paymentId}",
+        "description": "Get payment details"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/payments",
+        "description": "List payments with filtering"
+      }
+    ]
+  },
+  {
+    "id": "forms",
+    "name": "Forms API",
+    "description": "Access tax forms, retrieve form data, and generate form PDFs programmatically.",
+    "category": "Forms",
+    "icon": "📋",
+    "useCase": "Generate custom form reports for clients. Automatically populate forms with data from your system.",
+    "logicFlow": "1. Select form type → 2. Populate form data → 3. Generate PDF → 4. Store or send form → 5. Track form status",
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "/v2/forms",
+        "description": "List available forms"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/forms/{formId}",
+        "description": "Get form details and data"
+      },
+      {
+        "method": "POST",
+        "path": "/v2/forms/generate",
+        "description": "Generate a form PDF"
+      }
+    ]
+  }
+]
