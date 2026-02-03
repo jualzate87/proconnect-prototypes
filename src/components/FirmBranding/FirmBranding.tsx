@@ -66,7 +66,6 @@ export const FirmBranding: React.FC = () => {
         {activeTab === 'settings' ? (
           <BrandingSettings 
             onSave={handleSaveAssets}
-            currentAssets={brandingAssets}
           />
         ) : (
           <BrandingPreview

@@ -6,10 +6,9 @@ type UploadSource = 'device' | 'intuit' | 'external';
 
 interface BrandingSettingsProps {
   onSave: (assets: BrandingAssets) => void;
-  currentAssets: BrandingAssets;
 }
 
-export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, currentAssets }) => {
+export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave }) => {
   const [uploadSource, setUploadSource] = useState<UploadSource>('device');
   const [includeHeaderSpace, setIncludeHeaderSpace] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);

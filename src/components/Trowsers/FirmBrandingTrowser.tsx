@@ -16,7 +16,6 @@ export const FirmBrandingTrowser: React.FC<FirmBrandingTrowserProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'settings' | 'preview'>('settings');
   const [selectedDeliverable, setSelectedDeliverable] = useState<DeliverableType>('invoices');
-  const [brandingAssets, setBrandingAssets] = useState<BrandingAssets>({});
   const [currentAssets, setCurrentAssets] = useState<BrandingAssets>({});
   const [hasChanges, setHasChanges] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -28,7 +27,6 @@ export const FirmBrandingTrowser: React.FC<FirmBrandingTrowserProps> = ({
 
   const handleSaveAndClose = () => {
     if (hasChanges) {
-      setBrandingAssets(currentAssets);
       setShowSuccessMessage(true);
       setTimeout(() => {
         setShowSuccessMessage(false);
@@ -99,7 +97,6 @@ export const FirmBrandingTrowser: React.FC<FirmBrandingTrowserProps> = ({
           {activeTab === 'settings' ? (
             <BrandingSettings
               onSave={handleAssetsChange}
-              currentAssets={currentAssets}
             />
           ) : (
             <BrandingPreview

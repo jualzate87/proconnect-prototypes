@@ -95,7 +95,7 @@ export const KeyList: React.FC<KeyListProps> = ({ keys, onRevoke }) => {
 
   return (
     <>
-      <Table columns={columns} data={keys} />
+      <Table<APIKey> columns={columns} data={keys} />
       {revokeKeyId && (
         <Modal
           isOpen={!!revokeKeyId}

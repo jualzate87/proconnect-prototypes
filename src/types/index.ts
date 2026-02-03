@@ -29,7 +29,7 @@ export interface ResponseExample {
   body: Record<string, unknown>;
 }
 
-export interface APIKey {
+export interface APIKey extends Record<string, unknown> {
   id: string;
   name: string;
   description?: string;
@@ -56,7 +56,7 @@ export interface APIHealthMetric {
   status: 'healthy' | 'degraded' | 'down';
 }
 
-export interface TrafficLog {
+export interface TrafficLog extends Record<string, unknown> {
   id: string;
   timestamp: string;
   endpoint: string;

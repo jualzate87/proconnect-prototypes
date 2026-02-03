@@ -4,12 +4,6 @@ import { Badge } from '../Shared/Badge';
 import { TrafficLog } from '../../types';
 import './TrafficLogs.css';
 
-interface Column<T> {
-  key: string;
-  header: string;
-  render?: (item: T) => React.ReactNode;
-}
-
 interface TrafficLogsProps {
   logs: TrafficLog[];
 }
@@ -32,7 +26,7 @@ export const TrafficLogs: React.FC<TrafficLogsProps> = ({ logs }) => {
     return 'info';
   };
 
-  const columns: Column<TrafficLog>[] = [
+  const columns = [
     {
       key: 'timestamp',
       header: 'Timestamp',
