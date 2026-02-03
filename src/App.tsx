@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { SettingsLayout } from './components/Layout/SettingsLayout';
 import { Home } from './components/Home/Home';
+import { APICatalog } from './components/APICatalog/APICatalog';
+import { Documentation } from './components/Documentation/Documentation';
+import { APIKeys } from './components/APIKeys/APIKeys';
+import { APIHealth } from './components/APIHealth/APIHealth';
 import { APIPortalTrowser } from './components/Trowsers/APIPortalTrowser';
 import { FirmBrandingTrowser } from './components/Trowsers/FirmBrandingTrowser';
 import { PasswordProtection } from './components/Auth/PasswordProtection';
@@ -23,6 +27,13 @@ function App() {
         <Routes>
           <Route path="/" element={<SettingsLayout onOpenTrowser={handleOpenTrowser} />}>
             <Route index element={<Home />} />
+            <Route path="settings/api-portal">
+              <Route index element={<Navigate to="catalog" replace />} />
+              <Route path="catalog" element={<APICatalog />} />
+              <Route path="documentation" element={<Documentation />} />
+              <Route path="keys" element={<APIKeys />} />
+              <Route path="health" element={<APIHealth />} />
+            </Route>
           </Route>
         </Routes>
         

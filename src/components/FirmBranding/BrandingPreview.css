@@ -357,3 +357,422 @@
 .preview-signin-link:hover {
   text-decoration: underline;
 }
+
+/* Customization Toolbar */
+.branding-preview-toolbar {
+  display: flex;
+  gap: 32px;
+  padding: 16px 24px;
+  background-color: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.branding-preview-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.branding-preview-toolbar-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.branding-preview-toolbar-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.branding-preview-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #6c757d;
+}
+
+.branding-preview-toolbar-btn:hover {
+  border-color: #0077c5;
+  color: #0077c5;
+}
+
+.branding-preview-toolbar-btn-active {
+  border-color: #0077c5;
+  background-color: #e7f3ff;
+  color: #0077c5;
+}
+
+/* Logo Size Classes */
+.preview-logo.logo-small img {
+  max-height: 40px;
+  max-width: 120px;
+}
+
+.preview-logo.logo-medium img {
+  max-height: 60px;
+  max-width: 180px;
+}
+
+.preview-logo.logo-large img {
+  max-height: 80px;
+  max-width: 240px;
+}
+
+/* Logo Alignment Classes */
+.preview-logo.logo-left {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.preview-logo.logo-center {
+  text-align: center;
+  justify-content: center;
+}
+
+.preview-logo.logo-right {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+/* Style Preset Font Families */
+.style-modern {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.style-professional {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.style-traditional {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.style-creative {
+  font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+}
+
+/* Color Palette - Blue */
+.palette-blue .preview-invoice-title h1,
+.palette-blue .preview-firm-name,
+.palette-blue .branded-button {
+  color: #0077C8;
+}
+
+.palette-blue .branded-button {
+  background-color: #0077C8;
+  color: white;
+}
+
+.palette-blue .preview-invoice-table thead {
+  background-color: #0077C8;
+  color: white;
+}
+
+.palette-blue .total-row {
+  background-color: #e7f3ff;
+  color: #0077C8;
+}
+
+/* Color Palette - Green */
+.palette-green .preview-invoice-title h1,
+.palette-green .preview-firm-name,
+.palette-green .branded-button {
+  color: #2E7D32;
+}
+
+.palette-green .branded-button {
+  background-color: #2E7D32;
+  color: white;
+}
+
+.palette-green .preview-invoice-table thead {
+  background-color: #2E7D32;
+  color: white;
+}
+
+.palette-green .total-row {
+  background-color: #e8f5e9;
+  color: #2E7D32;
+}
+
+/* Color Palette - Purple */
+.palette-purple .preview-invoice-title h1,
+.palette-purple .preview-firm-name,
+.palette-purple .branded-button {
+  color: #7B1FA2;
+}
+
+.palette-purple .branded-button {
+  background-color: #7B1FA2;
+  color: white;
+}
+
+.palette-purple .preview-invoice-table thead {
+  background-color: #7B1FA2;
+  color: white;
+}
+
+.palette-purple .total-row {
+  background-color: #f3e5f5;
+  color: #7B1FA2;
+}
+
+/* Color Palette - Coral */
+.palette-coral .preview-invoice-title h1,
+.palette-coral .preview-firm-name,
+.palette-coral .branded-button {
+  color: #FF6B6B;
+}
+
+.palette-coral .branded-button {
+  background-color: #FF6B6B;
+  color: white;
+}
+
+.palette-coral .preview-invoice-table thead {
+  background-color: #FF6B6B;
+  color: white;
+}
+
+.palette-coral .total-row {
+  background-color: #ffe5e5;
+  color: #FF6B6B;
+}
+
+/* Enhanced Invoice Styles */
+.preview-invoice-header {
+  margin-bottom: 24px;
+}
+
+.preview-firm-info {
+  line-height: 1.6;
+}
+
+.preview-firm-info p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.preview-invoice-title {
+  text-align: center;
+  margin: 32px 0;
+}
+
+.preview-invoice-title h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.preview-invoice-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 40px;
+}
+
+.preview-invoice-details,
+.preview-bill-to {
+  flex: 1;
+}
+
+.preview-bill-to h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+}
+
+.preview-bill-to p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.preview-meta-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.preview-meta-label {
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.preview-meta-value {
+  color: #2c3e50;
+}
+
+.preview-invoice-table {
+  margin: 32px 0;
+}
+
+.preview-invoice-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.preview-invoice-table thead th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.preview-invoice-table tbody td {
+  padding: 12px;
+  border-top: 1px solid #e9ecef;
+  font-size: 14px;
+}
+
+.preview-invoice-table .col-description {
+  width: 50%;
+}
+
+.preview-invoice-table .col-qty {
+  width: 10%;
+  text-align: center;
+}
+
+.preview-invoice-table .col-rate,
+.preview-invoice-table .col-amount {
+  width: 20%;
+  text-align: right;
+}
+
+.preview-invoice-table tfoot td {
+  padding: 12px;
+  font-size: 14px;
+  border-top: 1px solid #e9ecef;
+}
+
+.preview-invoice-table .subtotal-row td,
+.preview-invoice-table .tax-row td {
+  text-align: right;
+}
+
+.preview-invoice-table .total-row {
+  border-top: 2px solid #2c3e50;
+  font-weight: 700;
+}
+
+.preview-invoice-table .total-row td {
+  text-align: right;
+  padding: 16px 12px;
+  font-size: 16px;
+}
+
+.preview-invoice-footer {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #e9ecef;
+  font-size: 14px;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.preview-invoice-footer p {
+  margin: 4px 0;
+}
+
+/* Enhanced Letter Styles */
+.preview-letter-header {
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.preview-letter-header p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.preview-letter-date {
+  margin: 32px 0 24px 0;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.preview-letter-recipient {
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.preview-letter-recipient p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.preview-letter-subject {
+  margin-bottom: 24px;
+}
+
+.preview-letter-subject p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.preview-letter-body {
+  line-height: 1.8;
+}
+
+.preview-letter-body p {
+  margin: 16px 0;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.preview-letter-body ul {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.preview-letter-body li {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.preview-letter-signature {
+  margin-top: 48px;
+  line-height: 1.4;
+}
+
+.preview-letter-signature p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+/* Branded Button Styles */
+.branded-button {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.branded-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}

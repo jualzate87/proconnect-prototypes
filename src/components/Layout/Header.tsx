@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import './Header.css';
 
 interface HeaderProps {
-  onOpenTrowser: (trowser: 'api-portal' | 'firm-branding') => void;
+  onOpenTrowser?: (trowser: 'api-portal' | 'firm-branding') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onOpenTrowser }) => {
@@ -95,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrowser }) => {
                   className="settings-dropdown-item"
                   onClick={() => {
                     setShowSettingsMenu(false);
-                    onOpenTrowser('firm-branding');
+                    onOpenTrowser?.('firm-branding');
                   }}
                 >
                   Firm branding
@@ -111,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrowser }) => {
                   className="settings-dropdown-item settings-dropdown-item-highlight"
                   onClick={() => {
                     setShowSettingsMenu(false);
-                    onOpenTrowser('api-portal');
+                    onOpenTrowser?.('api-portal');
                   }}
                 >
                   API portal

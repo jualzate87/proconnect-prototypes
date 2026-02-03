@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './BrandingSettings.css';
-import { BrandingAssets } from './FirmBranding';
+import { BrandingAssets, ColorPalette, StylePreset } from './FirmBranding';
 
-type UploadSource = 'device' | 'intuit' | 'external';
+type UploadSource = 'device' | 'intuit';
 
 interface BrandingSettingsProps {
   onSave: (assets: BrandingAssets) => void;
@@ -10,38 +10,43 @@ interface BrandingSettingsProps {
 
 export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave }) => {
   const [uploadSource, setUploadSource] = useState<UploadSource>('device');
-  const [includeHeaderSpace, setIncludeHeaderSpace] = useState(false);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
-  const [headerImagePreview, setHeaderImagePreview] = useState<string | null>(null);
+  const [selectedColorPalette, setSelectedColorPalette] = useState<ColorPalette>('blue');
+  const [selectedStylePreset, setSelectedStylePreset] = useState<StylePreset>('professional');
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, type: 'logo' | 'header') => {
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const newLogo = type === 'logo' ? (reader.result as string) : logoPreview;
-        const newHeader = type === 'header' ? (reader.result as string) : headerImagePreview;
-        
-        if (type === 'logo') {
-          setLogoPreview(reader.result as string);
-        } else {
-          setHeaderImagePreview(reader.result as string);
-        }
+        setLogoPreview(reader.result as string);
         
         // Update preview in real-time
         onSave({
-          logo: newLogo || undefined,
-          headerImage: newHeader || undefined,
+          logo: reader.result as string,
+          colorPalette: selectedColorPalette,
+          stylePreset: selectedStylePreset,
         });
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSave = () => {
+  const handleColorPaletteChange = (palette: ColorPalette) => {
+    setSelectedColorPalette(palette);
     onSave({
       logo: logoPreview || undefined,
-      headerImage: headerImagePreview || undefined,
+      colorPalette: palette,
+      stylePreset: selectedStylePreset,
+    });
+  };
+
+  const handleStylePresetChange = (preset: StylePreset) => {
+    setSelectedStylePreset(preset);
+    onSave({
+      logo: logoPreview || undefined,
+      colorPalette: selectedColorPalette,
+      stylePreset: preset,
     });
   };
 
@@ -105,30 +110,6 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave }) =>
               </p>
             </div>
           </label>
-
-          <label className="branding-settings-radio-card">
-            <input
-              type="radio"
-              name="uploadSource"
-              value="external"
-              checked={uploadSource === 'external'}
-              onChange={(e) => setUploadSource(e.target.value as UploadSource)}
-            />
-            <div className="branding-settings-radio-content">
-              <div className="branding-settings-radio-header">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span className="branding-settings-radio-title">Import from external app</span>
-              </div>
-              <p className="branding-settings-radio-description">
-                Connect to Dropbox, Google Drive, or other cloud storage services
-              </p>
-            </div>
-          </label>
         </div>
 
         {uploadSource === 'device' && (
@@ -139,39 +120,12 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave }) =>
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleFileUpload(e, 'logo')}
+                  onChange={(e) => handleFileUpload(e)}
                   id="logo-upload"
                 />
                 <label htmlFor="logo-upload" className="branding-settings-file-label">
                   {logoPreview ? (
                     <img src={logoPreview} alt="Logo preview" className="branding-settings-preview" />
-                  ) : (
-                    <>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path
-                          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                      <span>Choose file or drag and drop</span>
-                    </>
-                  )}
-                </label>
-              </div>
-            </div>
-
-            <div className="branding-settings-upload-field">
-              <label className="branding-settings-label">Header image (optional)</label>
-              <div className="branding-settings-file-input">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleFileUpload(e, 'header')}
-                  id="header-upload"
-                />
-                <label htmlFor="header-upload" className="branding-settings-file-label">
-                  {headerImagePreview ? (
-                    <img src={headerImagePreview} alt="Header preview" className="branding-settings-preview" />
                   ) : (
                     <>
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -197,51 +151,156 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave }) =>
           </div>
         )}
 
-        {uploadSource === 'external' && (
-          <div className="branding-settings-external-options">
-            <button className="branding-settings-external-btn">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" fill="currentColor"/>
-              </svg>
-              Connect to Dropbox
-            </button>
-            <button className="branding-settings-external-btn">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" fill="currentColor"/>
-              </svg>
-              Connect to Google Drive
-            </button>
-          </div>
-        )}
       </div>
 
       <div className="branding-settings-section">
-        <h2 className="branding-settings-section-title">Document layout options</h2>
-        
-        <label className="branding-settings-checkbox">
-          <input
-            type="checkbox"
-            checked={includeHeaderSpace}
-            onChange={(e) => setIncludeHeaderSpace(e.target.checked)}
-          />
-          <div className="branding-settings-checkbox-content">
-            <span className="branding-settings-checkbox-title">
-              Include header space for external branding
-            </span>
-            <p className="branding-settings-checkbox-description">
-              Leaves blank space at the top of printed documents so you can add branding using an external system
-            </p>
-          </div>
-        </label>
+        <h2 className="branding-settings-section-title">Color Palette</h2>
+        <p className="branding-settings-section-description">
+          Choose a color scheme for your firm's branding
+        </p>
+
+        <div className="branding-settings-palette-grid">
+          <label className={`branding-settings-palette-card ${selectedColorPalette === 'blue' ? 'branding-settings-palette-card-active' : ''}`}>
+            <input
+              type="radio"
+              name="colorPalette"
+              value="blue"
+              checked={selectedColorPalette === 'blue'}
+              onChange={() => handleColorPaletteChange('blue')}
+            />
+            <div className="branding-settings-palette-content">
+              <div className="branding-settings-palette-swatches">
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#0077C8' }}></div>
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#005A9C' }}></div>
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#4A9EFF' }}></div>
+              </div>
+              <span className="branding-settings-palette-name">Blue</span>
+            </div>
+          </label>
+
+          <label className={`branding-settings-palette-card ${selectedColorPalette === 'green' ? 'branding-settings-palette-card-active' : ''}`}>
+            <input
+              type="radio"
+              name="colorPalette"
+              value="green"
+              checked={selectedColorPalette === 'green'}
+              onChange={() => handleColorPaletteChange('green')}
+            />
+            <div className="branding-settings-palette-content">
+              <div className="branding-settings-palette-swatches">
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#2E7D32' }}></div>
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#1B5E20' }}></div>
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#66BB6A' }}></div>
+              </div>
+              <span className="branding-settings-palette-name">Green</span>
+            </div>
+          </label>
+
+          <label className={`branding-settings-palette-card ${selectedColorPalette === 'purple' ? 'branding-settings-palette-card-active' : ''}`}>
+            <input
+              type="radio"
+              name="colorPalette"
+              value="purple"
+              checked={selectedColorPalette === 'purple'}
+              onChange={() => handleColorPaletteChange('purple')}
+            />
+            <div className="branding-settings-palette-content">
+              <div className="branding-settings-palette-swatches">
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#7B1FA2' }}></div>
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#4A148C' }}></div>
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#BA68C8' }}></div>
+              </div>
+              <span className="branding-settings-palette-name">Purple</span>
+            </div>
+          </label>
+
+          <label className={`branding-settings-palette-card ${selectedColorPalette === 'coral' ? 'branding-settings-palette-card-active' : ''}`}>
+            <input
+              type="radio"
+              name="colorPalette"
+              value="coral"
+              checked={selectedColorPalette === 'coral'}
+              onChange={() => handleColorPaletteChange('coral')}
+            />
+            <div className="branding-settings-palette-content">
+              <div className="branding-settings-palette-swatches">
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#FF6B6B' }}></div>
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#EE5A52' }}></div>
+                <div className="branding-settings-color-swatch" style={{ backgroundColor: '#FFA07A' }}></div>
+              </div>
+              <span className="branding-settings-palette-name">Coral</span>
+            </div>
+          </label>
+        </div>
       </div>
 
-      <div className="branding-settings-actions">
-        <button className="branding-settings-btn-primary" onClick={handleSave}>
-          Save branding assets
-        </button>
-        <button className="branding-settings-btn-secondary">
-          Cancel
-        </button>
+      <div className="branding-settings-section">
+        <h2 className="branding-settings-section-title">Style Preset</h2>
+        <p className="branding-settings-section-description">
+          Choose a typography style that reflects your firm's personality
+        </p>
+
+        <div className="branding-settings-style-grid">
+          <label className={`branding-settings-style-card ${selectedStylePreset === 'modern' ? 'branding-settings-style-card-active' : ''}`}>
+            <input
+              type="radio"
+              name="stylePreset"
+              value="modern"
+              checked={selectedStylePreset === 'modern'}
+              onChange={() => handleStylePresetChange('modern')}
+            />
+            <div className="branding-settings-style-content">
+              <div className="branding-settings-style-preview" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>Aa</div>
+              <span className="branding-settings-style-name">Modern</span>
+              <p className="branding-settings-style-description">Clean and minimalist</p>
+            </div>
+          </label>
+
+          <label className={`branding-settings-style-card ${selectedStylePreset === 'professional' ? 'branding-settings-style-card-active' : ''}`}>
+            <input
+              type="radio"
+              name="stylePreset"
+              value="professional"
+              checked={selectedStylePreset === 'professional'}
+              onChange={() => handleStylePresetChange('professional')}
+            />
+            <div className="branding-settings-style-content">
+              <div className="branding-settings-style-preview" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Aa</div>
+              <span className="branding-settings-style-name">Professional</span>
+              <p className="branding-settings-style-description">Formal and trustworthy</p>
+            </div>
+          </label>
+
+          <label className={`branding-settings-style-card ${selectedStylePreset === 'traditional' ? 'branding-settings-style-card-active' : ''}`}>
+            <input
+              type="radio"
+              name="stylePreset"
+              value="traditional"
+              checked={selectedStylePreset === 'traditional'}
+              onChange={() => handleStylePresetChange('traditional')}
+            />
+            <div className="branding-settings-style-content">
+              <div className="branding-settings-style-preview" style={{ fontFamily: '"Times New Roman", Times, serif' }}>Aa</div>
+              <span className="branding-settings-style-name">Traditional</span>
+              <p className="branding-settings-style-description">Conservative and established</p>
+            </div>
+          </label>
+
+          <label className={`branding-settings-style-card ${selectedStylePreset === 'creative' ? 'branding-settings-style-card-active' : ''}`}>
+            <input
+              type="radio"
+              name="stylePreset"
+              value="creative"
+              checked={selectedStylePreset === 'creative'}
+              onChange={() => handleStylePresetChange('creative')}
+            />
+            <div className="branding-settings-style-content">
+              <div className="branding-settings-style-preview" style={{ fontFamily: '"Arial Rounded MT Bold", "Helvetica Rounded", sans-serif', fontWeight: 'bold' }}>Aa</div>
+              <span className="branding-settings-style-name">Creative</span>
+              <p className="branding-settings-style-description">Bold and distinctive</p>
+            </div>
+          </label>
+        </div>
       </div>
     </div>
   );

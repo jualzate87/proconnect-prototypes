@@ -16,12 +16,22 @@ export const FirmBrandingTrowser: React.FC<FirmBrandingTrowserProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'settings' | 'preview'>('settings');
   const [selectedDeliverable, setSelectedDeliverable] = useState<DeliverableType>('invoices');
-  const [currentAssets, setCurrentAssets] = useState<BrandingAssets>({});
+  const [currentAssets, setCurrentAssets] = useState<BrandingAssets>({
+    colorPalette: 'blue',
+    stylePreset: 'professional',
+    logoSize: 'medium',
+    logoAlignment: 'left',
+  });
   const [hasChanges, setHasChanges] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleAssetsChange = (assets: BrandingAssets) => {
-    setCurrentAssets(assets);
+    setCurrentAssets(prev => ({...prev, ...assets}));
+    setHasChanges(true);
+  };
+
+  const handleCustomizationChange = (updates: Partial<BrandingAssets>) => {
+    setCurrentAssets(prev => ({...prev, ...updates}));
     setHasChanges(true);
   };
 
@@ -103,6 +113,7 @@ export const FirmBrandingTrowser: React.FC<FirmBrandingTrowserProps> = ({
               selectedDeliverable={selectedDeliverable}
               onDeliverableChange={setSelectedDeliverable}
               brandingAssets={currentAssets}
+              onCustomizationChange={handleCustomizationChange}
             />
           )}
         </div>

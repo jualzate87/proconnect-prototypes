@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './BrandingPreview.css';
-import { DeliverableType, BrandingAssets } from './FirmBranding';
+import { DeliverableType, BrandingAssets, LogoSize, LogoAlignment } from './FirmBranding';
 
 interface BrandingPreviewProps {
   selectedDeliverable: DeliverableType;
   onDeliverableChange: (type: DeliverableType) => void;
   brandingAssets: BrandingAssets;
+  onCustomizationChange?: (updates: Partial<BrandingAssets>) => void;
 }
 
 export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
   selectedDeliverable,
   onDeliverableChange,
   brandingAssets,
+  onCustomizationChange,
 }) => {
+  const [logoSize, setLogoSize] = useState<LogoSize>(brandingAssets.logoSize || 'medium');
+  const [logoAlignment, setLogoAlignment] = useState<LogoAlignment>(brandingAssets.logoAlignment || 'left');
+
+  const handleLogoSizeChange = (size: LogoSize) => {
+    setLogoSize(size);
+    onCustomizationChange?.({ ...brandingAssets, logoSize: size });
+  };
+
+  const handleLogoAlignmentChange = (alignment: LogoAlignment) => {
+    setLogoAlignment(alignment);
+    onCustomizationChange?.({ ...brandingAssets, logoAlignment: alignment });
+  };
   const deliverableTypes = [
     { id: 'invoices' as DeliverableType, label: 'Invoices', icon: '📄' },
     { id: 'letters' as DeliverableType, label: 'Client letters', icon: '✉️' },
@@ -21,95 +35,184 @@ export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
   ];
 
   const renderPreviewContent = () => {
+    const logoSizeClass = `logo-${logoSize}`;
+    const logoAlignClass = `logo-${logoAlignment}`;
+    
     switch (selectedDeliverable) {
       case 'invoices':
         return (
-          <div className="preview-document preview-invoice">
+          <div className={`preview-document preview-invoice style-${brandingAssets.stylePreset || 'professional'} palette-${brandingAssets.colorPalette || 'blue'}`}>
             {brandingAssets.logo && (
-              <div className="preview-logo">
+              <div className={`preview-logo ${logoSizeClass} ${logoAlignClass}`}>
                 <img src={brandingAssets.logo as string} alt="Firm logo" />
               </div>
             )}
-            <div className="preview-header">
-              <h2>ABC Accounting Firm</h2>
-              <p>123 Main Street, Suite 100</p>
-              <p>City, State 12345</p>
+            <div className="preview-invoice-header">
+              <div className="preview-firm-info">
+                <h2 className="preview-firm-name">ABC Accounting Firm</h2>
+                <p>123 Main Street, Suite 100</p>
+                <p>City, State 12345</p>
+                <p>Phone: (555) 123-4567</p>
+                <p>Email: billing@abcaccounting.com</p>
+              </div>
             </div>
-            <div className="preview-title">
+            
+            <div className="preview-invoice-title">
               <h1>INVOICE</h1>
-              <p>Invoice #: 2024-001</p>
-              <p>Date: February 2, 2026</p>
             </div>
-            <div className="preview-content">
-              <div className="preview-section">
+
+            <div className="preview-invoice-meta">
+              <div className="preview-invoice-details">
+                <div className="preview-meta-row">
+                  <span className="preview-meta-label">Invoice #:</span>
+                  <span className="preview-meta-value">INV-2026-001234</span>
+                </div>
+                <div className="preview-meta-row">
+                  <span className="preview-meta-label">Date:</span>
+                  <span className="preview-meta-value">February 2, 2026</span>
+                </div>
+                <div className="preview-meta-row">
+                  <span className="preview-meta-label">Due Date:</span>
+                  <span className="preview-meta-value">March 4, 2026</span>
+                </div>
+              </div>
+
+              <div className="preview-bill-to">
                 <h3>Bill To:</h3>
-                <p>Client Name</p>
-                <p>Client Address</p>
+                <p><strong>John Smith</strong></p>
+                <p>456 Client Avenue</p>
+                <p>Anytown, CA 90210</p>
               </div>
-              <div className="preview-table">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Description</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Tax Preparation Services</td>
-                      <td>$500.00</td>
-                    </tr>
-                    <tr>
-                      <td>Consultation</td>
-                      <td>$150.00</td>
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td><strong>Total</strong></td>
-                      <td><strong>$650.00</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+            </div>
+
+            <div className="preview-invoice-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th className="col-description">Description</th>
+                    <th className="col-qty">Qty</th>
+                    <th className="col-rate">Rate</th>
+                    <th className="col-amount">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1040 Individual Tax Return</td>
+                    <td>1</td>
+                    <td>$350.00</td>
+                    <td>$350.00</td>
+                  </tr>
+                  <tr>
+                    <td>State Tax Return</td>
+                    <td>1</td>
+                    <td>$150.00</td>
+                    <td>$150.00</td>
+                  </tr>
+                  <tr>
+                    <td>Tax Consultation (hourly)</td>
+                    <td>2</td>
+                    <td>$125.00</td>
+                    <td>$250.00</td>
+                  </tr>
+                  <tr>
+                    <td>Document Preparation & Filing</td>
+                    <td>1</td>
+                    <td>$75.00</td>
+                    <td>$75.00</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr className="subtotal-row">
+                    <td colSpan={3}>Subtotal</td>
+                    <td>$825.00</td>
+                  </tr>
+                  <tr className="tax-row">
+                    <td colSpan={3}>Tax (0%)</td>
+                    <td>$0.00</td>
+                  </tr>
+                  <tr className="total-row">
+                    <td colSpan={3}><strong>Total Due</strong></td>
+                    <td><strong>$825.00</strong></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <div className="preview-invoice-footer">
+              <p><strong>Payment Terms:</strong> Net 30</p>
+              <p>Thank you for your business!</p>
             </div>
           </div>
         );
 
       case 'letters':
         return (
-          <div className="preview-document preview-letter">
+          <div className={`preview-document preview-letter style-${brandingAssets.stylePreset || 'professional'} palette-${brandingAssets.colorPalette || 'blue'}`}>
             {brandingAssets.logo && (
-              <div className="preview-logo">
+              <div className={`preview-logo ${logoSizeClass} ${logoAlignClass}`}>
                 <img src={brandingAssets.logo as string} alt="Firm logo" />
               </div>
             )}
-            <div className="preview-header">
-              <h2>ABC Accounting Firm</h2>
+            <div className="preview-letter-header">
+              <h2 className="preview-firm-name">ABC Accounting Firm</h2>
               <p>123 Main Street, Suite 100</p>
               <p>City, State 12345</p>
             </div>
-            <div className="preview-date">February 2, 2026</div>
-            <div className="preview-content">
-              <p><strong>Dear Valued Client,</strong></p>
+
+            <div className="preview-letter-date">February 2, 2026</div>
+
+            <div className="preview-letter-recipient">
+              <p>Mr. John Smith</p>
+              <p>456 Client Avenue</p>
+              <p>Anytown, CA 90210</p>
+            </div>
+
+            <div className="preview-letter-subject">
+              <p><strong>RE: 2025 Tax Return Preparation</strong></p>
+            </div>
+
+            <div className="preview-letter-body">
+              <p>Dear Mr. Smith,</p>
+
               <p>
-                We are writing to inform you about your upcoming tax filing deadline. 
-                Our team has been working diligently to ensure all your documents are in order.
+                I am pleased to inform you that we have completed the preparation of your 
+                2025 federal and state income tax returns.
               </p>
+
               <p>
-                Please review the attached documents and let us know if you have any questions 
-                or concerns. We are here to help you navigate the tax filing process.
+                The returns show a federal refund of $2,450 and a state refund of $685. 
+                We have filed your returns electronically and you should receive your 
+                refunds within 2-3 weeks.
               </p>
-              <p>Thank you for your continued trust in our services.</p>
-              <p><strong>Sincerely,</strong></p>
-              <p>ABC Accounting Firm Team</p>
+
+              <p><strong>Enclosed you will find:</strong></p>
+              <ul>
+                <li>Copy of your federal tax return (Form 1040)</li>
+                <li>Copy of your state tax return</li>
+                <li>Supporting documentation and schedules</li>
+              </ul>
+
+              <p>
+                Please review the returns carefully and contact our office if you have 
+                any questions or need clarification on any items. We appreciate your 
+                continued trust in our services and look forward to assisting you with 
+                your future tax and accounting needs.
+              </p>
+
+              <p>Sincerely,</p>
+
+              <div className="preview-letter-signature">
+                <p><strong>Sarah Johnson, CPA</strong></p>
+                <p>Partner</p>
+                <p>ABC Accounting Firm</p>
+              </div>
             </div>
           </div>
         );
 
       case 'emails':
         return (
-          <div className="preview-document preview-email">
+          <div className={`preview-document preview-email style-${brandingAssets.stylePreset || 'professional'} palette-${brandingAssets.colorPalette || 'blue'}`}>
             <div className="preview-email-header">
               <div className="preview-email-row">
                 <span className="preview-email-label">From:</span>
@@ -126,7 +229,7 @@ export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
             </div>
             <div className="preview-email-body">
               {brandingAssets.logo && (
-                <div className="preview-logo">
+                <div className={`preview-logo ${logoSizeClass} ${logoAlignClass}`}>
                   <img src={brandingAssets.logo as string} alt="Firm logo" />
                 </div>
               )}
@@ -137,7 +240,7 @@ export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
                 to securely access your documents through our client portal.
               </p>
               <div className="preview-email-button">
-                <button>Review Documents</button>
+                <button className="branded-button">Review Documents</button>
               </div>
               <p>
                 If you have any questions, please don't hesitate to contact us.
@@ -151,10 +254,10 @@ export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
 
       case 'signIn':
         return (
-          <div className="preview-document preview-signin">
+          <div className={`preview-document preview-signin style-${brandingAssets.stylePreset || 'professional'} palette-${brandingAssets.colorPalette || 'blue'}`}>
             <div className="preview-signin-container">
               {brandingAssets.logo && (
-                <div className="preview-logo">
+                <div className={`preview-logo ${logoSizeClass} ${logoAlignClass}`}>
                   <img src={brandingAssets.logo as string} alt="Firm logo" />
                 </div>
               )}
@@ -169,7 +272,7 @@ export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
                   <label>Password</label>
                   <input type="password" placeholder="••••••••" disabled />
                 </div>
-                <button className="preview-signin-button">Sign In</button>
+                <button className="preview-signin-button branded-button">Sign In</button>
                 <a href="#" className="preview-signin-link">Forgot password?</a>
               </div>
             </div>
@@ -209,6 +312,74 @@ export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
           <p className="branding-preview-description">
             Preview how your branding will appear on this deliverable
           </p>
+        </div>
+
+        <div className="branding-preview-toolbar">
+          <div className="branding-preview-toolbar-group">
+            <span className="branding-preview-toolbar-label">Logo Size:</span>
+            <div className="branding-preview-toolbar-buttons">
+              <button
+                className={`branding-preview-toolbar-btn ${logoSize === 'small' ? 'branding-preview-toolbar-btn-active' : ''}`}
+                onClick={() => handleLogoSizeChange('small')}
+                title="Small"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <rect x="4" y="4" width="8" height="8" fill="currentColor" />
+                </svg>
+              </button>
+              <button
+                className={`branding-preview-toolbar-btn ${logoSize === 'medium' ? 'branding-preview-toolbar-btn-active' : ''}`}
+                onClick={() => handleLogoSizeChange('medium')}
+                title="Medium"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="3" y="3" width="14" height="14" fill="currentColor" />
+                </svg>
+              </button>
+              <button
+                className={`branding-preview-toolbar-btn ${logoSize === 'large' ? 'branding-preview-toolbar-btn-active' : ''}`}
+                onClick={() => handleLogoSizeChange('large')}
+                title="Large"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="2" width="20" height="20" fill="currentColor" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div className="branding-preview-toolbar-group">
+            <span className="branding-preview-toolbar-label">Logo Alignment:</span>
+            <div className="branding-preview-toolbar-buttons">
+              <button
+                className={`branding-preview-toolbar-btn ${logoAlignment === 'left' ? 'branding-preview-toolbar-btn-active' : ''}`}
+                onClick={() => handleLogoAlignmentChange('left')}
+                title="Left"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="6" width="8" height="8" fill="currentColor" />
+                </svg>
+              </button>
+              <button
+                className={`branding-preview-toolbar-btn ${logoAlignment === 'center' ? 'branding-preview-toolbar-btn-active' : ''}`}
+                onClick={() => handleLogoAlignmentChange('center')}
+                title="Center"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="6" y="6" width="8" height="8" fill="currentColor" />
+                </svg>
+              </button>
+              <button
+                className={`branding-preview-toolbar-btn ${logoAlignment === 'right' ? 'branding-preview-toolbar-btn-active' : ''}`}
+                onClick={() => handleLogoAlignmentChange('right')}
+                title="Right"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="10" y="6" width="8" height="8" fill="currentColor" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="branding-preview-viewport">

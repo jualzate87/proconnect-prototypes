@@ -4,14 +4,17 @@ import { BrandingSettings } from './BrandingSettings';
 import { BrandingPreview } from './BrandingPreview';
 
 export type DeliverableType = 'invoices' | 'letters' | 'emails' | 'signIn';
+export type StylePreset = 'modern' | 'professional' | 'traditional' | 'creative';
+export type ColorPalette = 'blue' | 'green' | 'purple' | 'coral';
+export type LogoSize = 'small' | 'medium' | 'large';
+export type LogoAlignment = 'left' | 'center' | 'right';
 
 export interface BrandingAssets {
   logo?: File | string;
-  headerImage?: File | string;
-  colors?: {
-    primary?: string;
-    secondary?: string;
-  };
+  colorPalette?: ColorPalette;
+  stylePreset?: StylePreset;
+  logoSize?: LogoSize;
+  logoAlignment?: LogoAlignment;
 }
 
 export const FirmBranding: React.FC = () => {
