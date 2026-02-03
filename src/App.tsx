@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SettingsLayout } from './components/Layout/SettingsLayout';
 import { Home } from './components/Home/Home';
