@@ -88,5 +88,5 @@ export const TrafficLogs: React.FC<TrafficLogsProps> = ({ logs }) => {
     },
   ];
 
-  return <Table columns={columns} data={logs} />;
+  return <Table<TrafficLog> columns={columns} data={logs} />;
 };
