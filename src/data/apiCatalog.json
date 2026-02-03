@@ -2,7 +2,7 @@
   {
     "id": "tax-returns",
     "name": "Tax Returns API",
-    "description": "Access and manage tax return data programmatically. Retrieve return details, update client information, and track return status.",
+    "description": "Build custom dashboards and analytics tools that pull live tax return data. Integrate with project management tools, time tracking software, or BI platforms to monitor return progress, automate client workflows, and generate real-time reports across your entire client base.",
     "category": "Tax Returns",
     "icon": "📄",
     "useCase": "Automatically sync tax return data with your practice management system. When a return is accepted, trigger notifications to clients via SMS or email.",
@@ -42,7 +42,7 @@
   {
     "id": "diagnostics",
     "name": "Diagnostics API",
-    "description": "Run diagnostic checks on tax returns to identify errors, warnings, and optimization opportunities before filing.",
+    "description": "Create automated quality control systems that scan returns for errors before filing. Build review workflows in tools like Monday.com, Asana, or custom apps that flag issues, assign tasks to preparers, and track resolution—eliminating manual review bottlenecks.",
     "category": "Diagnostics",
     "icon": "🔍",
     "useCase": "Automatically run diagnostics on all returns before the filing deadline. Generate reports highlighting common issues across your client base.",
@@ -71,7 +71,7 @@
   {
     "id": "efile",
     "name": "E-file API",
-    "description": "Submit tax returns for electronic filing and track their status through the entire e-filing process.",
+    "description": "Build bulk filing automation that processes hundreds of returns with one script. Integrate with Slack, Microsoft Teams, or custom notification systems to alert staff instantly when returns are accepted or rejected—no more manual status checking.",
     "category": "E-file",
     "icon": "📤",
     "useCase": "Automate the e-filing process for bulk submissions. Get real-time status updates when returns are accepted or rejected by the IRS.",
@@ -92,7 +92,7 @@
   {
     "id": "client-sync",
     "name": "Client Sync API",
-    "description": "Synchronize client data between ProConnect and your CRM or practice management system.",
+    "description": "Connect ProConnect with Salesforce, HubSpot, Karbon, or any CRM to create a single source of truth for client data. Build two-way sync workflows so address updates, contact changes, and client notes flow automatically between systems—no more duplicate data entry.",
     "category": "Client Sync",
     "icon": "👥",
     "useCase": "Keep client information synchronized across systems. When a client updates their address in your CRM, automatically sync to ProConnect.",
@@ -123,7 +123,7 @@
   {
     "id": "document-bridge",
     "name": "Document Bridge API",
-    "description": "Upload, retrieve, and manage documents associated with tax returns and clients.",
+    "description": "Integrate with SharePoint, Box, Dropbox, or document management systems to automatically route client W-2s, 1099s, and receipts directly into ProConnect. Build client portals where documents uploaded by clients instantly attach to the right return—eliminating manual document handling.",
     "category": "Document Bridge",
     "icon": "📎",
     "useCase": "Automatically route documents from your document management system to ProConnect. Attach W-2s, 1099s, and other tax documents to returns.",
@@ -149,7 +149,7 @@
   {
     "id": "payments",
     "name": "Payments API",
-    "description": "Process payments, view payment history, and manage payment methods for tax preparation fees.",
+    "description": "Connect with QuickBooks, Xero, or your accounting software to automatically sync payment data. Build client billing portals that process payments and instantly update both your accounting system and ProConnect—creating a seamless financial workflow with automatic receipt generation.",
     "category": "Payments",
     "icon": "💳",
     "useCase": "Integrate payment processing with your billing system. Automatically record payments and send receipts to clients.",
@@ -175,7 +175,7 @@
   {
     "id": "forms",
     "name": "Forms API",
-    "description": "Access tax forms, retrieve form data, and generate form PDFs programmatically.",
+    "description": "Build custom client portals that generate tax forms on-demand, or integrate with email automation tools to send personalized form packages. Pull form data into Power BI or Tableau for tax planning analytics—turning static forms into actionable insights for advisory services.",
     "category": "Forms",
     "icon": "📋",
     "useCase": "Generate custom form reports for clients. Automatically populate forms with data from your system.",
