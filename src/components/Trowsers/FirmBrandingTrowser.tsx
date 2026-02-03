@@ -107,6 +107,7 @@ export const FirmBrandingTrowser: React.FC<FirmBrandingTrowserProps> = ({
           {activeTab === 'settings' ? (
             <BrandingSettings
               onSave={handleAssetsChange}
+              currentAssets={currentAssets}
             />
           ) : (
             <BrandingPreview

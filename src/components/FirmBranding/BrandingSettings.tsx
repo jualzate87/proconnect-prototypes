@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './BrandingSettings.css';
 import { BrandingAssets, ColorPalette, StylePreset } from './FirmBranding';
 
@@ -6,13 +6,33 @@ type UploadSource = 'device' | 'intuit';
 
 interface BrandingSettingsProps {
   onSave: (assets: BrandingAssets) => void;
+  currentAssets: BrandingAssets;
 }
 
-export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave }) => {
+export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, currentAssets }) => {
   const [uploadSource, setUploadSource] = useState<UploadSource>('device');
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
-  const [selectedColorPalette, setSelectedColorPalette] = useState<ColorPalette>('blue');
-  const [selectedStylePreset, setSelectedStylePreset] = useState<StylePreset>('professional');
+  const [logoPreview, setLogoPreview] = useState<string | null>(
+    typeof currentAssets.logo === 'string' ? currentAssets.logo : null
+  );
+  const [selectedColorPalette, setSelectedColorPalette] = useState<ColorPalette>(
+    currentAssets.colorPalette || 'blue'
+  );
+  const [selectedStylePreset, setSelectedStylePreset] = useState<StylePreset>(
+    currentAssets.stylePreset || 'professional'
+  );
+
+  // Update local state when currentAssets changes (e.g., when switching tabs)
+  useEffect(() => {
+    if (typeof currentAssets.logo === 'string') {
+      setLogoPreview(currentAssets.logo);
+    }
+    if (currentAssets.colorPalette) {
+      setSelectedColorPalette(currentAssets.colorPalette);
+    }
+    if (currentAssets.stylePreset) {
+      setSelectedStylePreset(currentAssets.stylePreset);
+    }
+  }, [currentAssets]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
