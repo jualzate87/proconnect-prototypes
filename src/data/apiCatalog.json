@@ -2,7 +2,7 @@
   {
     "id": "client-service",
     "name": "Client Service API",
-    "description": "Connect ProConnect with Salesforce, HubSpot, Karbon, or any CRM to create a single source of truth for client data. Build two-way sync workflows so contact updates, address changes, and demographic information flow automatically between systems—eliminating duplicate data entry and keeping your entire tech stack in perfect sync.",
+    "description": "Sync client data with Salesforce, HubSpot, Karbon, or any CRM. Build two-way workflows so contact updates and address changes flow automatically between systems—eliminating duplicate data entry.",
     "category": "Client Management",
     "icon": "👥",
     "useCase": "Build automated onboarding workflows that create clients in ProConnect when they're added to your CRM. Sync address changes instantly across all platforms.",
@@ -52,7 +52,7 @@
   {
     "id": "engagement-service",
     "name": "Engagement Service API",
-    "description": "Build custom dashboards and analytics tools that track tax return status, e-file progress, and project milestones in real-time. Integrate with Tableau, Power BI, or project management platforms to visualize engagement pipelines, identify bottlenecks, and automate status updates across your firm—transforming engagement data into actionable insights.",
+    "description": "Track tax return status, e-file progress, and project milestones in real-time. Integrate with Tableau, Power BI, or project management tools to visualize pipelines and automate status updates—transforming data into actionable insights.",
     "category": "Engagement Data",
     "icon": "📊",
     "useCase": "Create live dashboards showing all returns by status and e-file stage. Trigger automated notifications when engagements reach key milestones or deadlines approach.",
@@ -103,7 +103,7 @@
   {
     "id": "import-service",
     "name": "Import Service API",
-    "description": "Build automated data pipelines that pull tax data from payroll systems (ADP, Paychex), accounting software (QuickBooks, Xero), or prior-year returns directly into ProConnect engagements. Integrate with OCR tools to extract data from scanned documents and populate returns automatically—cutting data entry time by 80% and reducing errors.",
+    "description": "Pull tax data from payroll systems (ADP, Paychex) or accounting software (QuickBooks, Xero) directly into engagements. Integrate with OCR tools to extract scanned document data and populate returns automatically—cutting data entry time by 80%.",
     "category": "Data Import",
     "icon": "📥",
     "useCase": "Automatically import W-2 data from payroll providers into tax returns. Build integrations that pull prior-year return data and pre-populate current year engagements.",
@@ -143,7 +143,7 @@
   {
     "id": "export-service",
     "name": "Export Service API",
-    "description": "Extract engagement data, calculations, and tax forms to feed into analytics platforms, document management systems, or custom reporting tools. Build integrations that automatically export completed returns to archival systems, push tax data to advisory planning software, or generate custom reports in Excel—making ProConnect data work everywhere you need it.",
+    "description": "Export engagement data and calculations to analytics platforms, document management systems, or custom tools. Automatically archive completed returns, push data to advisory planning software, or generate Excel reports—making ProConnect data work everywhere.",
     "category": "Data Export",
     "icon": "📤",
     "useCase": "Export calculated tax data to financial planning software for advisory services. Automatically archive completed returns to SharePoint or document management systems.",
