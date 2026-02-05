@@ -1,32 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './BrandingPreview.css';
-import { DeliverableType, BrandingAssets, LogoSize, LogoAlignment } from './FirmBranding';
+import { DeliverableType, BrandingAssets } from './FirmBranding';
 
 interface BrandingPreviewProps {
   selectedDeliverable: DeliverableType;
   onDeliverableChange: (type: DeliverableType) => void;
   brandingAssets: BrandingAssets;
   onCustomizationChange?: (updates: Partial<BrandingAssets>) => void;
+  compactMode?: boolean;
 }
 
 export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
   selectedDeliverable,
   onDeliverableChange,
   brandingAssets,
-  onCustomizationChange,
+  compactMode = false,
 }) => {
-  const [logoSize, setLogoSize] = useState<LogoSize>(brandingAssets.logoSize || 'medium');
-  const [logoAlignment, setLogoAlignment] = useState<LogoAlignment>(brandingAssets.logoAlignment || 'left');
-
-  const handleLogoSizeChange = (size: LogoSize) => {
-    setLogoSize(size);
-    onCustomizationChange?.({ ...brandingAssets, logoSize: size });
-  };
-
-  const handleLogoAlignmentChange = (alignment: LogoAlignment) => {
-    setLogoAlignment(alignment);
-    onCustomizationChange?.({ ...brandingAssets, logoAlignment: alignment });
-  };
+  const logoSize = brandingAssets.logoSize || 'medium';
+  const logoAlignment = brandingAssets.logoAlignment || 'left';
   const deliverableTypes = [
     { id: 'invoices' as DeliverableType, label: 'Invoices', icon: '📄' },
     { id: 'letters' as DeliverableType, label: 'Client letters', icon: '✉️' },
@@ -284,6 +275,31 @@ export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
     }
   };
 
+  if (compactMode) {
+    return (
+      <div className="branding-preview-compact">
+        <div className="branding-preview-tabs">
+          {deliverableTypes.map((type) => (
+            <button
+              key={type.id}
+              className={`branding-preview-tab ${
+                selectedDeliverable === type.id ? 'branding-preview-tab-active' : ''
+              }`}
+              onClick={() => onDeliverableChange(type.id)}
+            >
+              <span className="branding-preview-tab-icon">{type.icon}</span>
+              <span>{type.label}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="branding-preview-viewport-compact">
+          {renderPreviewContent()}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="branding-preview">
       <div className="branding-preview-sidebar">
@@ -312,74 +328,6 @@ export const BrandingPreview: React.FC<BrandingPreviewProps> = ({
           <p className="branding-preview-description">
             Preview how your branding will appear on this deliverable
           </p>
-        </div>
-
-        <div className="branding-preview-toolbar">
-          <div className="branding-preview-toolbar-group">
-            <span className="branding-preview-toolbar-label">Logo Size:</span>
-            <div className="branding-preview-toolbar-buttons">
-              <button
-                className={`branding-preview-toolbar-btn ${logoSize === 'small' ? 'branding-preview-toolbar-btn-active' : ''}`}
-                onClick={() => handleLogoSizeChange('small')}
-                title="Small"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <rect x="4" y="4" width="8" height="8" fill="currentColor" />
-                </svg>
-              </button>
-              <button
-                className={`branding-preview-toolbar-btn ${logoSize === 'medium' ? 'branding-preview-toolbar-btn-active' : ''}`}
-                onClick={() => handleLogoSizeChange('medium')}
-                title="Medium"
-              >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="3" y="3" width="14" height="14" fill="currentColor" />
-                </svg>
-              </button>
-              <button
-                className={`branding-preview-toolbar-btn ${logoSize === 'large' ? 'branding-preview-toolbar-btn-active' : ''}`}
-                onClick={() => handleLogoSizeChange('large')}
-                title="Large"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <rect x="2" y="2" width="20" height="20" fill="currentColor" />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <div className="branding-preview-toolbar-group">
-            <span className="branding-preview-toolbar-label">Logo Alignment:</span>
-            <div className="branding-preview-toolbar-buttons">
-              <button
-                className={`branding-preview-toolbar-btn ${logoAlignment === 'left' ? 'branding-preview-toolbar-btn-active' : ''}`}
-                onClick={() => handleLogoAlignmentChange('left')}
-                title="Left"
-              >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="2" y="6" width="8" height="8" fill="currentColor" />
-                </svg>
-              </button>
-              <button
-                className={`branding-preview-toolbar-btn ${logoAlignment === 'center' ? 'branding-preview-toolbar-btn-active' : ''}`}
-                onClick={() => handleLogoAlignmentChange('center')}
-                title="Center"
-              >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="6" y="6" width="8" height="8" fill="currentColor" />
-                </svg>
-              </button>
-              <button
-                className={`branding-preview-toolbar-btn ${logoAlignment === 'right' ? 'branding-preview-toolbar-btn-active' : ''}`}
-                onClick={() => handleLogoAlignmentChange('right')}
-                title="Right"
-              >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="10" y="6" width="8" height="8" fill="currentColor" />
-                </svg>
-              </button>
-            </div>
-          </div>
         </div>
 
         <div className="branding-preview-viewport">

@@ -776,3 +776,69 @@
   opacity: 0.9;
   transform: translateY(-1px);
 }
+
+/* Compact Mode with Tabs */
+.branding-preview-compact {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.branding-preview-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.branding-preview-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: -2px;
+}
+
+.branding-preview-tab:hover {
+  color: #0077c5;
+  background-color: #f8f9fa;
+}
+
+.branding-preview-tab-active {
+  color: #0077c5;
+  border-bottom-color: #0077c5;
+  font-weight: 600;
+}
+
+.branding-preview-tab-icon {
+  font-size: 18px;
+}
+
+.branding-preview-viewport-compact {
+  flex: 1;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+.branding-preview-viewport-compact::-webkit-scrollbar {
+  width: 8px;
+}
+
+.branding-preview-viewport-compact::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}

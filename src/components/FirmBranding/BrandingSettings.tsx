@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './BrandingSettings.css';
-import { BrandingAssets, ColorPalette, StylePreset } from './FirmBranding';
+import { BrandingAssets, ColorPalette, StylePreset, LogoSize, LogoAlignment } from './FirmBranding';
 
 type UploadSource = 'device' | 'intuit';
 
 interface BrandingSettingsProps {
   onSave: (assets: BrandingAssets) => void;
   currentAssets: BrandingAssets;
+  onCustomizationChange?: (updates: Partial<BrandingAssets>) => void;
 }
 
-export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, currentAssets }) => {
+export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, currentAssets, onCustomizationChange }) => {
   const [uploadSource, setUploadSource] = useState<UploadSource>('device');
   const [logoPreview, setLogoPreview] = useState<string | null>(
     typeof currentAssets.logo === 'string' ? currentAssets.logo : null
@@ -20,8 +21,10 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, curr
   const [selectedStylePreset, setSelectedStylePreset] = useState<StylePreset>(
     currentAssets.stylePreset || 'professional'
   );
+  const [logoSize, setLogoSize] = useState<LogoSize>(currentAssets.logoSize || 'medium');
+  const [logoAlignment, setLogoAlignment] = useState<LogoAlignment>(currentAssets.logoAlignment || 'left');
 
-  // Update local state when currentAssets changes (e.g., when switching tabs)
+  // Update local state when currentAssets changes
   useEffect(() => {
     if (typeof currentAssets.logo === 'string') {
       setLogoPreview(currentAssets.logo);
@@ -32,7 +35,27 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, curr
     if (currentAssets.stylePreset) {
       setSelectedStylePreset(currentAssets.stylePreset);
     }
+    if (currentAssets.logoSize) {
+      setLogoSize(currentAssets.logoSize);
+    }
+    if (currentAssets.logoAlignment) {
+      setLogoAlignment(currentAssets.logoAlignment);
+    }
   }, [currentAssets]);
+
+  const handleLogoSizeChange = (size: LogoSize) => {
+    setLogoSize(size);
+    const updates = { ...currentAssets, logoSize: size };
+    onSave(updates);
+    onCustomizationChange?.(updates);
+  };
+
+  const handleLogoAlignmentChange = (alignment: LogoAlignment) => {
+    setLogoAlignment(alignment);
+    const updates = { ...currentAssets, logoAlignment: alignment };
+    onSave(updates);
+    onCustomizationChange?.(updates);
+  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -320,6 +343,83 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, curr
               <p className="branding-settings-style-description">Bold and distinctive</p>
             </div>
           </label>
+        </div>
+      </div>
+
+      <div className="branding-settings-section">
+        <h2 className="branding-settings-section-title">Logo Size</h2>
+        <p className="branding-settings-section-description">
+          Choose the size of your logo in documents
+        </p>
+
+        <div className="branding-settings-control-group">
+          <button
+            className={`branding-settings-control-btn ${logoSize === 'small' ? 'branding-settings-control-btn-active' : ''}`}
+            onClick={() => handleLogoSizeChange('small')}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="6" y="6" width="8" height="8" fill="currentColor" rx="1"/>
+            </svg>
+            <span>Small</span>
+          </button>
+          <button
+            className={`branding-settings-control-btn ${logoSize === 'medium' ? 'branding-settings-control-btn-active' : ''}`}
+            onClick={() => handleLogoSizeChange('medium')}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="5" y="5" width="14" height="14" fill="currentColor" rx="1"/>
+            </svg>
+            <span>Medium</span>
+          </button>
+          <button
+            className={`branding-settings-control-btn ${logoSize === 'large' ? 'branding-settings-control-btn-active' : ''}`}
+            onClick={() => handleLogoSizeChange('large')}
+          >
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect x="4" y="4" width="20" height="20" fill="currentColor" rx="1"/>
+            </svg>
+            <span>Large</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="branding-settings-section">
+        <h2 className="branding-settings-section-title">Logo Alignment</h2>
+        <p className="branding-settings-section-description">
+          Position your logo in documents
+        </p>
+
+        <div className="branding-settings-control-group">
+          <button
+            className={`branding-settings-control-btn ${logoAlignment === 'left' ? 'branding-settings-control-btn-active' : ''}`}
+            onClick={() => handleLogoAlignmentChange('left')}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="8" width="10" height="8" fill="currentColor" rx="1"/>
+              <line x1="3" y1="5" x2="3" y2="19" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+            <span>Left</span>
+          </button>
+          <button
+            className={`branding-settings-control-btn ${logoAlignment === 'center' ? 'branding-settings-control-btn-active' : ''}`}
+            onClick={() => handleLogoAlignmentChange('center')}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="7" y="8" width="10" height="8" fill="currentColor" rx="1"/>
+              <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+            <span>Center</span>
+          </button>
+          <button
+            className={`branding-settings-control-btn ${logoAlignment === 'right' ? 'branding-settings-control-btn-active' : ''}`}
+            onClick={() => handleLogoAlignmentChange('right')}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="11" y="8" width="10" height="8" fill="currentColor" rx="1"/>
+              <line x1="21" y1="5" x2="21" y2="19" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+            <span>Right</span>
+          </button>
         </div>
       </div>
     </div>

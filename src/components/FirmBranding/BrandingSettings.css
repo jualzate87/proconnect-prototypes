@@ -404,3 +404,43 @@
 .firm-branding-trowser .branding-settings-actions {
   display: none;
 }
+
+/* Logo Size and Alignment Control Buttons */
+.branding-settings-control-group {
+  display: flex;
+  gap: 12px;
+}
+
+.branding-settings-control-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background-color: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.branding-settings-control-btn:hover {
+  border-color: #0077c5;
+  color: #0077c5;
+  transform: translateY(-1px);
+}
+
+.branding-settings-control-btn-active {
+  border-color: #0077c5;
+  background-color: #e7f3ff;
+  color: #0077c5;
+  font-weight: 600;
+}
+
+.branding-settings-control-btn svg {
+  color: inherit;
+}

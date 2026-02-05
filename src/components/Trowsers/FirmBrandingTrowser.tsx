@@ -14,7 +14,6 @@ export const FirmBrandingTrowser: React.FC<FirmBrandingTrowserProps> = ({
   isOpen,
   onClose,
 }) => {
-  const [activeTab, setActiveTab] = useState<'settings' | 'preview'>('settings');
   const [selectedDeliverable, setSelectedDeliverable] = useState<DeliverableType>('invoices');
   const [currentAssets, setCurrentAssets] = useState<BrandingAssets>({
     colorPalette: 'blue',
@@ -84,39 +83,24 @@ export const FirmBrandingTrowser: React.FC<FirmBrandingTrowserProps> = ({
           </p>
         </div>
 
-        <div className="firm-branding-trowser-tabs">
-          <button
-            className={`firm-branding-trowser-tab ${
-              activeTab === 'settings' ? 'firm-branding-trowser-tab-active' : ''
-            }`}
-            onClick={() => setActiveTab('settings')}
-          >
-            Settings
-          </button>
-          <button
-            className={`firm-branding-trowser-tab ${
-              activeTab === 'preview' ? 'firm-branding-trowser-tab-active' : ''
-            }`}
-            onClick={() => setActiveTab('preview')}
-          >
-            Preview
-          </button>
-        </div>
-
-        <div className="firm-branding-trowser-content">
-          {activeTab === 'settings' ? (
+        <div className="firm-branding-trowser-layout">
+          <div className="firm-branding-trowser-controls">
             <BrandingSettings
               onSave={handleAssetsChange}
               currentAssets={currentAssets}
+              onCustomizationChange={handleCustomizationChange}
             />
-          ) : (
+          </div>
+          
+          <div className="firm-branding-trowser-preview">
             <BrandingPreview
               selectedDeliverable={selectedDeliverable}
               onDeliverableChange={setSelectedDeliverable}
               brandingAssets={currentAssets}
               onCustomizationChange={handleCustomizationChange}
+              compactMode={true}
             />
-          )}
+          </div>
         </div>
       </div>
     </Trowser>
