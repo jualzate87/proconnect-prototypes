@@ -1,200 +1,188 @@
 [
   {
-    "id": "tax-returns",
-    "name": "Tax Returns API",
-    "description": "Build custom dashboards and analytics tools that pull live tax return data. Integrate with project management tools, time tracking software, or BI platforms to monitor return progress, automate client workflows, and generate real-time reports across your entire client base.",
-    "category": "Tax Returns",
-    "icon": "📄",
-    "useCase": "Automatically sync tax return data with your practice management system. When a return is accepted, trigger notifications to clients via SMS or email.",
-    "logicFlow": "1. Authenticate with API key → 2. Query return by client ID → 3. Retrieve return data → 4. Process updates → 5. Monitor status changes",
+    "id": "client-service",
+    "name": "Client Service API",
+    "description": "Connect ProConnect with Salesforce, HubSpot, Karbon, or any CRM to create a single source of truth for client data. Build two-way sync workflows so contact updates, address changes, and demographic information flow automatically between systems—eliminating duplicate data entry and keeping your entire tech stack in perfect sync.",
+    "category": "Client Management",
+    "icon": "👥",
+    "useCase": "Build automated onboarding workflows that create clients in ProConnect when they're added to your CRM. Sync address changes instantly across all platforms.",
+    "logicFlow": "1. Authenticate with API key → 2. Add or update client data → 3. Sync with external systems → 4. Validate data integrity → 5. Maintain consistency across platforms",
     "endpoints": [
       {
         "method": "GET",
-        "path": "/v2/returns",
-        "description": "List all tax returns with optional filtering",
+        "path": "/v2/clients",
+        "description": "List all clients with optional filtering",
         "parameters": [
           {
-            "name": "clientId",
+            "name": "status",
             "type": "string",
             "required": false,
-            "description": "Filter returns by client ID"
+            "description": "Filter by client status (active, inactive)"
+          },
+          {
+            "name": "lastUpdated",
+            "type": "date",
+            "required": false,
+            "description": "Filter clients updated after specified date"
+          }
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v2/clients/{clientId}",
+        "description": "Get detailed information about a specific client"
+      },
+      {
+        "method": "POST",
+        "path": "/v2/clients",
+        "description": "Create a new client record"
+      },
+      {
+        "method": "PUT",
+        "path": "/v2/clients/{clientId}",
+        "description": "Update existing client information"
+      },
+      {
+        "method": "DELETE",
+        "path": "/v2/clients/{clientId}",
+        "description": "Archive or delete a client record"
+      }
+    ]
+  },
+  {
+    "id": "engagement-service",
+    "name": "Engagement Service API",
+    "description": "Build custom dashboards and analytics tools that track tax return status, e-file progress, and project milestones in real-time. Integrate with Tableau, Power BI, or project management platforms to visualize engagement pipelines, identify bottlenecks, and automate status updates across your firm—transforming engagement data into actionable insights.",
+    "category": "Engagement Data",
+    "icon": "📊",
+    "useCase": "Create live dashboards showing all returns by status and e-file stage. Trigger automated notifications when engagements reach key milestones or deadlines approach.",
+    "logicFlow": "1. Query engagement data → 2. Filter by year, status, or project type → 3. Pull return and plan details → 4. Integrate with BI tools → 5. Automate reporting workflows",
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "/v2/engagements",
+        "description": "List all engagements with filtering options",
+        "parameters": [
+          {
+            "name": "year",
+            "type": "integer",
+            "required": false,
+            "description": "Filter by tax year"
           },
           {
             "name": "status",
             "type": "string",
             "required": false,
-            "description": "Filter by return status (draft, filed, accepted)"
+            "description": "Filter by engagement status (draft, in-progress, complete)"
+          },
+          {
+            "name": "efileStatus",
+            "type": "string",
+            "required": false,
+            "description": "Filter by e-file status (pending, transmitted, accepted, rejected)"
           }
         ]
       },
       {
         "method": "GET",
-        "path": "/v2/returns/{returnId}",
-        "description": "Get detailed information about a specific tax return"
+        "path": "/v2/engagements/{engagementId}",
+        "description": "Get detailed engagement information including returns, projects, and plans"
       },
       {
-        "method": "PUT",
-        "path": "/v2/returns/{returnId}",
-        "description": "Update tax return information"
+        "method": "GET",
+        "path": "/v2/engagements/{engagementId}/returns",
+        "description": "Get all tax returns associated with an engagement"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/engagements/{engagementId}/projects",
+        "description": "Get project details for a specific engagement"
       }
     ]
   },
   {
-    "id": "diagnostics",
-    "name": "Diagnostics API",
-    "description": "Create automated quality control systems that scan returns for errors before filing. Build review workflows in tools like Monday.com, Asana, or custom apps that flag issues, assign tasks to preparers, and track resolution—eliminating manual review bottlenecks.",
-    "category": "Diagnostics",
-    "icon": "🔍",
-    "useCase": "Automatically run diagnostics on all returns before the filing deadline. Generate reports highlighting common issues across your client base.",
-    "logicFlow": "1. Submit return ID → 2. Run diagnostic checks → 3. Receive diagnostic results → 4. Process errors/warnings → 5. Generate report",
+    "id": "import-service",
+    "name": "Import Service API",
+    "description": "Build automated data pipelines that pull tax data from payroll systems (ADP, Paychex), accounting software (QuickBooks, Xero), or prior-year returns directly into ProConnect engagements. Integrate with OCR tools to extract data from scanned documents and populate returns automatically—cutting data entry time by 80% and reducing errors.",
+    "category": "Data Import",
+    "icon": "📥",
+    "useCase": "Automatically import W-2 data from payroll providers into tax returns. Build integrations that pull prior-year return data and pre-populate current year engagements.",
+    "logicFlow": "1. Connect to data source → 2. Map data fields to engagement structure → 3. Validate imported data → 4. Import into ProConnect → 5. Confirm successful import",
     "endpoints": [
       {
         "method": "POST",
-        "path": "/v2/diagnostics/run",
-        "description": "Run diagnostics on a tax return",
+        "path": "/v2/engagements/{engagementId}/import",
+        "description": "Import data into a specific engagement",
         "parameters": [
           {
-            "name": "returnId",
+            "name": "dataType",
             "type": "string",
             "required": true,
-            "description": "The ID of the return to diagnose"
+            "description": "Type of data being imported (forms, client-data, prior-year)"
+          },
+          {
+            "name": "source",
+            "type": "string",
+            "required": false,
+            "description": "Source system or file format"
+          }
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v2/engagements/{engagementId}/import/validate",
+        "description": "Validate import data before committing to engagement"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/engagements/{engagementId}/import/history",
+        "description": "Get import history and status for an engagement"
+      }
+    ]
+  },
+  {
+    "id": "export-service",
+    "name": "Export Service API",
+    "description": "Extract engagement data, calculations, and tax forms to feed into analytics platforms, document management systems, or custom reporting tools. Build integrations that automatically export completed returns to archival systems, push tax data to advisory planning software, or generate custom reports in Excel—making ProConnect data work everywhere you need it.",
+    "category": "Data Export",
+    "icon": "📤",
+    "useCase": "Export calculated tax data to financial planning software for advisory services. Automatically archive completed returns to SharePoint or document management systems.",
+    "logicFlow": "1. Select engagement or data set → 2. Choose export format (JSON, CSV, PDF) → 3. Specify data fields or calculations → 4. Export data → 5. Integrate with downstream systems",
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "/v2/engagements/{engagementId}/export",
+        "description": "Export engagement data and calculated values",
+        "parameters": [
+          {
+            "name": "format",
+            "type": "string",
+            "required": false,
+            "description": "Export format (json, csv, xml, pdf)"
+          },
+          {
+            "name": "includeCalculations",
+            "type": "boolean",
+            "required": false,
+            "description": "Include calculated values in export"
+          },
+          {
+            "name": "dataFields",
+            "type": "array",
+            "required": false,
+            "description": "Specific fields to include in export"
           }
         ]
       },
       {
         "method": "GET",
-        "path": "/v2/diagnostics/{diagnosticId}",
-        "description": "Get diagnostic results"
-      }
-    ]
-  },
-  {
-    "id": "efile",
-    "name": "E-file API",
-    "description": "Build bulk filing automation that processes hundreds of returns with one script. Integrate with Slack, Microsoft Teams, or custom notification systems to alert staff instantly when returns are accepted or rejected—no more manual status checking.",
-    "category": "E-file",
-    "icon": "📤",
-    "useCase": "Automate the e-filing process for bulk submissions. Get real-time status updates when returns are accepted or rejected by the IRS.",
-    "logicFlow": "1. Prepare return → 2. Submit for e-filing → 3. Receive acknowledgment → 4. Monitor status → 5. Handle acceptance/rejection",
-    "endpoints": [
-      {
-        "method": "POST",
-        "path": "/v2/efile/submit",
-        "description": "Submit a tax return for e-filing"
-      },
-      {
-        "method": "GET",
-        "path": "/v2/efile/status/{submissionId}",
-        "description": "Check the status of an e-file submission"
-      }
-    ]
-  },
-  {
-    "id": "client-sync",
-    "name": "Client Sync API",
-    "description": "Connect ProConnect with Salesforce, HubSpot, Karbon, or any CRM to create a single source of truth for client data. Build two-way sync workflows so address updates, contact changes, and client notes flow automatically between systems—no more duplicate data entry.",
-    "category": "Client Sync",
-    "icon": "👥",
-    "useCase": "Keep client information synchronized across systems. When a client updates their address in your CRM, automatically sync to ProConnect.",
-    "logicFlow": "1. Detect client data changes → 2. Push updates to ProConnect → 3. Pull latest client data → 4. Resolve conflicts → 5. Update both systems",
-    "endpoints": [
-      {
-        "method": "GET",
-        "path": "/v2/clients",
-        "description": "List all clients"
-      },
-      {
-        "method": "GET",
-        "path": "/v2/clients/{clientId}",
-        "description": "Get client details"
-      },
-      {
-        "method": "PUT",
-        "path": "/v2/clients/{clientId}",
-        "description": "Update client information"
+        "path": "/v2/engagements/{engagementId}/export/forms",
+        "description": "Export forms and schedules as PDFs"
       },
       {
         "method": "POST",
-        "path": "/v2/clients",
-        "description": "Create a new client"
-      }
-    ]
-  },
-  {
-    "id": "document-bridge",
-    "name": "Document Bridge API",
-    "description": "Integrate with SharePoint, Box, Dropbox, or document management systems to automatically route client W-2s, 1099s, and receipts directly into ProConnect. Build client portals where documents uploaded by clients instantly attach to the right return—eliminating manual document handling.",
-    "category": "Document Bridge",
-    "icon": "📎",
-    "useCase": "Automatically route documents from your document management system to ProConnect. Attach W-2s, 1099s, and other tax documents to returns.",
-    "logicFlow": "1. Upload document → 2. Associate with return/client → 3. Process document → 4. Extract data (optional) → 5. Store in ProConnect",
-    "endpoints": [
-      {
-        "method": "POST",
-        "path": "/v2/documents/upload",
-        "description": "Upload a document"
-      },
-      {
-        "method": "GET",
-        "path": "/v2/documents/{documentId}",
-        "description": "Retrieve a document"
-      },
-      {
-        "method": "GET",
-        "path": "/v2/documents",
-        "description": "List documents with filtering options"
-      }
-    ]
-  },
-  {
-    "id": "payments",
-    "name": "Payments API",
-    "description": "Connect with QuickBooks, Xero, or your accounting software to automatically sync payment data. Build client billing portals that process payments and instantly update both your accounting system and ProConnect—creating a seamless financial workflow with automatic receipt generation.",
-    "category": "Payments",
-    "icon": "💳",
-    "useCase": "Integrate payment processing with your billing system. Automatically record payments and send receipts to clients.",
-    "logicFlow": "1. Initiate payment → 2. Process payment → 3. Record transaction → 4. Update return status → 5. Send confirmation",
-    "endpoints": [
-      {
-        "method": "POST",
-        "path": "/v2/payments/process",
-        "description": "Process a payment"
-      },
-      {
-        "method": "GET",
-        "path": "/v2/payments/{paymentId}",
-        "description": "Get payment details"
-      },
-      {
-        "method": "GET",
-        "path": "/v2/payments",
-        "description": "List payments with filtering"
-      }
-    ]
-  },
-  {
-    "id": "forms",
-    "name": "Forms API",
-    "description": "Build custom client portals that generate tax forms on-demand, or integrate with email automation tools to send personalized form packages. Pull form data into Power BI or Tableau for tax planning analytics—turning static forms into actionable insights for advisory services.",
-    "category": "Forms",
-    "icon": "📋",
-    "useCase": "Generate custom form reports for clients. Automatically populate forms with data from your system.",
-    "logicFlow": "1. Select form type → 2. Populate form data → 3. Generate PDF → 4. Store or send form → 5. Track form status",
-    "endpoints": [
-      {
-        "method": "GET",
-        "path": "/v2/forms",
-        "description": "List available forms"
-      },
-      {
-        "method": "GET",
-        "path": "/v2/forms/{formId}",
-        "description": "Get form details and data"
-      },
-      {
-        "method": "POST",
-        "path": "/v2/forms/generate",
-        "description": "Generate a form PDF"
+        "path": "/v2/engagements/export/bulk",
+        "description": "Export data from multiple engagements at once"
       }
     ]
   }
