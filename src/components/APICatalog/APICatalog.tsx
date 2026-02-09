@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { APICard } from './APICard';
 import { APIDetailsModal } from './APIDetailsModal';
-import { APIDocumentationTrowser } from './APIDocumentationTrowser';
 import { SearchFilter } from './SearchFilter';
 import { ProConnectAdvantage } from './ProConnectAdvantage';
 import apiCatalogData from '../../data/apiCatalog.json';
@@ -12,8 +11,6 @@ export const APICatalog: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedAPI, setSelectedAPI] = useState<API | null>(null);
-  const [showDocumentation, setShowDocumentation] = useState(false);
-  const [documentationAPI, setDocumentationAPI] = useState<API | null>(null);
 
   const apis = apiCatalogData as API[];
 
@@ -32,12 +29,6 @@ export const APICatalog: React.FC = () => {
       return matchesSearch && matchesCategory;
     });
   }, [apis, searchQuery, selectedCategory]);
-
-  const handleOpenDocumentation = (api: API) => {
-    setDocumentationAPI(api);
-    setShowDocumentation(true);
-    setSelectedAPI(null); // Close details modal
-  };
 
   return (
     <div className="api-catalog">
@@ -71,15 +62,8 @@ export const APICatalog: React.FC = () => {
           api={selectedAPI}
           isOpen={!!selectedAPI}
           onClose={() => setSelectedAPI(null)}
-          onOpenDocumentation={handleOpenDocumentation}
         />
       )}
-
-      <APIDocumentationTrowser
-        api={documentationAPI}
-        isOpen={showDocumentation}
-        onClose={() => setShowDocumentation(false)}
-      />
     </div>
   );
 };
