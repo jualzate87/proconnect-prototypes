@@ -299,11 +299,18 @@
   font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all var(--transition-fast);
+  display: inline-block;
+  text-align: left;
 }
 
 .tax-hub-btn-view:hover {
   background-color: var(--color-background-secondary);
   border-color: var(--color-primary);
+}
+
+/* Ensure button cells are left-aligned */
+.tax-hub-table tbody td:has(.tax-hub-btn-view) {
+  text-align: left;
 }
 
 .tax-hub-pagination {

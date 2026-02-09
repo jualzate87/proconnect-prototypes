@@ -170,8 +170,7 @@ export const Home: React.FC = () => {
                 <th>ESIGNATURE</th>
                 <th>FEDERAL EFILE</th>
                 <th>STATE EFILE</th>
-                <th>DELIVERABLES</th>
-                <th></th>
+                <th>RETURN ACTION</th>
               </tr>
             </thead>
             <tbody>
@@ -189,7 +188,6 @@ export const Home: React.FC = () => {
                   <td className="tax-hub-cell-muted">Not sent</td>
                   <td className="tax-hub-cell-muted">Not e-filed</td>
                   <td className="tax-hub-cell-muted">Not e-filed</td>
-                  <td></td>
                   <td>
                     <button className="tax-hub-btn-view">View return ▾</button>
                   </td>
