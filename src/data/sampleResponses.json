@@ -1,0 +1,310 @@
+{
+  "client-service": {
+    "GET /v2/clients": {
+      "success": {
+        "data": [
+          {
+            "id": "client_2J9l3oP4wQ0yZ5aR",
+            "name": "Acme Corporation",
+            "email": "contact@acme.com",
+            "status": "active",
+            "taxId": "12-3456789"
+          },
+          {
+            "id": "client_8K0m4oQ5xR1zA6bS",
+            "name": "Smith Family Trust",
+            "email": "john.smith@email.com",
+            "status": "active",
+            "taxId": "***-**-7890"
+          }
+        ]
+      },
+      "errors": {
+        "401": {
+          "error": {
+            "code": "invalid_api_key",
+            "message": "The API key provided is invalid or has been revoked"
+          }
+        },
+        "403": {
+          "error": {
+            "code": "insufficient_scope",
+            "message": "API key does not have required scope: read:clients"
+          }
+        }
+      }
+    },
+    "GET /v2/clients/{clientId}": {
+      "success": {
+        "id": "client_2J9l3oP4wQ0yZ5aR",
+        "name": "Acme Corporation",
+        "email": "contact@acme.com",
+        "status": "active",
+        "taxId": "12-3456789",
+        "entityType": "C-Corp"
+      },
+      "errors": {
+        "404": {
+          "error": {
+            "code": "client_not_found",
+            "message": "No client found with ID: client_2J9l3oP4wQ0yZ5aR"
+          }
+        }
+      }
+    },
+    "POST /v2/clients": {
+      "request": {
+        "name": "New Client LLC",
+        "email": "info@newclient.com",
+        "taxId": "98-7654321",
+        "entityType": "LLC"
+      },
+      "success": {
+        "id": "client_9L1n5pR6yS2B7cT0",
+        "name": "New Client LLC",
+        "email": "info@newclient.com",
+        "status": "active",
+        "taxId": "98-7654321",
+        "entityType": "LLC"
+      },
+      "errors": {
+        "400": {
+          "error": {
+            "code": "validation_error",
+            "message": "Invalid request data",
+            "details": [
+              {
+                "field": "email",
+                "message": "Email address is required"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "PUT /v2/clients/{clientId}": {
+      "request": {
+        "email": "newemail@acme.com"
+      },
+      "success": {
+        "id": "client_2J9l3oP4wQ0yZ5aR",
+        "name": "Acme Corporation",
+        "email": "newemail@acme.com",
+        "status": "active"
+      }
+    },
+    "DELETE /v2/clients/{clientId}": {
+      "success": {
+        "id": "client_2J9l3oP4wQ0yZ5aR",
+        "status": "archived"
+      }
+    }
+  },
+  "engagement-service": {
+    "GET /v2/engagements": {
+      "success": {
+        "data": [
+          {
+            "id": "eng_5K2m7nQ8pR4zB9cT",
+            "clientId": "client_2J9l3oP4wQ0yZ5aR",
+            "year": 2024,
+            "returnType": "1120",
+            "status": "in-progress",
+            "efileStatus": "not-filed",
+            "dueDate": "2024-04-15"
+          },
+          {
+            "id": "eng_6L3n8oR9qS5aC0dU",
+            "clientId": "client_8K0m4oQ5xR1zA6bS",
+            "year": 2024,
+            "returnType": "1040",
+            "status": "complete",
+            "efileStatus": "accepted",
+            "dueDate": "2024-04-15"
+          }
+        ]
+      },
+      "errors": {
+        "400": {
+          "error": {
+            "code": "invalid_filter",
+            "message": "Invalid status value. Must be one of: draft, in-progress, review, complete"
+          }
+        }
+      }
+    },
+    "GET /v2/engagements/{engagementId}": {
+      "success": {
+        "id": "eng_5K2m7nQ8pR4zB9cT",
+        "clientId": "client_2J9l3oP4wQ0yZ5aR",
+        "clientName": "Acme Corporation",
+        "year": 2024,
+        "returnType": "1120",
+        "status": "in-progress",
+        "efileStatus": "not-filed",
+        "dueDate": "2024-04-15"
+      }
+    },
+    "GET /v2/engagements/{engagementId}/returns": {
+      "success": {
+        "data": [
+          {
+            "id": "ret_7M4o0pT1sU7bE2fW",
+            "formType": "1120",
+            "year": 2024,
+            "status": "draft",
+            "efileStatus": "not-filed",
+            "calculations": {
+              "totalIncome": 5450000,
+              "totalDeductions": 4820000,
+              "taxableIncome": 630000,
+              "totalTax": 132300
+            }
+          }
+        ]
+      }
+    },
+    "GET /v2/engagements/{engagementId}/projects": {
+      "success": {
+        "data": [
+          {
+            "id": "proj_8N5p1qU2tV8cF3gX",
+            "name": "2024 Corporate Return",
+            "status": "in-progress",
+            "completionPercent": 65
+          }
+        ]
+      }
+    }
+  },
+  "import-service": {
+    "POST /v2/engagements/{engagementId}/import": {
+      "request": {
+        "dataType": "forms",
+        "source": "quickbooks",
+        "data": {
+          "income": {
+            "w2Wages": 125000,
+            "interest": 1250
+          }
+        }
+      },
+      "success": {
+        "importId": "imp_9O6q2rV3uW9dG4hY",
+        "status": "completed",
+        "recordsImported": 47
+      },
+      "errors": {
+        "400": {
+          "error": {
+            "code": "invalid_data_format",
+            "message": "Data format is invalid for dataType: forms",
+            "details": [
+              {
+                "field": "income.w2Wages",
+                "message": "Must be a numeric value"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "POST /v2/engagements/{engagementId}/import/validate": {
+      "request": {
+        "dataType": "forms",
+        "data": {
+          "income": {
+            "w2Wages": 125000
+          }
+        }
+      },
+      "success": {
+        "valid": true,
+        "warnings": [
+          {
+            "field": "income.interest",
+            "message": "Interest income not provided - will default to 0"
+          }
+        ]
+      }
+    },
+    "GET /v2/engagements/{engagementId}/import/history": {
+      "success": {
+        "data": [
+          {
+            "importId": "imp_9O6q2rV3uW9dG4hY",
+            "dataType": "forms",
+            "source": "quickbooks",
+            "status": "completed",
+            "recordsImported": 47
+          },
+          {
+            "importId": "imp_0P7r3sW4vX0eH5iZ",
+            "dataType": "client-data",
+            "source": "csv",
+            "status": "completed",
+            "recordsImported": 12
+          }
+        ]
+      }
+    }
+  },
+  "export-service": {
+    "GET /v2/engagements/{engagementId}/export": {
+      "success": {
+        "exportId": "exp_1Q8s4tX5wY1fI6jA",
+        "format": "json",
+        "status": "completed",
+        "data": {
+          "client": {
+            "id": "client_2J9l3oP4wQ0yZ5aR",
+            "name": "Acme Corporation"
+          },
+          "year": 2024,
+          "returnType": "1120",
+          "calculations": {
+            "totalIncome": 5450000,
+            "taxableIncome": 630000,
+            "totalTax": 132300
+          }
+        }
+      },
+      "errors": {
+        "400": {
+          "error": {
+            "code": "invalid_format",
+            "message": "Export format must be one of: json, csv, xml, pdf"
+          }
+        }
+      }
+    },
+    "GET /v2/engagements/{engagementId}/export/forms": {
+      "success": {
+        "exportId": "exp_2R9t5uY6xZ2gJ7kB",
+        "format": "pdf",
+        "files": [
+          {
+            "formType": "1120",
+            "fileName": "Form-1120-2024.pdf",
+            "downloadUrl": "https://api.proconnect.intuit.com/v2/files/download/abc123"
+          }
+        ]
+      }
+    },
+    "POST /v2/engagements/export/bulk": {
+      "request": {
+        "engagementIds": [
+          "eng_5K2m7nQ8pR4zB9cT",
+          "eng_6L3n8oR9qS5aC0dU"
+        ],
+        "format": "csv"
+      },
+      "success": {
+        "exportId": "exp_3S0u6vZ7yA3hK8lC",
+        "status": "processing",
+        "engagementCount": 2,
+        "downloadUrl": null
+      }
+    }
+  }
+}

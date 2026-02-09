@@ -117,8 +117,67 @@ export const ConnectionWizard: React.FC<ConnectionWizardProps> = ({
               <h3 className="wizard-step-title">Configure Scopes</h3>
               <p className="wizard-step-description">
                 Select the permissions this API key should have. Use the
-                principle of least privilege.
+                principle of least privilege. One API key works for all APIs—scopes
+                determine what you can access.
               </p>
+
+              <div className="wizard-scope-suggestions">
+                <div className="wizard-scope-suggestions-header">
+                  💡 Common Scope Combinations
+                </div>
+                <div className="wizard-scope-suggestions-grid">
+                  <button
+                    className="wizard-scope-suggestion"
+                    onClick={() =>
+                      setSelectedScopes(['read:clients', 'write:clients'])
+                    }
+                  >
+                    <strong>CRM Integration</strong>
+                    <span>read:clients, write:clients</span>
+                  </button>
+                  <button
+                    className="wizard-scope-suggestion"
+                    onClick={() =>
+                      setSelectedScopes([
+                        'read:returns',
+                        'read:efile',
+                        'read:clients',
+                      ])
+                    }
+                  >
+                    <strong>Reporting Dashboard</strong>
+                    <span>read:returns, read:efile, read:clients</span>
+                  </button>
+                  <button
+                    className="wizard-scope-suggestion"
+                    onClick={() =>
+                      setSelectedScopes(['write:returns', 'write:clients'])
+                    }
+                  >
+                    <strong>Data Import Tool</strong>
+                    <span>write:returns, write:clients</span>
+                  </button>
+                  <button
+                    className="wizard-scope-suggestion"
+                    onClick={() =>
+                      setSelectedScopes([
+                        'read:returns',
+                        'read:clients',
+                        'write:returns',
+                        'write:clients',
+                        'read:efile',
+                        'write:efile',
+                        'read:documents',
+                        'write:documents',
+                      ])
+                    }
+                  >
+                    <strong>Full Access</strong>
+                    <span>All scopes</span>
+                  </button>
+                </div>
+              </div>
+
               <ScopeSelector
                 selectedScopes={selectedScopes}
                 onScopesChange={setSelectedScopes}

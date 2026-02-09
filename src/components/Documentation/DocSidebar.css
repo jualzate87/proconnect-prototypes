@@ -35,3 +35,16 @@
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
 }
+
+.doc-sidebar-header {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.05em;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-xs) var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.doc-sidebar-header:first-child {
+  margin-top: 0;
+}

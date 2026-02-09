@@ -9,12 +9,14 @@ interface APIDetailsModalProps {
   api: API;
   isOpen: boolean;
   onClose: () => void;
+  onOpenDocumentation: (api: API) => void;
 }
 
 export const APIDetailsModal: React.FC<APIDetailsModalProps> = ({
   api,
   isOpen,
   onClose,
+  onOpenDocumentation,
 }) => {
   return (
     <Modal
@@ -97,11 +99,16 @@ export const APIDetailsModal: React.FC<APIDetailsModalProps> = ({
           <Button variant="secondary" onClick={onClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => {
-            // Navigate to API Keys section to generate a key
+          <Button variant="secondary" onClick={() => {
             window.location.href = '/settings/api-portal/keys';
+            onClose();
           }}>
-            Connect API
+            Generate API Key
+          </Button>
+          <Button variant="primary" onClick={() => {
+            onOpenDocumentation(api);
+          }}>
+            View Full Documentation
           </Button>
         </div>
       </div>

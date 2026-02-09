@@ -1,0 +1,207 @@
+.endpoint-doc {
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-background);
+  overflow: hidden;
+}
+
+.endpoint-doc-header {
+  width: 100%;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  transition: background-color 0.2s;
+}
+
+.endpoint-doc-header:hover {
+  background-color: var(--color-background-secondary);
+}
+
+.endpoint-doc-header-content {
+  flex: 1;
+}
+
+.endpoint-doc-chevron {
+  color: var(--color-text-secondary);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.endpoint-doc-chevron-expanded {
+  transform: rotate(180deg);
+}
+
+.endpoint-doc-content {
+  padding: 0 var(--spacing-xl) var(--spacing-xl);
+}
+
+.endpoint-doc-method-path {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.endpoint-doc-path {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  background-color: var(--color-background-secondary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+}
+
+.endpoint-doc-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.endpoint-doc-section {
+  margin-top: var(--spacing-xl);
+}
+
+.endpoint-doc-section-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.endpoint-doc-scopes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.endpoint-doc-scope {
+  display: inline-block;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  background-color: var(--color-background-secondary);
+  color: var(--color-primary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-primary-light);
+}
+
+.endpoint-doc-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.endpoint-doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.endpoint-doc-table thead {
+  background-color: var(--color-background-secondary);
+}
+
+.endpoint-doc-table th {
+  text-align: left;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.endpoint-doc-table td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.endpoint-doc-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.endpoint-doc-table code {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  background-color: var(--color-background-secondary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.endpoint-doc-type {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+}
+
+.endpoint-doc-optional {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.endpoint-doc-code-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.endpoint-doc-code-tab {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.endpoint-doc-code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-background-secondary);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.endpoint-doc-copy-btn {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.endpoint-doc-copy-btn:hover {
+  background-color: var(--color-primary-light);
+}
+
+.endpoint-doc-response-status {
+  margin-bottom: var(--spacing-sm);
+}
+
+.endpoint-doc-error {
+  margin-bottom: var(--spacing-lg);
+}
+
+.endpoint-doc-error:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure code blocks within endpoint docs have proper styling */
+.endpoint-doc-code-tab pre {
+  margin: 0;
+  border-radius: 0;
+}

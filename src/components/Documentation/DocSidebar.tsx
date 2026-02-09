@@ -6,14 +6,23 @@ interface DocSidebarProps {
   onSectionChange: (section: string) => void;
 }
 
-const sections = [
+interface Section {
+  id: string;
+  label: string;
+  isHeader?: boolean;
+}
+
+const sections: Section[] = [
+  { id: 'header-getting-started', label: 'GETTING STARTED', isHeader: true },
   { id: 'quickstart', label: 'Quickstart' },
   { id: 'authentication', label: 'Authentication' },
   { id: 'webhooks', label: 'Webhooks' },
-  { id: 'returns', label: 'Tax Returns API' },
-  { id: 'clients', label: 'Client Sync API' },
-  { id: 'documents', label: 'Document Bridge API' },
   { id: 'best-practices', label: 'Best Practices' },
+  { id: 'header-api-reference', label: 'API REFERENCE', isHeader: true },
+  { id: 'client-service', label: 'Client Service API' },
+  { id: 'engagement-service', label: 'Engagement Service API' },
+  { id: 'import-service', label: 'Import Service API' },
+  { id: 'export-service', label: 'Export Service API' },
 ];
 
 export const DocSidebar: React.FC<DocSidebarProps> = ({
@@ -23,17 +32,23 @@ export const DocSidebar: React.FC<DocSidebarProps> = ({
   return (
     <aside className="doc-sidebar">
       <nav className="doc-sidebar-nav">
-        {sections.map((section) => (
-          <button
-            key={section.id}
-            className={`doc-sidebar-item ${
-              selectedSection === section.id ? 'doc-sidebar-item-active' : ''
-            }`}
-            onClick={() => onSectionChange(section.id)}
-          >
-            {section.label}
-          </button>
-        ))}
+        {sections.map((section) =>
+          section.isHeader ? (
+            <div key={section.id} className="doc-sidebar-header">
+              {section.label}
+            </div>
+          ) : (
+            <button
+              key={section.id}
+              className={`doc-sidebar-item ${
+                selectedSection === section.id ? 'doc-sidebar-item-active' : ''
+              }`}
+              onClick={() => onSectionChange(section.id)}
+            >
+              {section.label}
+            </button>
+          )
+        )}
       </nav>
     </aside>
   );
