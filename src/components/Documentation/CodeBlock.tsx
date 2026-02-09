@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './CodeBlock.css';
 
 interface CodeBlockProps {
-  language: 'javascript' | 'python' | 'curl';
+  language: 'javascript' | 'python' | 'curl' | 'bash' | 'json';
   code: string;
   description?: string;
 }
