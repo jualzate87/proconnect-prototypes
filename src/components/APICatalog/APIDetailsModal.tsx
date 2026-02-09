@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Modal } from '../Shared/Modal';
 import { Button } from '../Shared/Button';
 import { Badge } from '../Shared/Badge';
@@ -16,6 +17,7 @@ export const APIDetailsModal: React.FC<APIDetailsModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const navigate = useNavigate();
   return (
     <Modal
       isOpen={isOpen}
@@ -98,14 +100,14 @@ export const APIDetailsModal: React.FC<APIDetailsModalProps> = ({
             Close
           </Button>
           <Button variant="secondary" onClick={() => {
-            window.location.href = '/settings/api-portal/keys';
             onClose();
+            navigate('/settings/api-portal/keys');
           }}>
             Generate API Key
           </Button>
           <Button variant="primary" onClick={() => {
-            window.location.href = `/settings/api-portal/documentation#${api.id}`;
             onClose();
+            navigate(`/settings/api-portal/documentation#${api.id}`);
           }}>
             View Full Documentation
           </Button>
