@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Trowser } from '../Shared/Trowser';
 import { APICatalog } from '../APICatalog/APICatalog';
 import { Documentation } from '../Documentation/Documentation';
@@ -18,6 +18,7 @@ export const APIPortalTrowser: React.FC<APIPortalTrowserProps> = ({
   onClose,
 }) => {
   const [activeTab, setActiveTab] = useState<TabType>('catalog');
+  const [documentationHash, setDocumentationHash] = useState<string>('');
 
   const tabs = [
     { id: 'catalog' as TabType, label: 'API Catalog' },
@@ -26,10 +27,38 @@ export const APIPortalTrowser: React.FC<APIPortalTrowserProps> = ({
     { id: 'health' as TabType, label: 'API Health' },
   ];
 
+  const handleSwitchToKeys = () => {
+    setActiveTab('keys');
+  };
+
+  const handleSwitchToDocumentation = (hash?: string) => {
+    setActiveTab('documentation');
+    if (hash) {
+      setDocumentationHash(hash);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'documentation' && documentationHash) {
+      // Scroll to the hash after a brief delay to ensure content is rendered
+      setTimeout(() => {
+        const element = document.getElementById(documentationHash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, [activeTab, documentationHash]);
+
   const renderContent = () => {
     switch (activeTab) {
       case 'catalog':
-        return <APICatalog />;
+        return (
+          <APICatalog 
+            onSwitchToKeys={handleSwitchToKeys}
+            onSwitchToDocumentation={handleSwitchToDocumentation}
+          />
+        );
       case 'documentation':
         return <Documentation />;
       case 'keys':
@@ -37,7 +66,12 @@ export const APIPortalTrowser: React.FC<APIPortalTrowserProps> = ({
       case 'health':
         return <APIHealth />;
       default:
-        return <APICatalog />;
+        return (
+          <APICatalog 
+            onSwitchToKeys={handleSwitchToKeys}
+            onSwitchToDocumentation={handleSwitchToDocumentation}
+          />
+        );
     }
   };
 

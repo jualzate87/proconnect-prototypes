@@ -38,10 +38,29 @@
       "success": {
         "id": "client_2J9l3oP4wQ0yZ5aR",
         "name": "Acme Corporation",
+        "accountType": "C-Corp",
         "email": "contact@acme.com",
+        "phone": "(555) 987-6543",
         "status": "active",
         "taxId": "12-3456789",
-        "entityType": "C-Corp"
+        "entityType": "C-Corporation",
+        "fiscalYearEnd": "12-31",
+        "address": {
+          "street": "456 Corporate Blvd",
+          "city": "San Francisco",
+          "state": "CA",
+          "zip": "94102"
+        },
+        "contacts": [
+          {
+            "name": "John Doe",
+            "title": "CFO",
+            "email": "john.doe@acme.com",
+            "phone": "(555) 987-6544"
+          }
+        ],
+        "createdAt": "2022-03-15T09:00:00Z",
+        "updatedAt": "2024-01-20T14:30:00Z"
       },
       "errors": {
         "404": {
@@ -55,17 +74,30 @@
     "POST /v2/clients": {
       "request": {
         "name": "New Client LLC",
+        "accountType": "LLC",
         "email": "info@newclient.com",
+        "phone": "(555) 123-4567",
         "taxId": "98-7654321",
-        "entityType": "LLC"
+        "entityType": "Multi-Member LLC",
+        "fiscalYearEnd": "12-31",
+        "address": {
+          "street": "123 Business Ave",
+          "city": "Austin",
+          "state": "TX",
+          "zip": "78701"
+        }
       },
       "success": {
         "id": "client_9L1n5pR6yS2B7cT0",
         "name": "New Client LLC",
+        "accountType": "LLC",
         "email": "info@newclient.com",
+        "phone": "(555) 123-4567",
         "status": "active",
         "taxId": "98-7654321",
-        "entityType": "LLC"
+        "entityType": "Multi-Member LLC",
+        "fiscalYearEnd": "12-31",
+        "createdAt": "2024-01-15T10:30:00Z"
       },
       "errors": {
         "400": {
@@ -120,7 +152,13 @@
             "returnType": "1040",
             "status": "complete",
             "efileStatus": "accepted",
-            "dueDate": "2024-04-15"
+            "dueDate": "2024-04-15",
+            "efileDetails": {
+              "transmissionId": "20240215-1040-ABC123456",
+              "submittedAt": "2024-02-15T10:30:00Z",
+              "acceptedAt": "2024-02-15T14:22:00Z",
+              "acknowledgmentCode": "0000"
+            }
           }
         ]
       },
@@ -142,7 +180,26 @@
         "returnType": "1120",
         "status": "in-progress",
         "efileStatus": "not-filed",
-        "dueDate": "2024-04-15"
+        "dueDate": "2024-04-15",
+        "assignee": {
+          "id": "user_4K9m3nP7qS8aB2cD",
+          "name": "Sarah Johnson",
+          "email": "sarah.johnson@firm.com"
+        },
+        "returns": [
+          {
+            "id": "ret_7M4o0pT1sU7bE2fW",
+            "formType": "1120",
+            "status": "draft"
+          }
+        ],
+        "projects": [
+          {
+            "id": "proj_8N5p1qU2tV8cF3gX",
+            "name": "2024 Corporate Return",
+            "completionPercent": 65
+          }
+        ]
       }
     },
     "GET /v2/engagements/{engagementId}/returns": {
@@ -154,11 +211,29 @@
             "year": 2024,
             "status": "draft",
             "efileStatus": "not-filed",
+            "filingType": "original",
             "calculations": {
-              "totalIncome": 5450000,
-              "totalDeductions": 4820000,
+              "grossReceipts": 5450000,
+              "costOfGoodsSold": 3200000,
+              "grossProfit": 2250000,
+              "totalDeductions": 1620000,
               "taxableIncome": 630000,
-              "totalTax": 132300
+              "totalTax": 132300,
+              "estimatedTaxPaid": 120000,
+              "balanceDue": 12300,
+              "schedules": {
+                "scheduleM1": {
+                  "bookIncome": 645000,
+                  "federalIncomeTax": 132300,
+                  "excessCapitalLosses": 0,
+                  "taxableIncome": 630000
+                },
+                "scheduleL": {
+                  "totalAssets": 8500000,
+                  "totalLiabilities": 3200000,
+                  "shareholderEquity": 5300000
+                }
+              }
             }
           }
         ]
@@ -185,14 +260,40 @@
         "data": {
           "income": {
             "w2Wages": 125000,
-            "interest": 1250
+            "w2FederalWithholding": 18500,
+            "w2SocialSecurityWages": 125000,
+            "w2MedicareWages": 125000,
+            "interest1099INT": 1250,
+            "dividends1099DIV": 3400,
+            "capitalGains": 8500,
+            "businessIncome": {
+              "scheduleC": {
+                "grossReceipts": 85000,
+                "costOfGoodsSold": 32000,
+                "otherExpenses": 28000
+              }
+            }
+          },
+          "deductions": {
+            "mortgageInterest": 12500,
+            "propertyTaxes": 8200,
+            "charitableContributions": 5000,
+            "medicalExpenses": 4500,
+            "stateLocalTaxes": 10000
           }
         }
       },
       "success": {
         "importId": "imp_9O6q2rV3uW9dG4hY",
         "status": "completed",
-        "recordsImported": 47
+        "recordsImported": 47,
+        "summary": {
+          "formsCreated": ["1040", "Schedule A", "Schedule C", "Schedule D"],
+          "warnings": [
+            "State tax deduction limited to $10,000 cap"
+          ]
+        },
+        "importedAt": "2024-02-10T14:22:30Z"
       },
       "errors": {
         "400": {
@@ -258,16 +359,38 @@
         "data": {
           "client": {
             "id": "client_2J9l3oP4wQ0yZ5aR",
-            "name": "Acme Corporation"
+            "name": "Acme Corporation",
+            "taxId": "12-3456789"
           },
           "year": 2024,
           "returnType": "1120",
+          "filingType": "original",
           "calculations": {
-            "totalIncome": 5450000,
+            "grossReceipts": 5450000,
+            "costOfGoodsSold": 3200000,
+            "grossProfit": 2250000,
+            "officerCompensation": 450000,
+            "salariesWages": 680000,
+            "repairs": 85000,
+            "depreciation": 125000,
+            "advertising": 95000,
+            "pensionPlans": 78000,
+            "employeeBenefits": 92000,
+            "otherDeductions": 15000,
+            "totalDeductions": 1620000,
             "taxableIncome": 630000,
-            "totalTax": 132300
-          }
-        }
+            "incomeTax": 132300,
+            "credits": {
+              "researchCredit": 25000,
+              "workOpportunityCredit": 8000
+            },
+            "totalTax": 99300,
+            "estimatedTaxPaid": 120000,
+            "overpayment": 20700
+          },
+          "forms": ["1120", "4562", "1125-A", "Schedule K"]
+        },
+        "exportedAt": "2024-02-10T15:45:22Z"
       },
       "errors": {
         "400": {
@@ -285,10 +408,27 @@
         "files": [
           {
             "formType": "1120",
+            "formName": "U.S. Corporation Income Tax Return",
             "fileName": "Form-1120-2024.pdf",
-            "downloadUrl": "https://api.proconnect.intuit.com/v2/files/download/abc123"
+            "downloadUrl": "https://api.proconnect.intuit.com/v2/files/download/abc123",
+            "fileSize": 245680
+          },
+          {
+            "formType": "4562",
+            "formName": "Depreciation and Amortization",
+            "fileName": "Form-4562-2024.pdf",
+            "downloadUrl": "https://api.proconnect.intuit.com/v2/files/download/def456",
+            "fileSize": 128340
+          },
+          {
+            "formType": "Schedule K",
+            "formName": "Other Information",
+            "fileName": "Schedule-K-2024.pdf",
+            "downloadUrl": "https://api.proconnect.intuit.com/v2/files/download/ghi789",
+            "fileSize": 95220
           }
-        ]
+        ],
+        "expiresAt": "2024-02-11T15:45:22Z"
       }
     },
     "POST /v2/engagements/export/bulk": {
@@ -297,12 +437,26 @@
           "eng_5K2m7nQ8pR4zB9cT",
           "eng_6L3n8oR9qS5aC0dU"
         ],
-        "format": "csv"
+        "format": "csv",
+        "includeCalculations": true,
+        "dataFields": [
+          "clientName",
+          "taxId",
+          "taxYear",
+          "returnType",
+          "status",
+          "efileStatus",
+          "taxableIncome",
+          "totalTax",
+          "balanceDue",
+          "refundAmount"
+        ]
       },
       "success": {
         "exportId": "exp_3S0u6vZ7yA3hK8lC",
         "status": "processing",
         "engagementCount": 2,
+        "estimatedCompletionTime": "2024-02-10T16:00:00Z",
         "downloadUrl": null
       }
     }

@@ -7,7 +7,15 @@ import apiCatalogData from '../../data/apiCatalog.json';
 import { API } from '../../types';
 import './APICatalog.css';
 
-export const APICatalog: React.FC = () => {
+interface APICatalogProps {
+  onSwitchToKeys?: () => void;
+  onSwitchToDocumentation?: (hash?: string) => void;
+}
+
+export const APICatalog: React.FC<APICatalogProps> = ({
+  onSwitchToKeys,
+  onSwitchToDocumentation,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedAPI, setSelectedAPI] = useState<API | null>(null);
@@ -62,6 +70,8 @@ export const APICatalog: React.FC = () => {
           api={selectedAPI}
           isOpen={!!selectedAPI}
           onClose={() => setSelectedAPI(null)}
+          onSwitchToKeys={onSwitchToKeys}
+          onSwitchToDocumentation={onSwitchToDocumentation}
         />
       )}
     </div>

@@ -384,7 +384,6 @@ const response = await fetch(
             { field: 'createdAt', type: 'string', description: 'ISO 8601 timestamp of creation' },
             { field: 'updatedAt', type: 'string', description: 'ISO 8601 timestamp of last update' },
           ]}
-          errorSamples={sampleResponsesData['client-service']['GET /v2/clients'].errors}
         />
 
         <EndpointDoc
@@ -401,7 +400,6 @@ const response = await fetch(
             { field: 'contacts', type: 'array', description: 'Array of contact persons for the client' },
             { field: 'metadata', type: 'object', description: 'Additional custom metadata' },
           ]}
-          errorSamples={sampleResponsesData['client-service']['GET /v2/clients/{clientId}'].errors}
         />
 
         <EndpointDoc
@@ -409,9 +407,58 @@ const response = await fetch(
           path="/v2/clients"
           description="Create a new client record."
           requiredScopes={['write:clients']}
+          requestBodyFields={[
+            {
+              name: 'name',
+              type: 'String',
+              required: true,
+              description: 'Client or company name (max 100 characters)',
+            },
+            {
+              name: 'accountType',
+              type: 'String',
+              required: true,
+              description: 'Account type: Individual, C-Corp, S-Corp, Partnership, LLC, Trust, Estate',
+            },
+            {
+              name: 'taxId',
+              type: 'String',
+              required: 'Conditionally required',
+              description: 'SSN for individuals or EIN for entities. Required for all except new clients pending EIN',
+            },
+            {
+              name: 'email',
+              type: 'String',
+              required: false,
+              description: 'Primary contact email address',
+            },
+            {
+              name: 'phone',
+              type: 'String',
+              required: false,
+              description: 'Primary phone number',
+            },
+            {
+              name: 'address',
+              type: 'Object',
+              required: false,
+              description: 'Mailing address object containing street, city, state, zip',
+            },
+            {
+              name: 'fiscalYearEnd',
+              type: 'String',
+              required: 'Conditionally required',
+              description: 'Fiscal year end date in MM-DD format. Required for C-Corps and S-Corps',
+            },
+            {
+              name: 'entityType',
+              type: 'String',
+              required: false,
+              description: 'Specific entity classification (e.g., C-Corp, S-Corp, Multi-Member LLC, etc.)',
+            },
+          ]}
           requestSample={sampleResponsesData['client-service']['POST /v2/clients'].request}
           responseSample={sampleResponsesData['client-service']['POST /v2/clients'].success}
-          errorSamples={sampleResponsesData['client-service']['POST /v2/clients'].errors}
         />
 
         <EndpointDoc
@@ -419,6 +466,44 @@ const response = await fetch(
           path="/v2/clients/{clientId}"
           description="Update existing client information."
           requiredScopes={['write:clients']}
+          requestBodyFields={[
+            {
+              name: 'name',
+              type: 'String',
+              required: false,
+              description: 'Client or company name (max 100 characters)',
+            },
+            {
+              name: 'email',
+              type: 'String',
+              required: false,
+              description: 'Primary contact email address',
+            },
+            {
+              name: 'phone',
+              type: 'String',
+              required: false,
+              description: 'Primary phone number',
+            },
+            {
+              name: 'address',
+              type: 'Object',
+              required: false,
+              description: 'Mailing address object containing street, city, state, zip',
+            },
+            {
+              name: 'status',
+              type: 'String',
+              required: false,
+              description: 'Client status: active, inactive, archived',
+            },
+            {
+              name: 'fiscalYearEnd',
+              type: 'String',
+              required: false,
+              description: 'Fiscal year end date in MM-DD format',
+            },
+          ]}
           requestSample={sampleResponsesData['client-service']['PUT /v2/clients/{clientId}'].request}
           responseSample={sampleResponsesData['client-service']['PUT /v2/clients/{clientId}'].success}
         />
@@ -493,7 +578,6 @@ const response = await fetch(
             { field: 'assignee', type: 'object', description: 'Assigned team member' },
             { field: 'dueDate', type: 'string', description: 'Filing due date' },
           ]}
-          errorSamples={sampleResponsesData['engagement-service']['GET /v2/engagements'].errors}
         />
 
         <EndpointDoc
@@ -552,18 +636,54 @@ const response = await fetch(
           path="/v2/engagements/{engagementId}/import"
           description="Import data into a specific engagement."
           requiredScopes={['write:returns']}
-          parameters={[
+          requestBodyFields={[
             {
               name: 'dataType',
-              type: 'string',
+              type: 'String',
               required: true,
-              description: 'Type of data being imported (forms, client-data, prior-year)',
+              description: 'Type of data being imported: forms, client-data, prior-year, payroll, accounting',
             },
             {
               name: 'source',
-              type: 'string',
+              type: 'String',
               required: false,
-              description: 'Source system or file format (quickbooks, adp, paychex, csv, etc.)',
+              description: 'Source system or file format: quickbooks, xero, adp, paychex, gusto, csv, xml',
+            },
+            {
+              name: 'data',
+              type: 'Object',
+              required: true,
+              description: 'Structured data payload matching the dataType schema. Contains tax forms, income, deductions, etc.',
+            },
+            {
+              name: 'data.income',
+              type: 'Object',
+              required: false,
+              description: 'Income data including W-2 wages, 1099 income, interest, dividends, capital gains',
+            },
+            {
+              name: 'data.income.w2Wages',
+              type: 'Number',
+              required: false,
+              description: 'Total W-2 wages from all employers',
+            },
+            {
+              name: 'data.income.interest',
+              type: 'Number',
+              required: false,
+              description: 'Interest income from banks and financial institutions',
+            },
+            {
+              name: 'data.deductions',
+              type: 'Object',
+              required: false,
+              description: 'Deduction data including mortgage interest, charitable contributions, business expenses',
+            },
+            {
+              name: 'validateOnly',
+              type: 'Boolean',
+              required: false,
+              description: 'If true, validates data without importing. Default: false',
             },
           ]}
           requestSample={sampleResponsesData['import-service']['POST /v2/engagements/{engagementId}/import'].request}
@@ -575,7 +695,6 @@ const response = await fetch(
             { field: 'summary', type: 'object', description: 'Summary of import operation including forms created and warnings' },
             { field: 'importedAt', type: 'string', description: 'ISO 8601 timestamp of import completion' },
           ]}
-          errorSamples={sampleResponsesData['import-service']['POST /v2/engagements/{engagementId}/import'].errors}
         />
 
         <EndpointDoc
@@ -583,6 +702,32 @@ const response = await fetch(
           path="/v2/engagements/{engagementId}/import/validate"
           description="Validate import data before committing to engagement."
           requiredScopes={['write:returns']}
+          requestBodyFields={[
+            {
+              name: 'dataType',
+              type: 'String',
+              required: true,
+              description: 'Type of data being validated: forms, client-data, prior-year, payroll, accounting',
+            },
+            {
+              name: 'data',
+              type: 'Object',
+              required: true,
+              description: 'Structured data payload to validate against engagement schema',
+            },
+            {
+              name: 'data.income',
+              type: 'Object',
+              required: false,
+              description: 'Income data to validate including W-2, 1099, interest, dividends',
+            },
+            {
+              name: 'strictValidation',
+              type: 'Boolean',
+              required: false,
+              description: 'If true, enforces strict validation with no warnings. Default: false',
+            },
+          ]}
           requestSample={sampleResponsesData['import-service']['POST /v2/engagements/{engagementId}/import/validate'].request}
           responseSample={sampleResponsesData['import-service']['POST /v2/engagements/{engagementId}/import/validate'].success}
           responseFields={[
@@ -652,7 +797,6 @@ const response = await fetch(
             { field: 'data', type: 'object', description: 'Exported engagement data' },
             { field: 'exportedAt', type: 'string', description: 'ISO 8601 timestamp of export' },
           ]}
-          errorSamples={sampleResponsesData['export-service']['GET /v2/engagements/{engagementId}/export'].errors}
         />
 
         <EndpointDoc
@@ -673,6 +817,44 @@ const response = await fetch(
           path="/v2/engagements/export/bulk"
           description="Export data from multiple engagements at once."
           requiredScopes={['read:returns', 'read:clients']}
+          requestBodyFields={[
+            {
+              name: 'engagementIds',
+              type: 'Array',
+              required: true,
+              description: 'Array of engagement IDs to export. Maximum 100 engagements per request',
+            },
+            {
+              name: 'format',
+              type: 'String',
+              required: false,
+              description: 'Export format: json, csv, xml, excel. Default: csv',
+            },
+            {
+              name: 'includeCalculations',
+              type: 'Boolean',
+              required: false,
+              description: 'Include calculated tax values (income, deductions, credits, liability). Default: false',
+            },
+            {
+              name: 'dataFields',
+              type: 'Array',
+              required: false,
+              description: 'Specific fields to include: clientName, taxYear, returnType, status, efileStatus, calculations, etc.',
+            },
+            {
+              name: 'filters',
+              type: 'Object',
+              required: false,
+              description: 'Additional filters to apply: year range, return types, e-file status',
+            },
+            {
+              name: 'webhookUrl',
+              type: 'String',
+              required: false,
+              description: 'Webhook URL to notify when export completes. Recommended for large exports',
+            },
+          ]}
           requestSample={sampleResponsesData['export-service']['POST /v2/engagements/export/bulk'].request}
           responseSample={sampleResponsesData['export-service']['POST /v2/engagements/export/bulk'].success}
           responseFields={[

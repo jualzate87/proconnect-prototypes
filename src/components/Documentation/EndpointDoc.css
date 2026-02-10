@@ -148,44 +148,36 @@
   color: var(--color-text-tertiary);
 }
 
-.endpoint-doc-code-tabs {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
+.endpoint-doc-conditional {
+  font-size: var(--font-size-sm);
+  color: var(--color-warning);
+  font-style: italic;
 }
 
-.endpoint-doc-code-tab {
+/* Request URL Section - Prominent Display */
+.endpoint-doc-request-url {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-background-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  overflow: hidden;
+  margin-top: var(--spacing-sm);
 }
 
-.endpoint-doc-code-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--color-background-secondary);
-  border-bottom: 1px solid var(--color-border);
+.endpoint-doc-url {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  word-break: break-all;
+}
+
+/* Make scopes section less prominent */
+.endpoint-doc-scopes-section {
+  opacity: 0.8;
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-}
-
-.endpoint-doc-copy-btn {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
-  background-color: transparent;
-  border: 1px solid var(--color-primary);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.endpoint-doc-copy-btn:hover {
-  background-color: var(--color-primary-light);
 }
 
 .endpoint-doc-response-status {
@@ -200,8 +192,25 @@
   margin-bottom: 0;
 }
 
-/* Ensure code blocks within endpoint docs have proper styling */
-.endpoint-doc-code-tab pre {
-  margin: 0;
-  border-radius: 0;
+/* Enhanced table styling for attributes */
+.endpoint-doc-table th:first-child {
+  width: 25%;
+}
+
+.endpoint-doc-table th:nth-child(2) {
+  width: 15%;
+}
+
+.endpoint-doc-table th:nth-child(3) {
+  width: 15%;
+}
+
+.endpoint-doc-table th:nth-child(4) {
+  width: 45%;
+}
+
+/* Improved visual hierarchy for sections */
+.endpoint-doc-section + .endpoint-doc-section {
+  border-top: 1px solid var(--color-border-light);
+  padding-top: var(--spacing-lg);
 }
