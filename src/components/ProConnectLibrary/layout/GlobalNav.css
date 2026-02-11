@@ -1,0 +1,184 @@
+/* ── GlobalNav: ProConnect Left Sidebar Navigation ──
+   Uses PTG PTO tokens for nav-specific colors,
+   CGDS tokens for typography and spacing. */
+
+.pc-global-nav {
+  width: var(--pc-sidebar-width, 240px);
+  background-color: var(--pc-nav-bg, #055393);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-sticky, 200);
+  transition: width var(--transition-slow, 300ms ease-in-out);
+  overflow: hidden;
+}
+
+.pc-global-nav--collapsed {
+  width: var(--pc-sidebar-collapsed-width, 56px);
+}
+
+/* Logo */
+.pc-global-nav__logo {
+  padding: var(--space-4, 16px);
+  border-bottom: 1px solid var(--pc-nav-border, rgba(255, 255, 255, 0.12));
+  flex-shrink: 0;
+}
+
+/* Navigation Body */
+.pc-global-nav__body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-2, 8px) 0;
+}
+
+.pc-global-nav__body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.pc-global-nav__body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+/* Section */
+.pc-global-nav__section {
+  margin-bottom: var(--space-2, 8px);
+}
+
+.pc-global-nav__section-title {
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  color: var(--pc-nav-text-muted, rgba(255, 255, 255, 0.6));
+  font-size: var(--font-size-body-4, 12px);
+  font-weight: var(--font-weight-heading-bold, 800);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: var(--space-2, 8px);
+  white-space: nowrap;
+}
+
+/* Nav Item */
+.pc-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  width: 100%;
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  color: var(--pc-nav-text, #FFFFFF);
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  font-size: var(--font-size-body-3, 14px);
+  line-height: var(--line-height-body-3, 20px);
+  font-family: var(--font-name-body);
+  font-weight: var(--font-weight-body, 400);
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast, 100ms ease-in-out);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pc-nav-item:hover {
+  background-color: var(--pc-nav-bg-hover, #06629E);
+}
+
+.pc-nav-item--active {
+  background-color: var(--pc-nav-bg-active, #0077C5);
+  border-left-color: var(--pc-nav-text, #FFFFFF);
+  font-weight: var(--font-weight-body-bold, 600);
+}
+
+.pc-nav-item--nested {
+  font-size: var(--font-size-body-3, 14px);
+}
+
+.pc-nav-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.pc-nav-item__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pc-nav-item__badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--pc-nav-text, #FFFFFF);
+  padding: 1px 6px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: var(--font-size-body-4, 12px);
+  font-weight: var(--font-weight-body-bold, 600);
+  flex-shrink: 0;
+}
+
+.pc-nav-item__indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--pc-nav-indicator, #00D09C);
+  flex-shrink: 0;
+}
+
+.pc-nav-item__chevron {
+  display: flex;
+  align-items: center;
+  transition: transform var(--transition-fast, 100ms ease-in-out);
+  flex-shrink: 0;
+}
+
+.pc-nav-item__chevron--open {
+  transform: rotate(180deg);
+}
+
+.pc-nav-item__children {
+  overflow: hidden;
+}
+
+/* Footer */
+.pc-global-nav__footer {
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  border-top: 1px solid var(--pc-nav-border, rgba(255, 255, 255, 0.12));
+  flex-shrink: 0;
+}
+
+/* Collapse Button */
+.pc-global-nav__collapse-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  background: none;
+  border: none;
+  border-top: 1px solid var(--pc-nav-border, rgba(255, 255, 255, 0.12));
+  color: var(--pc-nav-text, #FFFFFF);
+  font-size: var(--font-size-body-3, 14px);
+  font-family: var(--font-name-body);
+  cursor: pointer;
+  transition: background-color var(--transition-fast, 100ms ease-in-out);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pc-global-nav__collapse-btn:hover {
+  background-color: var(--pc-nav-bg-hover, #06629E);
+}
+
+/* Collapsed overrides */
+.pc-global-nav--collapsed .pc-nav-item {
+  justify-content: center;
+  padding: var(--space-2, 8px);
+}
+
+.pc-global-nav--collapsed .pc-global-nav__collapse-btn {
+  justify-content: center;
+}

@@ -1,0 +1,108 @@
+/* ── Radio: CGDS-based Radio Group ── */
+
+.pc-radio-group {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.pc-radio-group__label {
+  font-size: var(--font-size-body-3, 14px);
+  line-height: var(--line-height-body-3, 20px);
+  font-weight: var(--font-weight-body-bold, 600);
+  color: var(--color-text-primary, #21262A);
+  margin-bottom: var(--space-1, 4px);
+}
+
+.pc-radio-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.pc-radio-group--horizontal .pc-radio-group__options {
+  flex-direction: row;
+  gap: var(--space-6, 24px);
+}
+
+/* Individual radio */
+.pc-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2, 8px);
+  cursor: pointer;
+}
+
+.pc-radio--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pc-radio__control {
+  position: relative;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.pc-radio__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.pc-radio__circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-divider-primary, #6B6C72);
+  border-radius: 50%;
+  background-color: var(--color-container-background-primary, #FFFFFF);
+  transition: all var(--transition-fast, 100ms ease-in-out);
+}
+
+.pc-radio__circle--checked {
+  border-color: var(--color-ui-primary, #0077C5);
+}
+
+.pc-radio__circle--checked::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-ui-primary, #0077C5);
+}
+
+.pc-radio__input:focus-visible + .pc-radio__circle {
+  outline: 2px solid var(--color-border-focus, #0077C5);
+  outline-offset: 2px;
+}
+
+.pc-radio__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pc-radio__label {
+  font-size: var(--font-size-body-3, 14px);
+  line-height: var(--line-height-body-3, 20px);
+  color: var(--color-text-primary, #21262A);
+}
+
+.pc-radio__description {
+  font-size: var(--font-size-body-4, 12px);
+  line-height: var(--line-height-body-4, 16px);
+  color: var(--color-text-secondary, #5D686F);
+}
+
+.pc-radio-group__error {
+  font-size: var(--font-size-body-4, 12px);
+  line-height: var(--line-height-body-4, 16px);
+  color: var(--color-text-negative, #D32F2F);
+}

@@ -1,0 +1,78 @@
+/* ── PromptSuggestions ── */
+
+.pc-prompt-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pc-space-3, 12px);
+}
+
+.pc-prompt-suggestions__title {
+  font-size: var(--pc-font-size-sm, 13px);
+  font-weight: var(--pc-font-weight-medium, 500);
+  color: var(--pc-color-text-secondary, #5D686F);
+  margin: 0;
+}
+
+/* List layout */
+.pc-prompt-suggestions--list .pc-prompt-suggestions__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pc-space-2, 8px);
+}
+
+/* Grid layout */
+.pc-prompt-suggestions--grid .pc-prompt-suggestions__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pc-space-2, 8px);
+}
+
+/* Individual suggestion */
+.pc-prompt-suggestion {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pc-space-3, 12px);
+  padding: var(--pc-space-3, 12px);
+  background-color: var(--pc-color-surface-primary, #FFFFFF);
+  border: 1px solid var(--pc-color-border-primary, #D4D7DC);
+  border-radius: var(--pc-radius-lg, 8px);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all var(--pc-transition-fast, 100ms ease-in-out);
+}
+
+.pc-prompt-suggestion:hover {
+  border-color: var(--pc-color-ai-primary, #236CFF);
+  background-color: var(--pc-color-ai-primary-light, #EBF1FF);
+  box-shadow: var(--pc-shadow-xs, 0 1px 2px rgba(0, 0, 0, 0.05));
+}
+
+.pc-prompt-suggestion__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--pc-radius-md, 6px);
+  background-color: var(--pc-color-ai-primary-light, #EBF1FF);
+}
+
+.pc-prompt-suggestion__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pc-prompt-suggestion__text {
+  font-size: var(--pc-font-size-sm, 13px);
+  font-weight: var(--pc-font-weight-medium, 500);
+  color: var(--pc-color-text-primary, #282828);
+}
+
+.pc-prompt-suggestion__desc {
+  font-size: var(--pc-font-size-xs, 11px);
+  color: var(--pc-color-text-tertiary, #8C8C8C);
+}
