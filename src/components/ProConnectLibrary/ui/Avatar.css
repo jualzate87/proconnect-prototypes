@@ -1,0 +1,60 @@
+/* ── Avatar: CGDS-based Avatar ── */
+
+.pc-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Default variant — CGDS primary */
+.pc-avatar--default {
+  background-color: #D9EFFB;
+  color: var(--color-ui-primary, #0077C5);
+}
+
+/* AI variant — Intuit Assist gradient */
+.pc-avatar--ai {
+  background: linear-gradient(135deg, var(--ai-color-gradient-start, #7C3AED), var(--ai-color-gradient-end, #236CFF));
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+/* Sizes */
+.pc-avatar--xs { width: 20px; height: 20px; font-size: 9px; }
+.pc-avatar--sm { width: 24px; height: 24px; font-size: 10px; }
+.pc-avatar--md { width: 32px; height: 32px; font-size: var(--font-size-body-4, 12px); }
+.pc-avatar--lg { width: 40px; height: 40px; font-size: var(--font-size-body-3, 14px); }
+.pc-avatar--xl { width: 56px; height: 56px; font-size: var(--font-size-body-2, 16px); }
+
+.pc-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-avatar__initials {
+  font-family: var(--font-name-body);
+  font-weight: var(--font-weight-body-bold, 600);
+  letter-spacing: 0.5px;
+  user-select: none;
+}
+
+/* Status indicator */
+.pc-avatar__status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: 25%;
+  min-width: 6px;
+  min-height: 6px;
+  border-radius: 50%;
+  border: 2px solid var(--color-container-background-primary, #FFFFFF);
+}
+
+.pc-avatar__status--online  { background-color: var(--color-ui-positive, #00856D); }
+.pc-avatar__status--offline { background-color: var(--color-text-disabled, #BABEC5); }
+.pc-avatar__status--busy    { background-color: var(--color-ui-negative, #D32F2F); }

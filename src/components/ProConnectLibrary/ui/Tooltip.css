@@ -1,0 +1,35 @@
+/* ── Tooltip: CGDS-based Tooltip ── */
+
+.pc-tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.pc-tooltip {
+  position: absolute;
+  z-index: var(--z-tooltip, 700);
+  pointer-events: none;
+  animation: pc-tooltip-in 100ms ease-out;
+}
+
+@keyframes pc-tooltip-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pc-tooltip__content {
+  background-color: var(--color-container-background-inverse, #393A3D);
+  color: var(--color-text-inverse, #FFFFFF);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius-small, 4px);
+  font-size: var(--font-size-body-4, 12px);
+  line-height: var(--line-height-body-4, 16px);
+  white-space: nowrap;
+  box-shadow: var(--elevation-level-2, 0px 2px 8px rgba(76, 85, 91, 0.2));
+}
+
+/* Positions */
+.pc-tooltip--top    { bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); }
+.pc-tooltip--bottom { top: calc(100% + 6px); left: 50%; transform: translateX(-50%); }
+.pc-tooltip--left   { right: calc(100% + 6px); top: 50%; transform: translateY(-50%); }
+.pc-tooltip--right  { left: calc(100% + 6px); top: 50%; transform: translateY(-50%); }

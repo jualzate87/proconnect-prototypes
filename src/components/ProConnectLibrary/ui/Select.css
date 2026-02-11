@@ -1,0 +1,82 @@
+/* ── Select: CGDS-based Select Dropdown ── */
+
+.pc-select {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+
+.pc-select--full {
+  width: 100%;
+}
+
+.pc-select__label {
+  font-size: var(--font-size-body-3, 14px);
+  line-height: var(--line-height-body-3, 20px);
+  font-weight: var(--font-weight-body-bold, 600);
+  color: var(--color-text-primary, #21262A);
+}
+
+.pc-select__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pc-select__input {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: var(--space-2, 8px) var(--space-8, 32px) var(--space-2, 8px) var(--space-3, 12px);
+  background-color: var(--color-container-background-primary, #FFFFFF);
+  border: 1px solid var(--color-divider-secondary, #D4D7DC);
+  border-radius: var(--radius-medium, 6px);
+  font-size: var(--font-size-body-3, 14px);
+  line-height: var(--line-height-body-3, 20px);
+  font-family: var(--font-name-body);
+  font-weight: var(--font-weight-body, 400);
+  color: var(--color-text-primary, #21262A);
+  cursor: pointer;
+  transition: all var(--transition-fast, 100ms ease-in-out);
+}
+
+.pc-select__input:focus {
+  outline: none;
+  border-color: var(--color-border-focus, #0077C5);
+  box-shadow: 0 0 0 2px #D9EFFB;
+}
+
+.pc-select__input:disabled {
+  background-color: var(--color-container-background-secondary, #F4F5F8);
+  cursor: not-allowed;
+  color: var(--color-text-disabled, #BABEC5);
+}
+
+.pc-select__field--error .pc-select__input {
+  border-color: var(--color-border-negative, #D32F2F);
+}
+
+.pc-select__field--error .pc-select__input:focus {
+  box-shadow: 0 0 0 2px #FFEBEE;
+}
+
+.pc-select__chevron {
+  position: absolute;
+  right: var(--space-2, 8px);
+  color: var(--color-icon-secondary, #5D686F);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.pc-select__error {
+  font-size: var(--font-size-body-4, 12px);
+  line-height: var(--line-height-body-4, 16px);
+  color: var(--color-text-negative, #D32F2F);
+}
+
+.pc-select__helper {
+  font-size: var(--font-size-body-4, 12px);
+  line-height: var(--line-height-body-4, 16px);
+  color: var(--color-text-secondary, #5D686F);
+}
