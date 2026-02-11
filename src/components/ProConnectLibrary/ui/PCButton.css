@@ -1,0 +1,131 @@
+/* ── PCButton: CGDS-based Button Component ── */
+
+.pc-btn {
+  font-family: var(--font-name-body);
+  font-weight: var(--font-weight-body-bold);
+  border: none;
+  border-radius: var(--radius-medium, 6px);
+  cursor: pointer;
+  transition: all var(--transition-base, 200ms ease-in-out);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  white-space: nowrap;
+  position: relative;
+}
+
+.pc-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pc-btn--full {
+  width: 100%;
+}
+
+/* Sizes */
+.pc-btn--sm {
+  padding: var(--space-1, 4px) var(--space-3, 12px);
+  font-size: var(--font-size-body-4, 12px);
+  line-height: var(--line-height-body-4, 16px);
+  height: 28px;
+}
+
+.pc-btn--md {
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  font-size: var(--font-size-body-3, 14px);
+  line-height: var(--line-height-body-3, 20px);
+  height: 36px;
+}
+
+.pc-btn--lg {
+  padding: var(--space-3, 12px) var(--space-6, 24px);
+  font-size: var(--font-size-body-2, 16px);
+  line-height: var(--line-height-body-2, 24px);
+  height: 44px;
+}
+
+/* Variants */
+.pc-btn--primary {
+  background-color: var(--color-action-primary, #0077C5);
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+.pc-btn--primary:hover:not(:disabled) {
+  background-color: var(--color-action-primary-hover, #005A94);
+}
+
+.pc-btn--primary:active:not(:disabled) {
+  background-color: var(--color-action-primary-active, #004B7A);
+}
+
+.pc-btn--secondary {
+  background-color: transparent;
+  color: var(--color-action-primary, #0077C5);
+  border: 1px solid var(--color-action-primary, #0077C5);
+}
+
+.pc-btn--secondary:hover:not(:disabled) {
+  background-color: var(--color-action-passive-hover, #F4F5F8);
+}
+
+.pc-btn--tertiary {
+  background-color: var(--color-container-background-secondary, #F4F5F8);
+  color: var(--color-text-primary, #21262A);
+  border: 1px solid var(--color-divider-secondary, #D4D7DC);
+}
+
+.pc-btn--tertiary:hover:not(:disabled) {
+  background-color: var(--color-container-background-tertiary, #ECEEF1);
+}
+
+.pc-btn--danger {
+  background-color: var(--color-ui-negative, #D32F2F);
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+.pc-btn--danger:hover:not(:disabled) {
+  background-color: #B71C1C;
+}
+
+.pc-btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-primary, #21262A);
+}
+
+.pc-btn--ghost:hover:not(:disabled) {
+  background-color: var(--color-action-passive-hover, #F4F5F8);
+}
+
+.pc-btn--ai {
+  background: linear-gradient(135deg, var(--ai-color-gradient-start, #7C3AED), var(--ai-color-gradient-end, #236CFF));
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+.pc-btn--ai:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+/* Icon */
+.pc-btn__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pc-btn__label {
+  flex-shrink: 0;
+}
+
+/* Loading */
+.pc-btn--loading {
+  pointer-events: none;
+}
+
+.pc-btn__spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

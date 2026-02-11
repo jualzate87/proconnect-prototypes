@@ -1,0 +1,152 @@
+/* ── InReturnNav: Tax Return In-Form Navigation ──
+   Uses CGDS tokens for colors, PTG PTO for structure. */
+
+.pc-return-nav {
+  width: 240px;
+  background-color: var(--color-container-background-primary, #FFFFFF);
+  border-right: 1px solid var(--color-divider-secondary, #D4D7DC);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* Back button */
+.pc-return-nav__back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-divider-tertiary, #ECEEF1);
+  color: var(--color-text-link, #0077C5);
+  font-size: var(--font-size-body-3, 14px);
+  font-family: var(--font-name-body);
+  cursor: pointer;
+  transition: background-color var(--transition-fast, 100ms ease-in-out);
+}
+
+.pc-return-nav__back:hover {
+  background-color: var(--color-action-passive-hover, #F4F5F8);
+}
+
+/* Header */
+.pc-return-nav__header {
+  padding: var(--space-4, 16px);
+  border-bottom: 1px solid var(--color-divider-tertiary, #ECEEF1);
+}
+
+.pc-return-nav__title {
+  font-size: var(--font-size-body-2, 16px);
+  font-weight: var(--font-weight-body-bold, 600);
+  color: var(--color-text-primary, #21262A);
+  margin: 0;
+}
+
+.pc-return-nav__subtitle {
+  font-size: var(--font-size-body-3, 14px);
+  color: var(--color-text-secondary, #5D686F);
+  margin: var(--space-1, 4px) 0 0 0;
+}
+
+/* Sections */
+.pc-return-nav__sections {
+  padding: var(--space-2, 8px) 0;
+}
+
+.pc-return-nav__section {
+  margin-bottom: var(--space-1, 4px);
+}
+
+.pc-return-nav__section-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  width: 100%;
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  font-size: var(--font-size-body-3, 14px);
+  line-height: var(--line-height-body-3, 20px);
+  font-family: var(--font-name-body);
+  color: var(--color-text-primary, #21262A);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast, 100ms ease-in-out);
+}
+
+.pc-return-nav__section-btn:hover {
+  background-color: var(--color-action-passive-hover, #F4F5F8);
+}
+
+.pc-return-nav__section-btn--active {
+  background-color: #D9EFFB;
+  border-left-color: var(--color-ui-primary, #0077C5);
+  font-weight: var(--font-weight-body-bold, 600);
+  color: var(--color-ui-primary, #0077C5);
+}
+
+.pc-return-nav__section-label { flex: 1; }
+
+/* Status indicators — CGDS semantic colors */
+.pc-return-nav__status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--color-divider-secondary, #D4D7DC);
+  flex-shrink: 0;
+  background: var(--color-container-background-primary, #FFFFFF);
+}
+
+.pc-return-nav__status--sm { width: 8px; height: 8px; }
+
+.pc-return-nav__status--complete {
+  background-color: var(--color-ui-positive, #00856D);
+  border-color: var(--color-ui-positive, #00856D);
+}
+
+.pc-return-nav__status--in-progress {
+  background-color: var(--color-ui-primary, #0077C5);
+  border-color: var(--color-ui-primary, #0077C5);
+}
+
+.pc-return-nav__status--error {
+  background-color: var(--color-ui-negative, #D32F2F);
+  border-color: var(--color-ui-negative, #D32F2F);
+}
+
+/* Children */
+.pc-return-nav__children {
+  padding-left: var(--space-4, 16px);
+}
+
+.pc-return-nav__child {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  width: 100%;
+  padding: var(--space-1, 4px) var(--space-4, 16px);
+  background: none;
+  border: none;
+  font-size: var(--font-size-body-3, 14px);
+  font-family: var(--font-name-body);
+  color: var(--color-text-secondary, #5D686F);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast, 100ms ease-in-out);
+  border-left: 1px solid var(--color-divider-tertiary, #ECEEF1);
+}
+
+.pc-return-nav__child:hover {
+  background-color: var(--color-action-passive-hover, #F4F5F8);
+  color: var(--color-text-primary, #21262A);
+}
+
+.pc-return-nav__child--active {
+  color: var(--color-ui-primary, #0077C5);
+  font-weight: var(--font-weight-body-bold, 600);
+  border-left-color: var(--color-ui-primary, #0077C5);
+}
