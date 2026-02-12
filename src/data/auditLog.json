@@ -1,0 +1,262 @@
+[
+  {
+    "id": "audit-001",
+    "returnId": "jordan-wells",
+    "action": "status_changed",
+    "category": "status",
+    "timestamp": "2025-02-12T09:00:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Changed return status to Documents received",
+    "details": {
+      "previousStatus": "Not started",
+      "status": "Documents received"
+    }
+  },
+  {
+    "id": "audit-002",
+    "returnId": "jordan-wells",
+    "action": "assignee_changed",
+    "category": "collaboration",
+    "timestamp": "2025-02-12T09:02:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Assigned return to Sonia Miller",
+    "details": {
+      "assigneeName": "Sonia Miller"
+    }
+  },
+  {
+    "id": "audit-003",
+    "returnId": "jordan-wells",
+    "action": "document_uploaded",
+    "category": "document",
+    "timestamp": "2025-02-12T09:15:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Uploaded W-2 from Bing Corp",
+    "details": {
+      "documentName": "W2 Bing",
+      "documentType": "W-2"
+    }
+  },
+  {
+    "id": "audit-004",
+    "returnId": "jordan-wells",
+    "action": "document_uploaded",
+    "category": "document",
+    "timestamp": "2025-02-12T09:16:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Uploaded W-2 from Globex Inc",
+    "details": {
+      "documentName": "W2 Globex",
+      "documentType": "W-2"
+    }
+  },
+  {
+    "id": "audit-005",
+    "returnId": "jordan-wells",
+    "action": "document_uploaded",
+    "category": "document",
+    "timestamp": "2025-02-12T09:17:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Uploaded 1099-DIV from Vanguard",
+    "details": {
+      "documentName": "1099-DIV Vanguard",
+      "documentType": "1099-DIV"
+    }
+  },
+  {
+    "id": "audit-006",
+    "returnId": "jordan-wells",
+    "action": "document_imported",
+    "category": "document",
+    "timestamp": "2025-02-12T09:25:00Z",
+    "user": { "name": "System", "initials": "SY", "color": "#8C8C8C" },
+    "description": "OCR import completed for W2 Bing (72% confidence)",
+    "details": {
+      "documentName": "W2 Bing",
+      "documentType": "W-2"
+    }
+  },
+  {
+    "id": "audit-007",
+    "returnId": "jordan-wells",
+    "action": "document_imported",
+    "category": "document",
+    "timestamp": "2025-02-12T09:26:00Z",
+    "user": { "name": "System", "initials": "SY", "color": "#8C8C8C" },
+    "description": "OCR import completed for W2 Globex (95% confidence)",
+    "details": {
+      "documentName": "W2 Globex",
+      "documentType": "W-2"
+    }
+  },
+  {
+    "id": "audit-008",
+    "returnId": "jordan-wells",
+    "action": "bulk_import_completed",
+    "category": "return-data",
+    "timestamp": "2025-02-12T09:30:00Z",
+    "user": { "name": "System", "initials": "SY", "color": "#8C8C8C" },
+    "description": "Batch data import completed — 5 documents processed"
+  },
+  {
+    "id": "audit-009",
+    "returnId": "jordan-wells",
+    "action": "status_changed",
+    "category": "status",
+    "timestamp": "2025-02-12T09:31:00Z",
+    "user": { "name": "System", "initials": "SY", "color": "#8C8C8C" },
+    "description": "Return status auto-updated to Ready for review",
+    "details": {
+      "previousStatus": "Documents received",
+      "status": "Ready for review"
+    }
+  },
+  {
+    "id": "audit-010",
+    "returnId": "jordan-wells",
+    "action": "field_value_changed",
+    "category": "return-data",
+    "timestamp": "2025-02-12T10:05:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Edited Line 1a — Total W-2 wages",
+    "details": {
+      "fieldId": "line-1a",
+      "fieldLabel": "Total amount from Form(s) W-2, box 1",
+      "oldValue": 124265,
+      "newValue": 125000
+    }
+  },
+  {
+    "id": "audit-011",
+    "returnId": "jordan-wells",
+    "action": "version_saved",
+    "category": "version",
+    "timestamp": "2025-02-12T10:10:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Saved version: \"Pre-review baseline\"",
+    "details": {
+      "versionLabel": "Pre-review baseline"
+    }
+  },
+  {
+    "id": "audit-012",
+    "returnId": "jordan-wells",
+    "action": "review_started",
+    "category": "review",
+    "timestamp": "2025-02-12T10:15:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Started assisted AI review"
+  },
+  {
+    "id": "audit-013",
+    "returnId": "jordan-wells",
+    "action": "issue_flagged",
+    "category": "review",
+    "timestamp": "2025-02-12T10:18:00Z",
+    "user": { "name": "Tax Prep Agent", "initials": "AI", "color": "#0077C5" },
+    "description": "Flagged: Significant income drop (14.3% YoY)",
+    "details": {
+      "issueTitle": "Significant income drop",
+      "fieldId": "line-1a"
+    }
+  },
+  {
+    "id": "audit-014",
+    "returnId": "jordan-wells",
+    "action": "issue_flagged",
+    "category": "review",
+    "timestamp": "2025-02-12T10:19:00Z",
+    "user": { "name": "Tax Prep Agent", "initials": "AI", "color": "#0077C5" },
+    "description": "Flagged: Low scan confidence on W2 Bing (72%)",
+    "details": {
+      "issueTitle": "Low scan confidence on W2 Bing",
+      "documentName": "W2 Bing"
+    }
+  },
+  {
+    "id": "audit-015",
+    "returnId": "jordan-wells",
+    "action": "review_completed",
+    "category": "review",
+    "timestamp": "2025-02-12T10:22:00Z",
+    "user": { "name": "Tax Prep Agent", "initials": "AI", "color": "#0077C5" },
+    "description": "AI review completed — Score: 62/100",
+    "details": {
+      "score": 62
+    }
+  },
+  {
+    "id": "audit-016",
+    "returnId": "jordan-wells",
+    "action": "comment_added",
+    "category": "collaboration",
+    "timestamp": "2025-02-12T10:45:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Added note: \"Need to verify W-2 from Bing — income looks low\"",
+    "details": {
+      "commentText": "Need to verify W-2 from Bing — income looks low"
+    }
+  },
+  {
+    "id": "audit-017",
+    "returnId": "jordan-wells",
+    "action": "field_marked_reviewed",
+    "category": "review",
+    "timestamp": "2025-02-12T11:00:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Marked Line 2b (Ordinary dividends) as reviewed",
+    "details": {
+      "fieldId": "line-2b",
+      "fieldLabel": "Ordinary dividends"
+    }
+  },
+  {
+    "id": "audit-018",
+    "returnId": "jordan-wells",
+    "action": "issue_resolved",
+    "category": "review",
+    "timestamp": "2025-02-12T11:15:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Resolved: Low scan confidence on W2 Bing — confirmed value with client",
+    "details": {
+      "issueTitle": "Low scan confidence on W2 Bing"
+    }
+  },
+  {
+    "id": "audit-019",
+    "returnId": "jordan-wells",
+    "action": "document_replaced",
+    "category": "document",
+    "timestamp": "2025-02-12T11:20:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Replaced W2 Bing with updated scan",
+    "details": {
+      "documentName": "W2 Bing",
+      "documentType": "W-2"
+    }
+  },
+  {
+    "id": "audit-020",
+    "returnId": "jordan-wells",
+    "action": "return_shared",
+    "category": "collaboration",
+    "timestamp": "2025-02-12T11:30:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Shared return with Brandon Williams for second review",
+    "details": {
+      "assigneeName": "Brandon Williams"
+    }
+  },
+  {
+    "id": "audit-021",
+    "returnId": "jordan-wells",
+    "action": "version_saved",
+    "category": "version",
+    "timestamp": "2025-02-12T11:34:00Z",
+    "user": { "name": "Sonia Miller", "initials": "SM", "color": "#7B61FF" },
+    "description": "Saved version: \"After initial review fixes\"",
+    "details": {
+      "versionLabel": "After initial review fixes"
+    }
+  }
+]

@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { Dropdown } from '../ProConnectLibrary/ui/Dropdown';
+import type { DropdownItem } from '../ProConnectLibrary/ui/Dropdown';
+import { AuditLogPanel } from '../AuditLog/AuditLogPanel';
+import type { AuditLogEntry } from '../../types';
+import auditLogData from '../../data/auditLog.json';
 import './Home.css';
 
 const returns = [
@@ -14,9 +19,38 @@ const returns = [
   { client: 'Bill Smith', returnName: 'Smith, Bill', assignee: 'Sonia Miller', status: 'Not started' },
 ];
 
+const viewReturnSections = [
+  {
+    items: [
+      { id: 'view-return', label: 'View return' },
+      { id: 'copy-return', label: 'Copy return' },
+      { id: 'rename-return', label: 'Rename return' },
+      { id: 'restrict-access', label: 'Restrict access' },
+      { id: 'unlock-return', label: 'Unlock return' },
+      { id: 'split-mfj', label: 'Split MFJ return' },
+    ],
+  },
+  {
+    items: [
+      { id: 'collect-data', label: 'Collect data Intuit Link' },
+      { id: 'esignature', label: 'eSignature' },
+      { id: 'efile-letter', label: 'E-file confirmation letter' },
+      { id: 'invoice', label: 'Invoice' },
+      { id: 'invoice-qb', label: 'Invoice via QuickBooks' },
+    ],
+  },
+  {
+    items: [
+      { id: 'audit-log', label: 'Audit log' },
+    ],
+  },
+];
+
 export const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState('by-return-type');
   const [activeReturnType, setActiveReturnType] = useState('all');
+  const [auditLogOpen, setAuditLogOpen] = useState(false);
+  const [auditLogClient, setAuditLogClient] = useState<string | undefined>(undefined);
 
   return (
     <div className="tax-hub">
@@ -189,7 +223,22 @@ export const Home: React.FC = () => {
                   <td className="tax-hub-cell-muted">Not e-filed</td>
                   <td className="tax-hub-cell-muted">Not e-filed</td>
                   <td>
-                    <button className="tax-hub-btn-view">View return ▾</button>
+                    <Dropdown
+                      trigger={
+                        <button className="tax-hub-btn-view">
+                          View return ▾
+                        </button>
+                      }
+                      sections={viewReturnSections}
+                      align="right"
+                      width={250}
+                      onItemClick={(item: DropdownItem) => {
+                        if (item.id === 'audit-log') {
+                          setAuditLogClient(returnItem.client);
+                          setAuditLogOpen(true);
+                        }
+                      }}
+                    />
                   </td>
                 </tr>
               ))}
@@ -212,6 +261,13 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <AuditLogPanel
+        isOpen={auditLogOpen}
+        onClose={() => setAuditLogOpen(false)}
+        entries={auditLogData as AuditLogEntry[]}
+        clientName={auditLogClient}
+      />
     </div>
   );
 };
