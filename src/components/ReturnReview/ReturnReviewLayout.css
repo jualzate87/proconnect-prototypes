@@ -1,0 +1,22 @@
+.review-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--color-background);
+  overflow: hidden;
+}
+
+.review-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.review-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  transition: flex var(--transition-slow);
+}

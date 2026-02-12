@@ -1,0 +1,181 @@
+[
+  {
+    "id": "issue-yoy-wages",
+    "category": "yoy-analysis",
+    "severity": "high",
+    "title": "Significant income drop",
+    "description": "Wages dropped by $21.5k (-15%) vs Prior Year.",
+    "explanation": "Combined W-2 wages fell from $145,000 to $124,265. The Bing Equipment W-2 shows a $22,000 reduction while Tech Circle remained stable. This could indicate reduced hours, a mid-year role change, or a scan extraction error.",
+    "rootCause": "Last year, the taxpayer had W-2 income totaling $145,000 from two employers. This year, while both W-2s are present (Bing Equipment: $60,000, Tech Circle: $64,304), the combined total is $124,265 — a decrease of $20,735. The Bing Equipment W-2 shows a significant reduction from the prior year ($82,000 → $60,000), which could indicate reduced hours, a mid-year job change, or a data extraction error given the low scan confidence on that document.",
+    "affectedFields": ["line-1a", "line-1z", "line-9", "line-11"],
+    "suggestedAction": "Verify the W2 Bing wages amount ($60,000) against the source document. The scan confidence is low (72%). Confirm with the client whether the income reduction is expected.",
+    "status": "open",
+    "whyItMatters": "A 15% income drop is significant and could indicate missing income documents, data extraction errors, or unreported income. The IRS cross-references W-2 data, so any discrepancy will trigger a notice.",
+    "estimatedTaxImpact": "~$4,600 reduction in tax liability",
+    "details": [
+      { "label": "Bing Equipment W-2 (2024)", "value": "$60,000" },
+      { "label": "Bing Equipment W-2 (2023)", "value": "$82,000" },
+      { "label": "Tech Circle W-2 (2024)", "value": "$64,304" },
+      { "label": "Tech Circle W-2 (2023)", "value": "$63,000" },
+      { "label": "Net change", "value": "-$20,735 (-14.3%)" }
+    ],
+    "calculations": [
+      { "label": "2024 Total W-2 Wages", "formula": "$60,000 + $64,304", "result": "$124,265" },
+      { "label": "2023 Total W-2 Wages", "formula": "$82,000 + $63,000", "result": "$145,000" },
+      { "label": "Year-over-Year Change", "formula": "$124,265 - $145,000", "result": "-$20,735 (-14.3%)" }
+    ]
+  },
+  {
+    "id": "issue-missing-1099",
+    "category": "yoy-analysis",
+    "severity": "high",
+    "title": "Potential missing document: Chase Bank 1099-INT",
+    "description": "A 1099-INT from Chase Bank was present last year but not imported this year.",
+    "explanation": "Last year's return included $1,200 in interest income from Chase Bank (1099-INT). No matching document was received this year. If the account is still active, the missing document would understate taxable interest.",
+    "rootCause": "Historical document comparison shows that a 1099-INT from Chase Bank was filed with last year's return reporting $1,200 in interest income. This year's document import did not include any Chase Bank documents. Either the client closed the account, the 1099-INT hasn't been uploaded yet, or it was lost.",
+    "affectedFields": ["line-2b"],
+    "suggestedAction": "Contact the client to confirm if the Chase Bank account was closed or if the 1099-INT was simply not uploaded yet.",
+    "status": "open",
+    "whyItMatters": "Missing income documents lead to underreported income. The IRS receives copies of all 1099s and will issue a CP2000 notice for any unreported interest income, plus penalties and interest.",
+    "estimatedTaxImpact": "~$264 if $1,200 interest is unreported",
+    "missingDocuments": ["Chase Bank 1099-INT (2023: $1,200 interest income)"],
+    "details": [
+      { "label": "2023 Chase Bank interest", "value": "$1,200" },
+      { "label": "2024 Chase Bank interest", "value": "Not received" },
+      { "label": "Current taxable interest (Line 2b)", "value": "$4,535" },
+      { "label": "Potential corrected amount", "value": "$5,735" }
+    ]
+  },
+  {
+    "id": "issue-scan-w2bing",
+    "category": "scan-quality",
+    "severity": "medium",
+    "title": "Low scan confidence on W2-Bing.pdf",
+    "description": "OCR confidence is 72% for the W2-Bing document. The wages field ($60,000) may not be accurately extracted.",
+    "explanation": "The W2-Bing.pdf was likely scanned at low resolution or photographed. The OCR system flagged Box 1 (Wages) at 72% confidence — there is a 28% chance the extracted value ($60,000) is incorrect.",
+    "rootCause": "The W2-Bing.pdf document appears to have been scanned at a lower resolution or may have been a photograph rather than a direct scan. The OCR system flagged the wages box (Box 1) with 72% confidence, meaning there is a 28% chance the extracted value is incorrect. Other fields on this W-2 may also be affected.",
+    "affectedFields": ["line-1a", "line-25a"],
+    "suggestedAction": "Open the W2-Bing source document to verify the wages amount. Compare the extracted $60,000 against what's visible on the document image. If incorrect, edit the value in the source extraction panel.",
+    "status": "open",
+    "whyItMatters": "Inaccurate data extraction leads to incorrect tax calculations. If the wages are wrong, federal withholding, Social Security, and Medicare calculations will also be wrong, potentially resulting in an incorrect refund or balance due.",
+    "estimatedTaxImpact": "Could vary by $500-$5,000+ depending on the correct value",
+    "details": [
+      { "label": "Document", "value": "W2-Bing.pdf" },
+      { "label": "OCR Confidence", "value": "72%" },
+      { "label": "Extracted wages (Box 1)", "value": "$60,000" },
+      { "label": "Extracted withholding (Box 2)", "value": "$10,000" },
+      { "label": "Affected 1040 lines", "value": "Line 1a (Wages), Line 25a (Withholding)" }
+    ]
+  },
+  {
+    "id": "issue-address-mismatch",
+    "category": "scan-quality",
+    "severity": "low",
+    "title": "Potential address discrepancy",
+    "description": "Address on W2-Bing (331 Easy Street) may differ from the return address (333 Easy Street).",
+    "explanation": "The address extracted from the W2-Bing document reads '331 Easy Street' while the return has '333 Easy Street.' This could be a scan/OCR error or an actual address change.",
+    "rootCause": "Address mismatches between the tax return and IRS records can trigger automated correspondence. The OCR extraction from the low-confidence W2-Bing document may have misread '333' as '331'. Alternatively, the client may have moved during the year.",
+    "affectedFields": [],
+    "suggestedAction": "Cross-reference the address against the W-2 addresses and prior year return. Confirm with the client that 333 Easy Street, Middlefield, CA 98756 is their current address.",
+    "status": "open",
+    "whyItMatters": "Address typos and mismatches are one of the most common causes of IRS letters and delayed refunds. A simple verification step can prevent weeks of client frustration.",
+    "estimatedTaxImpact": "No direct tax impact, but may delay processing",
+    "details": [
+      { "label": "Return address", "value": "333 Easy Street, Middlefield, CA 98756" },
+      { "label": "W2-Bing address", "value": "331 Easy Street, Middlefield, CA 98756" },
+      { "label": "Prior year address", "value": "333 Easy Street, Middlefield, CA 98756" }
+    ]
+  },
+  {
+    "id": "issue-irs-withholding",
+    "category": "irs-compliance",
+    "severity": "medium",
+    "title": "Under-withholding: safe harbor risk",
+    "description": "Total federal withholding ($19,800) is only 82% of total tax liability ($24,186). Client may owe an underpayment penalty.",
+    "explanation": "The taxpayer's withholdings fall short of both IRS safe harbor thresholds: they have neither 90% of current-year tax nor 100% of prior-year tax withheld. An underpayment penalty of approximately $350 may apply.",
+    "rootCause": "The taxpayer's federal income tax withholdings from both W-2s total $19,800, but the calculated tax liability is $24,186 — a shortfall of $4,386. Under IRS safe harbor rules, taxpayers must have withheld at least 90% of the current year's tax ($21,767) or 100% of the prior year's tax ($28,433) to avoid underpayment penalties. Neither threshold is met.",
+    "affectedFields": ["line-25a", "line-24", "line-37"],
+    "suggestedAction": "Inform the client about the $4,386 balance due and potential underpayment penalty. Recommend adjusting W-4 withholdings for the current year to prevent recurrence. Consider if estimated tax payments were made but not yet documented.",
+    "status": "open",
+    "whyItMatters": "The IRS charges an underpayment penalty (currently ~8% annualized) when taxpayers don't meet safe harbor withholding thresholds. Flagging this early allows the preparer to advise the client and check for any estimated payments that may offset the shortfall.",
+    "estimatedTaxImpact": "~$350 underpayment penalty + $4,386 balance due",
+    "estimatedPenalty": {
+      "amount": 350,
+      "calculation": "Shortfall of $4,386 × ~8% annualized rate, prorated across quarters",
+      "quarterlyPayment": 6047,
+      "safeHarborThreshold": 21767,
+      "currentWithholding": 19800
+    },
+    "calculations": [
+      { "label": "Total tax liability (Line 24)", "result": "$24,186" },
+      { "label": "Total withholding (Line 25a)", "result": "$19,800" },
+      { "label": "Shortfall", "formula": "$24,186 - $19,800", "result": "$4,386" },
+      { "label": "90% safe harbor threshold", "formula": "$24,186 × 90%", "result": "$21,767" },
+      { "label": "100% prior year threshold", "result": "$28,433" },
+      { "label": "Estimated underpayment penalty", "result": "~$350" },
+      { "label": "Recommended Q4 estimated payment", "result": "$6,047" }
+    ],
+    "details": [
+      { "label": "W2-Bing withholding", "value": "$10,000" },
+      { "label": "W2-Tech Circle withholding", "value": "$9,800" },
+      { "label": "Total withholding", "value": "$19,800" },
+      { "label": "Total tax liability", "value": "$24,186" },
+      { "label": "Withholding ratio", "value": "82% (below 90% safe harbor)" }
+    ]
+  },
+  {
+    "id": "issue-credits-charitable",
+    "category": "credits-deductions",
+    "severity": "low",
+    "title": "Potential audit trigger: high charitable giving",
+    "description": "If client has charitable deductions, verify they are proportional to income. High ratios trigger IRS scrutiny.",
+    "explanation": "The client is using the standard deduction ($14,600). If they have significant charitable contributions that weren't itemized, they may be leaving money on the table. Conversely, if charitable contributions are disproportionately high, it's an audit flag.",
+    "rootCause": "While the current return uses the standard deduction ($14,600), if the client has significant charitable contributions that weren't itemized, they may be leaving money on the table. Conversely, if charitable deductions exceed typical percentages for this income level (generally 3-5% of AGI), it can trigger IRS audit selection criteria.",
+    "affectedFields": ["line-12"],
+    "suggestedAction": "Confirm with the client whether they have charitable contributions that could benefit from itemizing. If itemized deductions exceed $14,600, switch from standard to itemized deduction.",
+    "status": "open",
+    "whyItMatters": "Charitable deductions disproportionate to income are one of the top IRS audit triggers. Even legitimate deductions should be well-documented with receipts and acknowledgment letters.",
+    "estimatedTaxImpact": "Could save $500-$2,000+ if itemizing is beneficial",
+    "calculations": [
+      { "label": "Current deduction (Standard)", "result": "$14,600" },
+      { "label": "AGI", "result": "$129,933" },
+      { "label": "Typical charitable range (3-5% of AGI)", "formula": "$129,933 × 3-5%", "result": "$3,898 - $6,497" },
+      { "label": "Itemized deduction breakeven", "result": "> $14,600 to benefit from itemizing" }
+    ]
+  },
+  {
+    "id": "issue-withholding-gap",
+    "category": "irs-compliance",
+    "severity": "medium",
+    "title": "Multi-job withholding gap",
+    "description": "Taxpayer has two W-2 jobs. Combined withholding may not account for higher marginal bracket from total income.",
+    "explanation": "Each employer withholds as if it's the only job. With two jobs ($60K + $64K), each withholds at a lower bracket than the combined $124K income actually requires. This commonly causes under-withholding.",
+    "rootCause": "When a taxpayer has multiple W-2 jobs, each employer calculates withholding independently based only on that job's wages. Employer 1 (Bing, $60,000) withholds as if the taxpayer earns only $60K, and Employer 2 (Tech Circle, $64,304) withholds as if the taxpayer earns only $64K. However, the combined income of $124,265 pushes the taxpayer into a higher marginal bracket, resulting in systematic under-withholding.",
+    "affectedFields": ["line-25a", "line-24"],
+    "suggestedAction": "Advise the client to submit updated W-4 forms to both employers, checking the 'Two jobs' box on Step 2, or use the IRS Tax Withholding Estimator to calculate the additional withholding needed.",
+    "status": "open",
+    "whyItMatters": "Multi-job withholding gaps are one of the most common causes of surprise tax bills. Proactive W-4 adjustment prevents this from recurring next year.",
+    "estimatedTaxImpact": "Underlying cause of the $4,386 balance due",
+    "details": [
+      { "label": "Job 1 (Bing Equipment)", "value": "$60,000 wages / $10,000 withheld" },
+      { "label": "Job 2 (Tech Circle)", "value": "$64,304 wages / $9,800 withheld" },
+      { "label": "Combined income", "value": "$124,265" },
+      { "label": "Effective withholding rate", "value": "15.9%" },
+      { "label": "Required rate for this income", "value": "~19.5%" }
+    ]
+  },
+  {
+    "id": "issue-interest-spike",
+    "category": "yoy-analysis",
+    "severity": "low",
+    "title": "Taxable interest increased 42%",
+    "description": "Taxable interest rose from $3,200 to $4,535 (+42%). Verify this is consistent with the client's savings activity.",
+    "explanation": "Interest income increased by $1,335 year-over-year. This is likely due to higher interest rates, but could also indicate a new savings account or CD that should be documented.",
+    "rootCause": "The 1099-INT from the current year shows $4,535 in interest income vs $3,200 last year. Given the rising interest rate environment, this increase is plausible for existing savings/CD holdings. However, if the client opened new accounts, there may be additional 1099-INTs that haven't been received yet.",
+    "affectedFields": ["line-2b"],
+    "suggestedAction": "Confirm with the client whether the interest increase is from existing accounts (higher rates) or new accounts. If new accounts exist, ensure all 1099-INTs are collected.",
+    "status": "open",
+    "whyItMatters": "A 42% increase in interest income is notable. While likely explained by rate increases, it's worth confirming no additional interest income sources are missing.",
+    "estimatedTaxImpact": "~$295 additional tax from $1,335 increase (at 22% bracket)"
+  }
+]

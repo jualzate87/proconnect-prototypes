@@ -1,0 +1,376 @@
+.form-1040-viewer {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  background-color: #f0f0f0;
+}
+
+.form-1040-container {
+  max-width: 920px;
+  margin: 0 auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Header Section */
+.form-1040-header-section {
+  padding: var(--spacing-sm);
+  border-bottom: 2px solid #333;
+}
+
+.form-1040-top-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 80px 120px;
+  gap: 4px;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid #999;
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-number-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-label-small {
+  font-size: 10px;
+  color: #666;
+}
+
+.form-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-dept {
+  font-size: 9px;
+  color: #666;
+  text-align: center;
+}
+
+.form-title-main {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.form-year-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-year {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-omb-block {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.form-omb {
+  font-size: 8px;
+  color: #666;
+}
+
+.form-irs-block {
+  display: none;
+}
+
+/* Personal Info */
+.form-personal-section {
+  border: 1px solid #999;
+}
+
+.form-row {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.form-row:last-child {
+  border-bottom: none;
+}
+
+.form-cell {
+  padding: 4px 8px;
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.form-cell:last-child {
+  border-right: none;
+}
+
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+.flex-3 { flex: 3; }
+
+.form-label-tiny {
+  font-size: 9px;
+  color: #666;
+  line-height: 1.3;
+}
+
+.form-value-filled {
+  font-size: 14px;
+  color: #0055aa;
+  font-weight: 500;
+}
+
+.form-value-filled.address {
+  color: #0055aa;
+}
+
+/* Filing Status */
+.form-section {
+  border-bottom: 2px solid #333;
+}
+
+.form-section-header {
+  background-color: #f5f5f5;
+  padding: 6px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  font-family: -apple-system, sans-serif;
+}
+
+.filing-status-options {
+  padding: 8px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.filing-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #333;
+  cursor: default;
+}
+
+.filing-option input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+}
+
+/* Form Lines */
+.form-lines {
+  padding: 4px 0;
+}
+
+.form-line {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px 160px;
+  align-items: center;
+  padding: 6px 12px;
+  min-height: 34px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color var(--transition-fast);
+}
+
+.form-line:hover {
+  background-color: #fafafa;
+}
+
+.form-line.sub-line {
+  padding-left: 24px;
+}
+
+.form-line.total-line {
+  border-top: 1px solid #ddd;
+  font-weight: 600;
+}
+
+.form-line.major {
+  background-color: #fafafa;
+  border-top: 2px solid #999;
+}
+
+.form-line.amount-owe {
+  background-color: #fff9e6;
+}
+
+.line-number {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.line-description {
+  font-size: 12px;
+  color: #333;
+  padding-right: 12px;
+  font-family: -apple-system, sans-serif;
+  line-height: 1.4;
+}
+
+.line-ref {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+/* Field Values - Interactive */
+.form-field-value {
+  text-align: right;
+  padding: 4px 10px;
+  font-size: 14px;
+  color: #0055aa;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  transition: all var(--transition-fast);
+  min-height: 28px;
+}
+
+.form-field-value.empty {
+  min-height: 28px;
+}
+
+.form-field-value.highlighted {
+  background-color: var(--color-highlight-field);
+  cursor: pointer;
+  border: 1px solid rgba(0, 119, 197, 0.3);
+}
+
+.form-field-value.highlighted:hover {
+  background-color: var(--color-highlight-field-active);
+  box-shadow: 0 0 0 2px rgba(0, 119, 197, 0.2);
+}
+
+.form-field-value.active {
+  background-color: var(--color-highlight-field-active);
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 119, 197, 0.15);
+}
+
+/* Personal review state */
+.form-field-value.personally-reviewed {
+  background-color: rgba(0, 166, 81, 0.06);
+  border-left: 2px solid #00a651;
+}
+
+/* Corrected (edited via source) */
+.form-field-value.corrected {
+  background-color: rgba(0, 119, 197, 0.06);
+  border-left: 2px solid #0077C5;
+}
+
+/* Personal review checkmark (always visible when reviewed) */
+.field-personal-check {
+  color: #00a651;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Corrected badge */
+.field-corrected-badge {
+  color: #0077C5;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Hover review button */
+.field-review-hover-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid #94a3b8;
+  background: white;
+  color: #94a3b8;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.field-review-hover-btn:hover {
+  border-color: #00a651;
+  background: #dcfce7;
+  color: #00a651;
+}
+
+/* Change badges */
+.field-change-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  font-family: -apple-system, sans-serif;
+  flex-shrink: 0;
+}
+
+/* Graduated severity colors */
+.field-change-badge.change-severe {
+  background-color: var(--color-change-severe-bg);
+  color: var(--color-change-severe-text);
+}
+
+.field-change-badge.change-moderate {
+  background-color: var(--color-change-moderate-bg);
+  color: var(--color-change-moderate-text);
+}
+
+.field-change-badge.change-minor {
+  background-color: var(--color-change-minor-bg);
+  color: var(--color-change-minor-text);
+}
+
+/* Legacy fallback for badges without severity class */
+.field-change-badge.negative:not(.change-severe):not(.change-moderate):not(.change-minor) {
+  background-color: #fce8e8;
+  color: #b71c1c;
+}
+
+.field-change-badge.positive:not(.change-severe):not(.change-moderate):not(.change-minor) {
+  background-color: #e6f9ed;
+  color: #1b6d3d;
+}
+
+.form-line-separator {
+  height: 1px;
+  background-color: #ddd;
+  margin: 4px 0;
+}

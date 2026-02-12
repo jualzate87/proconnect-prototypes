@@ -69,4 +69,41 @@
   /* Layout */
   --sidebar-width: 240px;
   --header-height: 64px;
+
+  /* Agent Panel */
+  --agent-panel-width: 384px;
+  --color-agent-primary: #0077C5;
+  --color-agent-bg: #ffffff;
+
+  /* Review Scores */
+  --color-score-accuracy: #00a651;
+  --color-score-completeness: #0077C5;
+  --color-score-risk: #ff9800;
+
+  /* 1040 Field States */
+  --color-highlight-field: rgba(0, 119, 197, 0.15);
+  --color-highlight-field-active: rgba(0, 119, 197, 0.3);
+
+  /* OCR Confidence */
+  --color-confidence-high: #00a651;
+  --color-confidence-medium: #ff9800;
+  --color-confidence-low: #d32f2f;
+
+  /* Diff Styling */
+  --color-diff-added: #e6f9ed;
+  --color-diff-removed: #fce8e8;
+  --color-diff-text-added: #1b6d3d;
+  --color-diff-text-removed: #b71c1c;
+
+  /* Return Header */
+  --return-header-height: 63px;
+  --return-tabs-height: 48px;
+
+  /* YoY Change Severity (graduated color coding) */
+  --color-change-severe-bg: #e65100;
+  --color-change-severe-text: #ffffff;
+  --color-change-moderate-bg: #ff9800;
+  --color-change-moderate-text: #ffffff;
+  --color-change-minor-bg: #fff3e0;
+  --color-change-minor-text: #e65100;
 }

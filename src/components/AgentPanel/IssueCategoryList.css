@@ -1,0 +1,479 @@
+.issue-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.issue-category {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.issue-category.expanded {
+  border-color: #cbd5e1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.issue-category-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 14px;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+
+.issue-category-header:hover {
+  background-color: #f8fafc;
+}
+
+.issue-category-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.issue-category-label {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.issue-category-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0 6px;
+}
+
+.issue-category-badge-complete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #00a651;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.issue-category-chevron {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.issue-category-chevron.rotated {
+  transform: rotate(90deg);
+}
+
+/* Issue Cards */
+.issue-category-body {
+  padding: 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.issue-card {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-left: 3px solid transparent;
+}
+
+.issue-card:hover {
+  background-color: #f1f5f9;
+}
+
+.issue-card.issue-expanded {
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid;
+}
+
+.issue-card.issue-correct {
+  opacity: 0.75;
+}
+
+.issue-card.high {
+  border-left-color: #ef4444;
+}
+
+.issue-card.medium {
+  border-left-color: #f59e0b;
+}
+
+.issue-card.low {
+  border-left-color: #3b82f6;
+}
+
+/* Card header */
+.issue-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.issue-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.issue-severity-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.issue-severity-dot.high {
+  background: #ef4444;
+}
+
+.issue-severity-dot.medium {
+  background: #f59e0b;
+}
+
+.issue-severity-dot.low {
+  background: #3b82f6;
+}
+
+.issue-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a202c;
+  line-height: 1.3;
+}
+
+.issue-card-correct-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: #00a651;
+  font-weight: 600;
+  padding: 2px 8px;
+  background: #dcfce7;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.issue-card-description {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Tax impact */
+.issue-tax-impact {
+  display: inline-block;
+  font-size: 11px;
+  color: #92400e;
+  background: #fef3c7;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Expanded details */
+.issue-card-details {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideDown 0.2s ease-out;
+}
+
+.issue-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.issue-detail-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.issue-detail-text {
+  font-size: 12px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.issue-detail-text.suggestion {
+  color: #0077C5;
+  background: rgba(0, 119, 197, 0.06);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border-left: 2px solid #0077C5;
+}
+
+/* Details table */
+.issue-detail-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.issue-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: white;
+}
+
+.detail-row-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.detail-row-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+/* Missing documents */
+.missing-docs .missing-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #dc2626;
+  padding: 6px 10px;
+  background: #fef2f2;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+
+/* Penalty section */
+.penalty-section {
+  background: #fef3c7;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.penalty-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.penalty-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.penalty-desc {
+  font-size: 12px;
+  color: #92400e;
+}
+
+.penalty-calculation {
+  font-size: 11px;
+  color: #78716c;
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+
+.penalty-quarterly {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #475569;
+  padding: 6px 10px;
+  background: white;
+  border-radius: 6px;
+}
+
+.penalty-quarterly strong {
+  color: #0077C5;
+}
+
+/* Why it matters */
+.issue-why-matters {
+  font-size: 12px;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.issue-why-matters summary {
+  font-weight: 600;
+  color: #475569;
+  padding: 4px 0;
+  list-style: none;
+}
+
+.issue-why-matters summary::before {
+  content: '▶ ';
+  font-size: 10px;
+}
+
+.issue-why-matters[open] summary::before {
+  content: '▼ ';
+}
+
+.issue-why-matters p {
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+/* Action buttons */
+.issue-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.issue-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid;
+}
+
+.issue-action-btn.contextual {
+  background: white;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+.issue-action-btn.contextual:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.action-icon {
+  font-size: 13px;
+}
+
+.issue-action-btn.mark-correct {
+  background: white;
+  border-color: #00a651;
+  color: #00a651;
+}
+
+.issue-action-btn.mark-correct:hover {
+  background: #dcfce7;
+}
+
+/* Mark as correct confirmation */
+.mark-correct-confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.resolution-note-input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid #00a651;
+  border-radius: 4px;
+  font-size: 11px;
+  outline: none;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.confirm-correct-btn {
+  padding: 4px 10px;
+  background: #00a651;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.confirm-correct-btn:hover {
+  background: #009147;
+}
+
+.cancel-correct-btn {
+  padding: 4px 8px;
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #64748b;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cancel-correct-btn:hover {
+  background: #f1f5f9;
+}
+
+.issue-correct-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #00a651;
+  font-weight: 600;
+}
+
+.resolution-note-display {
+  font-size: 11px;
+  font-weight: 400;
+  color: #64748b;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

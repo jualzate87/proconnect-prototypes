@@ -1,20 +1,46 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Dropdown } from '../ProConnectLibrary/ui/Dropdown';
+import type { DropdownItem } from '../ProConnectLibrary/ui/Dropdown';
 import './Home.css';
 
 const returns = [
-  { client: 'Wells, Jordan', returnName: 'Wells, Jordan', assignee: 'Sonia Miller', status: 'Not started' },
-  { client: 'Melissa Tahan', returnName: 'Tahan, Melissa', assignee: 'Brandon Williams', status: 'Not started' },
-  { client: 'Melissa London', returnName: 'London, Melissa', assignee: 'Sonia Miller', status: 'Not started' },
-  { client: 'Anne Seurat', returnName: 'Seurat, Anne', assignee: 'Sonia Miller', status: 'Not started' },
-  { client: 'Stephanie Zau', returnName: 'Zau, Stephanie', assignee: 'Sonia Miller', status: 'Not started' },
-  { client: 'Andy Hoobing', returnName: 'Hoobing, Andy', assignee: 'Sonia Miller', status: 'Not started' },
-  { client: 'Yvonne Hobbs', returnName: 'Hobbs, Yvonne', assignee: 'Sonia Miller', status: 'Not started' },
-  { client: 'Shannon Carus', returnName: 'Carus, Shannon', assignee: 'Brandon Williams', status: 'Not started' },
-  { client: 'Lisa Pifko', returnName: 'Pifko, Lisa', assignee: 'Brandon Williams', status: 'Not started' },
-  { client: 'Bill Smith', returnName: 'Smith, Bill', assignee: 'Sonia Miller', status: 'Not started' },
+  { client: 'Wells, Jordan', returnName: 'Wells, Jordan', assignee: 'Sonia Miller', status: 'Not started', clientId: 'jordan-wells' },
+  { client: 'Melissa Tahan', returnName: 'Tahan, Melissa', assignee: 'Brandon Williams', status: 'Not started', clientId: null },
+  { client: 'Melissa London', returnName: 'London, Melissa', assignee: 'Sonia Miller', status: 'Not started', clientId: null },
+  { client: 'Anne Seurat', returnName: 'Seurat, Anne', assignee: 'Sonia Miller', status: 'Not started', clientId: null },
+  { client: 'Stephanie Zau', returnName: 'Zau, Stephanie', assignee: 'Sonia Miller', status: 'Not started', clientId: null },
+  { client: 'Andy Hoobing', returnName: 'Hoobing, Andy', assignee: 'Sonia Miller', status: 'Not started', clientId: null },
+  { client: 'Yvonne Hobbs', returnName: 'Hobbs, Yvonne', assignee: 'Sonia Miller', status: 'Not started', clientId: null },
+  { client: 'Shannon Carus', returnName: 'Carus, Shannon', assignee: 'Brandon Williams', status: 'Not started', clientId: null },
+  { client: 'Lisa Pifko', returnName: 'Pifko, Lisa', assignee: 'Brandon Williams', status: 'Not started', clientId: null },
+  { client: 'Bill Smith', returnName: 'Smith, Bill', assignee: 'Sonia Miller', status: 'Not started', clientId: null },
+];
+
+const viewReturnSections = [
+  {
+    items: [
+      { id: 'view-return', label: 'View return' },
+      { id: 'copy-return', label: 'Copy return' },
+      { id: 'rename-return', label: 'Rename return' },
+      { id: 'restrict-access', label: 'Restrict access' },
+      { id: 'unlock-return', label: 'Unlock return' },
+      { id: 'split-mfj', label: 'Split MFJ return' },
+    ],
+  },
+  {
+    items: [
+      { id: 'collect-data', label: 'Collect data Intuit Link' },
+      { id: 'esignature', label: 'eSignature' },
+      { id: 'efile-letter', label: 'E-file confirmation letter' },
+      { id: 'invoice', label: 'Invoice' },
+      { id: 'invoice-qb', label: 'Invoice via QuickBooks' },
+    ],
+  },
 ];
 
 export const Home: React.FC = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('by-return-type');
   const [activeReturnType, setActiveReturnType] = useState('all');
 
@@ -189,7 +215,21 @@ export const Home: React.FC = () => {
                   <td className="tax-hub-cell-muted">Not e-filed</td>
                   <td className="tax-hub-cell-muted">Not e-filed</td>
                   <td>
-                    <button className="tax-hub-btn-view">View return ▾</button>
+                    <Dropdown
+                      trigger={
+                        <button className="tax-hub-btn-view">
+                          View return ▾
+                        </button>
+                      }
+                      sections={viewReturnSections}
+                      align="right"
+                      width={250}
+                      onItemClick={(item: DropdownItem) => {
+                        if (item.id === 'view-return' && returnItem.clientId) {
+                          navigate(`/return/${returnItem.clientId}/launch`);
+                        }
+                      }}
+                    />
                   </td>
                 </tr>
               ))}
