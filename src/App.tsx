@@ -9,6 +9,7 @@ import { APIHealth } from './components/APIHealth/APIHealth';
 import { APIPortalTrowser } from './components/Trowsers/APIPortalTrowser';
 import { FirmBrandingTrowser } from './components/Trowsers/FirmBrandingTrowser';
 import { PasswordProtection } from './components/Auth/PasswordProtection';
+import { IconShowcase } from './components/IconShowcase/IconShowcase';
 
 function App() {
   const [openTrowser, setOpenTrowser] = useState<'api-portal' | 'firm-branding' | null>(null);
@@ -35,6 +36,7 @@ function App() {
               <Route path="health" element={<APIHealth />} />
             </Route>
           </Route>
+          <Route path="icons" element={<IconShowcase />} />
         </Routes>
         
         <APIPortalTrowser 
