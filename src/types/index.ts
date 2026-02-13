@@ -80,6 +80,76 @@ export interface CodeExample {
 }
 
 // ============================================
+// Audit Log Types
+// ============================================
+
+export type AuditActionType =
+  | 'document_uploaded'
+  | 'document_deleted'
+  | 'document_replaced'
+  | 'document_imported'
+  | 'field_value_changed'
+  | 'field_value_restored'
+  | 'bulk_import_completed'
+  | 'review_started'
+  | 'review_completed'
+  | 'issue_flagged'
+  | 'issue_resolved'
+  | 'field_marked_reviewed'
+  | 'status_changed'
+  | 'return_locked'
+  | 'return_unlocked'
+  | 'assignee_changed'
+  | 'comment_added'
+  | 'comment_resolved'
+  | 'return_shared'
+  | 'return_efiled'
+  | 'efile_accepted'
+  | 'efile_rejected'
+  | 'return_printed'
+  | 'version_saved'
+  | 'version_restored'
+  | 'version_compared';
+
+export type AuditActionCategory =
+  | 'document'
+  | 'return-data'
+  | 'review'
+  | 'status'
+  | 'collaboration'
+  | 'filing'
+  | 'version';
+
+export interface AuditLogEntry {
+  id: string;
+  returnId: string;
+  action: AuditActionType;
+  category: AuditActionCategory;
+  timestamp: string;
+  user: {
+    name: string;
+    initials: string;
+    color: string;
+  };
+  description: string;
+  details?: {
+    fieldId?: string;
+    fieldLabel?: string;
+    oldValue?: string | number;
+    newValue?: string | number;
+    documentName?: string;
+    documentType?: string;
+    status?: string;
+    previousStatus?: string;
+    versionLabel?: string;
+    score?: number;
+    assigneeName?: string;
+    commentText?: string;
+    issueTitle?: string;
+  };
+}
+
+// ============================================
 // Agentic Review Types
 // ============================================
 
