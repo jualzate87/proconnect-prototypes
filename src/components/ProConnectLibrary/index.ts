@@ -237,6 +237,10 @@ export {
   IconClients,
   IconReporting,
 
+  // ── Brand ──
+  IconProConnectMark,
+  ProConnectLogo,
+
   // ── Backward-compatible aliases ──
   IconPlus,
   IconCheck,

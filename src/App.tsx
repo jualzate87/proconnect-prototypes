@@ -11,6 +11,7 @@ import { FirmBrandingTrowser } from './components/Trowsers/FirmBrandingTrowser';
 import { PasswordProtection } from './components/Auth/PasswordProtection';
 import { LaunchReturn } from './components/ReturnView/LaunchReturn';
 import { ReturnReviewLayout } from './components/ReturnReview/ReturnReviewLayout';
+import { IconShowcase } from './components/IconShowcase/IconShowcase';
 
 function App() {
   const [openTrowser, setOpenTrowser] = useState<'api-portal' | 'firm-branding' | null>(null);
@@ -43,6 +44,7 @@ function App() {
 
           {/* Agentic Review: Return Review (standalone new-tab experience) */}
           <Route path="/return/:clientId/review" element={<ReturnReviewLayout />} />
+          <Route path="icons" element={<IconShowcase />} />
         </Routes>
         
         <APIPortalTrowser 
