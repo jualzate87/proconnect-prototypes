@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { IconMenuCollapse, IconMenuExpand, ProConnectLogo } from '../ProConnectLibrary';
 import './Sidebar.css';
 
 interface NavItem {
@@ -54,8 +55,7 @@ export const Sidebar: React.FC = () => {
         onClick={() => navigate('/')}
         aria-label="Go to Tax Hub"
       >
-        <div className="sidebar-logo-intuit">INTUIT</div>
-        <div className="sidebar-logo-proconnect">proconnect</div>
+        <ProConnectLogo width={140} />
       </button>
 
       <nav className="sidebar-nav">
@@ -86,15 +86,8 @@ export const Sidebar: React.FC = () => {
         onClick={() => setIsCollapsed(!isCollapsed)}
         aria-label="Collapse sidebar"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M12 8H4M8 12V4"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-        </svg>
-        <span>Collapse</span>
+        {isCollapsed ? <IconMenuExpand size={16} /> : <IconMenuCollapse size={16} />}
+        {!isCollapsed && <span>Collapse sidebar</span>}
       </button>
     </aside>
   );

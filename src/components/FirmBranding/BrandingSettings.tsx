@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { IconFolderFill, IconGraph, IconAdd } from '../ProConnectLibrary';
 import './BrandingSettings.css';
 import { BrandingAssets, ColorPalette, StylePreset, LogoSize, LogoAlignment } from './FirmBranding';
 
@@ -112,12 +113,7 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, curr
             />
             <div className="branding-settings-radio-content">
               <div className="branding-settings-radio-header">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"
-                    fill="currentColor"
-                  />
-                </svg>
+                <IconFolderFill size={24} />
                 <span className="branding-settings-radio-title">Upload from device</span>
               </div>
               <p className="branding-settings-radio-description">
@@ -136,16 +132,7 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, curr
             />
             <div className="branding-settings-radio-content">
               <div className="branding-settings-radio-header">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"
-                    fill="currentColor"
-                  />
-                </svg>
+                <IconGraph size={24} />
                 <span className="branding-settings-radio-title">Import from Intuit Account Suite</span>
               </div>
               <p className="branding-settings-radio-description">
@@ -171,12 +158,7 @@ export const BrandingSettings: React.FC<BrandingSettingsProps> = ({ onSave, curr
                     <img src={logoPreview} alt="Logo preview" className="branding-settings-preview" />
                   ) : (
                     <>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path
-                          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                          fill="currentColor"
-                        />
-                      </svg>
+                      <IconAdd size={24} />
                       <span>Choose file or drag and drop</span>
                     </>
                   )}
