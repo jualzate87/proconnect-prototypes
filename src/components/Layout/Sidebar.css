@@ -12,9 +12,8 @@
 
 .sidebar-logo {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: var(--spacing-lg);
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
   background: none;
   border: none;
   cursor: pointer;
@@ -24,22 +23,42 @@
 }
 
 .sidebar-logo:hover {
-  opacity: 0.7;
+  opacity: 0.85;
+}
+
+.sidebar-logo-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  padding: 0;
+}
+
+.sidebar-logo-badge svg {
+  flex-shrink: 0;
+}
+
+.sidebar-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1;
 }
 
 .sidebar-logo-intuit {
-  font-size: 10px;
+  font-size: 8px;
   font-weight: var(--font-weight-bold);
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
 .sidebar-logo-proconnect {
-  font-size: var(--font-size-lg);
+  font-size: 16px;
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-inverse);
+  color: #ffffff;
   text-transform: lowercase;
+  letter-spacing: -0.2px;
 }
 
 .sidebar-nav {
