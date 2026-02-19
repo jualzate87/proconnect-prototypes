@@ -98,7 +98,9 @@
 }
 
 .issue-card {
+  position: relative;
   padding: 12px 14px;
+  padding-right: 100px; /* Space for See details button */
   border-radius: 10px;
   background-color: #f8fafc;
   cursor: pointer;
@@ -237,8 +239,11 @@
   font-weight: 500;
 }
 
-/* See details button — tertiary, top right, blue border on hover */
+/* See details button — absolute top-right inside card, tertiary, blue border on hover */
 .issue-card-see-details-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   display: inline-flex;
   align-items: center;
   gap: 4px;

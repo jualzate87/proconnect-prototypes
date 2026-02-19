@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { ReviewIssue, IssueCategory } from '../../types';
-import { IconGraph, IconSearch, IconSecurity, IconDocument, IconCalc, IconChevronRight, IconInfo, IconCircleAlertFill } from '../ProConnectLibrary';
+import { IconGraph, IconSearch, IconSecurity, IconDocument, IconCalc, IconChevronRight, IconCircleAlertFill } from '../ProConnectLibrary';
 import './IssueCategoryList.css';
 
 interface IssueCategoryListProps {
@@ -110,39 +110,22 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
                       className={`issue-card ${issue.severity} ${isIssueExpanded ? 'issue-expanded' : ''} ${isCorrect ? 'issue-correct' : ''}`}
                       onClick={(e) => handleIssueExpand(issue, e)}
                     >
+                      {/* See details — absolute top-right inside card */}
+                      <button
+                        className="issue-card-see-details-btn"
+                        onClick={(e) => { e.stopPropagation(); handleIssueExpand(issue, e); }}
+                        aria-label={isIssueExpanded ? 'Collapse' : 'See details'}
+                      >
+                        See details
+                        <span className={`issue-card-expand-icon ${isIssueExpanded ? 'expanded' : ''}`}>
+                          <IconChevronRight size={14} />
+                        </span>
+                      </button>
                       {/* Card header */}
                       <div className="issue-card-header">
                         <div className="issue-card-title-row">
                           <span className={`issue-severity-dot ${issue.severity}`} />
                           <span className="issue-card-title">{issue.title}</span>
-                          <div className="issue-card-header-actions" onClick={(e) => e.stopPropagation()}>
-                            {issue.whyItMatters && (
-                              <button
-                                className="issue-card-icon-btn"
-                                onClick={(e) => { e.stopPropagation(); if (!isIssueExpanded) handleIssueExpand(issue, e); }}
-                                aria-label="Learn why"
-                              >
-                                <IconInfo size={14} />
-                              </button>
-                            )}
-                            <button
-                              className="issue-card-icon-btn"
-                              onClick={() => onIssueAction?.(issue, actionConfig.action)}
-                              aria-label="View detail"
-                            >
-                              <span className="action-icon">{React.createElement(actionConfig.Icon, { size: 14, color: '#475569' })}</span>
-                            </button>
-                            <button
-                              className="issue-card-see-details-btn"
-                              onClick={(e) => { e.stopPropagation(); handleIssueExpand(issue, e); }}
-                              aria-label={isIssueExpanded ? 'Collapse' : 'See details'}
-                            >
-                              See details
-                              <span className={`issue-card-expand-icon ${isIssueExpanded ? 'expanded' : ''}`}>
-                                <IconChevronRight size={14} />
-                              </span>
-                            </button>
-                          </div>
                         </div>
                         {isCorrect && (
                           <span className="issue-card-correct-badge">✓ Correct</span>

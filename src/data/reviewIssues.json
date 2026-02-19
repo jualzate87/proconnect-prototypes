@@ -11,7 +11,7 @@
     "suggestedAction": "Verify the W2 Bing wages amount ($60,000) against the source document. The scan confidence is low (72%). Confirm with the client whether the income reduction is expected.",
     "status": "open",
     "whyItMatters": "A 15% income drop is significant and could indicate missing income documents, data extraction errors, or unreported income. The IRS cross-references W-2 data, so any discrepancy will trigger a notice.",
-    "estimatedTaxImpact": "~$4,600 reduction in tax liability",
+    "estimatedTaxImpact": "~$4,600 lower tax liability from the $20.7k wage drop (lower taxable income)",
     "details": [
       { "label": "Bing Equipment W-2 (2024)", "value": "$60,000" },
       { "label": "Bing Equipment W-2 (2023)", "value": "$82,000" },
@@ -37,7 +37,7 @@
     "suggestedAction": "Contact the client to confirm if the Chase Bank account was closed or if the 1099-INT was simply not uploaded yet.",
     "status": "open",
     "whyItMatters": "Missing income documents lead to underreported income. The IRS receives copies of all 1099s and will issue a CP2000 notice for any unreported interest income, plus penalties and interest.",
-    "estimatedTaxImpact": "~$264 if $1,200 interest is unreported",
+    "estimatedTaxImpact": "~$264 additional tax if $1,200 Chase interest is unreported (22% bracket)",
     "missingDocuments": ["Chase Bank 1099-INT (2023: $1,200 interest income)"],
     "details": [
       { "label": "2023 Chase Bank interest", "value": "$1,200" },
@@ -58,7 +58,7 @@
     "suggestedAction": "Open the W2-Bing source document to verify the wages amount. Compare the extracted $60,000 against what's visible on the document image. If incorrect, edit the value in the source extraction panel.",
     "status": "open",
     "whyItMatters": "Inaccurate data extraction leads to incorrect tax calculations. If the wages are wrong, federal withholding, Social Security, and Medicare calculations will also be wrong, potentially resulting in an incorrect refund or balance due.",
-    "estimatedTaxImpact": "Could vary by $500-$5,000+ depending on the correct value",
+    "estimatedTaxImpact": "Could vary $500–$5,000+ depending on correct wages; low OCR confidence on W2-Bing",
     "details": [
       { "label": "Document", "value": "W2-Bing.pdf" },
       { "label": "OCR Confidence", "value": "72%" },
@@ -79,7 +79,7 @@
     "suggestedAction": "Cross-reference the address against the W-2 addresses and prior year return. Confirm with the client that 333 Easy Street, Middlefield, CA 98756 is their current address.",
     "status": "open",
     "whyItMatters": "Address typos and mismatches are one of the most common causes of IRS letters and delayed refunds. A simple verification step can prevent weeks of client frustration.",
-    "estimatedTaxImpact": "No direct tax impact, but may delay processing",
+    "estimatedTaxImpact": "No tax change; may delay refund if IRS flags address mismatch",
     "details": [
       { "label": "Return address", "value": "333 Easy Street, Middlefield, CA 98756" },
       { "label": "W2-Bing address", "value": "331 Easy Street, Middlefield, CA 98756" },
@@ -98,7 +98,7 @@
     "suggestedAction": "Inform the client about the $4,386 balance due and potential underpayment penalty. Recommend adjusting W-4 withholdings for the current year to prevent recurrence. Consider if estimated tax payments were made but not yet documented.",
     "status": "open",
     "whyItMatters": "The IRS charges an underpayment penalty (currently ~8% annualized) when taxpayers don't meet safe harbor withholding thresholds. Flagging this early allows the preparer to advise the client and check for any estimated payments that may offset the shortfall.",
-    "estimatedTaxImpact": "~$350 underpayment penalty + $4,386 balance due",
+    "estimatedTaxImpact": "~$350 underpayment penalty + $4,386 balance due (withholding 82% of tax, below 90% safe harbor)",
     "estimatedPenalty": {
       "amount": 350,
       "calculation": "Shortfall of $4,386 × ~8% annualized rate, prorated across quarters",
@@ -127,20 +127,25 @@
     "id": "issue-credits-charitable",
     "category": "irs-compliance",
     "severity": "low",
-    "title": "Potential audit trigger: high charitable giving",
-    "description": "If client has charitable deductions, verify they are proportional to income. High ratios trigger IRS scrutiny.",
-    "explanation": "Using standard deduction. High charitable ratios trigger IRS scrutiny; low ratios may mean missed savings.",
-    "rootCause": "Verify charitable deductions are proportional to income and well-documented.",
+    "title": "Charitable giving high relative to income — IRS audit trigger",
+    "description": "Charitable deductions ($8,000) are 6.2% of AGI. Typical range is 3–5%. High ratios trigger IRS scrutiny.",
+    "explanation": "Schedule A charitable of $8,000 vs. AGI $129,933 = 6.2%. IRS flags ratios above ~5% as potential overstatement. Verify documentation even if legitimate.",
+    "rootCause": "Charitable-to-AGI ratio (6.2%) exceeds typical 3–5% range; disproportionate deductions are a known audit trigger.",
     "affectedFields": ["line-12"],
-    "suggestedAction": "Confirm with the client whether they have charitable contributions that could benefit from itemizing. If itemized deductions exceed $14,600, switch from standard to itemized deduction.",
+    "suggestedAction": "Obtain receipts and written acknowledgments for all charitable contributions. Confirm the $8,000 is accurate and properly documented. High ratios require strong substantiation.",
     "status": "open",
     "whyItMatters": "Charitable deductions disproportionate to income are one of the top IRS audit triggers. Even legitimate deductions should be well-documented with receipts and acknowledgment letters.",
-    "estimatedTaxImpact": "Could save $500-$2,000+ if itemizing is beneficial",
+    "estimatedTaxImpact": "Audit risk if unsubstantiated; potential disallowance of excess charitable deduction if documentation is insufficient",
+    "details": [
+      { "label": "Charitable (Schedule A)", "value": "$8,000" },
+      { "label": "AGI", "value": "$129,933" },
+      { "label": "Charitable/AGI ratio", "value": "6.2% (typical 3–5%)" }
+    ],
     "calculations": [
-      { "label": "Current deduction (Standard)", "result": "$14,600" },
+      { "label": "Charitable deduction", "result": "$8,000" },
       { "label": "AGI", "result": "$129,933" },
-      { "label": "Typical charitable range (3-5% of AGI)", "formula": "$129,933 × 3-5%", "result": "$3,898 - $6,497" },
-      { "label": "Itemized deduction breakeven", "result": "> $14,600 to benefit from itemizing" }
+      { "label": "Charitable/AGI ratio", "formula": "$8,000 ÷ $129,933", "result": "6.2%" },
+      { "label": "Typical range", "result": "3–5% of AGI" }
     ]
   },
   {
@@ -155,7 +160,7 @@
     "suggestedAction": "Advise the client to submit updated W-4 forms to both employers, checking the 'Two jobs' box on Step 2, or use the IRS Tax Withholding Estimator to calculate the additional withholding needed.",
     "status": "open",
     "whyItMatters": "Multi-job withholding gaps are one of the most common causes of surprise tax bills. Proactive W-4 adjustment prevents this from recurring next year.",
-    "estimatedTaxImpact": "Underlying cause of the $4,386 balance due",
+    "estimatedTaxImpact": "Drives the $4,386 balance due; two jobs withhold at lower brackets than combined income",
     "details": [
       { "label": "Job 1 (Bing Equipment)", "value": "$60,000 wages / $10,000 withheld" },
       { "label": "Job 2 (Tech Circle)", "value": "$64,304 wages / $9,800 withheld" },
@@ -176,6 +181,6 @@
     "suggestedAction": "Confirm with the client whether the interest increase is from existing accounts (higher rates) or new accounts. If new accounts exist, ensure all 1099-INTs are collected.",
     "status": "open",
     "whyItMatters": "A 42% increase in interest income is notable. While likely explained by rate increases, it's worth confirming no additional interest income sources are missing.",
-    "estimatedTaxImpact": "~$295 additional tax from $1,335 increase (at 22% bracket)"
+    "estimatedTaxImpact": "~$295 additional tax from $1,335 interest increase (22% bracket)"
   }
 ]

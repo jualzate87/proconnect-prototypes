@@ -19,7 +19,7 @@ const PANEL_WIDTH_DEFAULT = 384;
 
 const POPOVER_WIDTH = 360;
 const POPOVER_HEIGHT_EST = 400;
-const POPOVER_OFFSET = 8;
+const POPOVER_OFFSET = 16;
 
 /** Shared popover position: always above the field, centered. Same for all triggers. */
 function getPopoverPosition(fieldEl: HTMLElement): { top: number; left: number } {
@@ -234,17 +234,14 @@ export const ReturnReviewLayout: React.FC = () => {
   }, []);
 
   const handleIssueAction = useCallback((issue: ReviewIssue, action: string) => {
-    if (action === 'view-sources' || action === 'view-details') {
-      // Open the field popover for the first affected field
-      const field = fields.find((f) => issue.affectedFields.includes(f.id));
-      if (field) {
-        handleFieldClick(field);
-      }
-    } else if (action === 'view-document') {
-      // Open the trowser for the scan quality issue
+    if (action === 'view-sources' || action === 'view-document') {
+      // Open the source document trowser for the first affected field with sources (same behavior for YoY and Scan)
       const field = fields.find((f) => issue.affectedFields.includes(f.id));
       if (field && field.sources && field.sources.length > 0) {
         setSelectedSource(field.sources[0]);
+      } else if (action === 'view-sources') {
+        // Fallback: open field popover if no sources (e.g., calculated fields only)
+        if (field) handleFieldClick(field);
       }
     } else if (action === 'view-calculation') {
       setCalcPos({
