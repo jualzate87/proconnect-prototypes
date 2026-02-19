@@ -40,7 +40,7 @@
 
 .issue-category-label {
   flex: 1;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #1a202c;
 }
@@ -146,6 +146,7 @@
   align-items: center;
   gap: 6px;
   flex: 1;
+  min-width: 0;
 }
 
 .issue-severity-dot {
@@ -168,7 +169,7 @@
 }
 
 .issue-card-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #1a202c;
   line-height: 1.3;
@@ -189,32 +190,95 @@
 }
 
 .issue-card-description {
-  font-size: 12px;
+  font-size: 13px;
   color: #64748b;
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-/* Tax impact */
-.issue-tax-impact {
-  display: inline-block;
-  font-size: 11px;
+/* Borderless icon buttons in card header */
+.issue-card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.issue-card-icon-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #64748b;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.issue-card-icon-btn:hover {
+  color: #475569;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Tax impact — single line compact */
+.issue-tax-impact-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
   color: #92400e;
   background: #fef3c7;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-top: 6px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 6px;
   font-weight: 500;
+}
+
+/* See details button — tertiary, top right, blue border on hover */
+.issue-card-see-details-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-primary, #0077C5);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.issue-card-see-details-btn:hover,
+.issue-card-see-details-btn:focus {
+  border-color: var(--color-primary, #0077C5);
+  background: rgba(0, 119, 197, 0.06);
+}
+
+.issue-card-expand-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+.issue-card-expand-icon.expanded {
+  transform: rotate(90deg);
 }
 
 /* Expanded details */
 .issue-card-details {
-  margin-top: 12px;
-  padding-top: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
   border-top: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   animation: slideDown 0.2s ease-out;
 }
 
@@ -225,7 +289,7 @@
 }
 
 .issue-detail-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: #475569;
   text-transform: uppercase;
@@ -233,7 +297,7 @@
 }
 
 .issue-detail-text {
-  font-size: 12px;
+  font-size: 13px;
   color: #475569;
   margin: 0;
   line-height: 1.5;
@@ -266,12 +330,12 @@
 }
 
 .detail-row-label {
-  font-size: 12px;
+  font-size: 13px;
   color: #64748b;
 }
 
 .detail-row-value {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: #1a202c;
 }

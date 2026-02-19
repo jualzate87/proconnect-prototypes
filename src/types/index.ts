@@ -202,7 +202,7 @@ export interface SourceReference {
 }
 
 export type IssueSeverity = 'high' | 'medium' | 'low';
-export type IssueCategory = 'yoy-analysis' | 'scan-quality' | 'irs-compliance' | 'credits-deductions';
+export type IssueCategory = 'yoy-analysis' | 'scan-quality' | 'irs-compliance';
 
 export interface ReviewIssue {
   id: string;

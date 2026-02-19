@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { ReviewIssue } from '../../types';
+import { IconIntuitAssist, IconSend, IconAttach } from '../ProConnectLibrary';
 import './AgentChatInput.css';
 
 interface AgentChatInputProps {
@@ -64,9 +65,7 @@ export const AgentChatInput: React.FC<AgentChatInputProps> = ({
               className="suggestion-chip"
               onClick={() => handleSend(suggestion)}
             >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="chip-sparkle">
-                <path d="M6 1L7 4L10 5L7 6L6 9L5 6L2 5L5 4L6 1Z" fill="currentColor"/>
-              </svg>
+              <IconIntuitAssist size={16} color="var(--ai-color-sparkle, #7C3AED)" className="chip-sparkle" />
               {suggestion}
             </button>
           ))}
@@ -75,14 +74,12 @@ export const AgentChatInput: React.FC<AgentChatInputProps> = ({
 
       <div className="agent-chat-input-wrapper">
         <button className="chat-input-add-btn" aria-label="Add attachment">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M9 3V15M3 9H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
+          <IconAttach size={18} />
         </button>
         <input
           type="text"
           className="chat-input-field"
-          placeholder="Ask anything"
+          placeholder="Ask Intuit Assist..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
@@ -94,13 +91,11 @@ export const AgentChatInput: React.FC<AgentChatInputProps> = ({
           onClick={() => handleSend()}
           aria-label="Send"
         >
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M16 2L8 10M16 2L11 16L8 10M16 2L2 7L8 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <IconSend size={18} />
         </button>
       </div>
       <p className="agent-chat-disclaimer">
-        <a href="#" className="disclaimer-link">Important information about how we use generative AI</a>
+        Intuit Assist can make mistakes. Review important information.
       </p>
     </div>
   );

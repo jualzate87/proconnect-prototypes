@@ -103,22 +103,41 @@
   font-size: var(--font-size-lg);
 }
 
-.yoy-change {
+.yoy-net-change-block {
+  margin-left: var(--spacing-md, 12px);
+  padding-left: var(--spacing-md, 12px);
+  border-left: 1px solid var(--color-border);
+}
+
+.yoy-net-change-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Net change value: same font size/weight as prior/current amounts */
+.yoy-net-change-value {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.yoy-percent-badge {
   padding: 2px 8px;
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  margin-left: auto;
 }
 
-.yoy-change.positive {
-  background-color: var(--color-diff-added);
-  color: var(--color-diff-text-added);
+.yoy-percent-badge.positive {
+  background-color: var(--color-diff-added, #dcfce7);
+  color: var(--color-diff-text-added, #15803d);
 }
 
-.yoy-change.negative {
-  background-color: var(--color-diff-removed);
-  color: var(--color-diff-text-removed);
+.yoy-percent-badge.negative {
+  background-color: var(--color-diff-removed, #fee2e2);
+  color: var(--color-diff-text-removed, #b91c1c);
 }
 
 /* Source Documents */
@@ -184,19 +203,14 @@
   border-radius: 8px;
 }
 
-.source-confidence.high {
-  background-color: #e6f9ed;
-  color: var(--color-confidence-high);
-}
-
-.source-confidence.medium {
-  background-color: #fff3e0;
-  color: var(--color-confidence-medium);
-}
-
-.source-confidence.low {
+.source-confidence.warning {
   background-color: #fce8e8;
-  color: var(--color-confidence-low);
+  color: #991b1b;
+}
+
+.source-confidence.caution {
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .source-chevron {

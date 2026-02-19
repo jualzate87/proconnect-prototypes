@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Form1040Field } from '../../types';
+import type { Form1040Field, IssueCategory } from '../../types';
 import './Form1040Viewer.css';
 
 interface Form1040ViewerProps {
@@ -13,6 +13,7 @@ interface Form1040ViewerProps {
   onFieldPersonalReview?: (fieldId: string) => void;
   highlightedFieldIds?: string[];
   activeFieldId?: string | null;
+  expandedCategory?: IssueCategory | null;
 }
 
 const formatCurrency = (value: number | string): string => {
@@ -37,6 +38,7 @@ export const Form1040Viewer: React.FC<Form1040ViewerProps> = ({
   onFieldPersonalReview,
   highlightedFieldIds = [],
   activeFieldId,
+  expandedCategory,
 }) => {
   const [hoveredFieldId, setHoveredFieldId] = useState<string | null>(null);
   const getField = (id: string) => fields.find((f) => f.id === id);
@@ -87,7 +89,7 @@ export const Form1040Viewer: React.FC<Form1040ViewerProps> = ({
             </svg>
           </button>
         )}
-        {hasChange && (
+        {hasChange && expandedCategory === 'yoy-analysis' && (
           <span className={`field-change-badge ${field.changePercent! > 0 ? 'positive' : 'negative'} ${getChangeClass(field.changePercent!)}`}>
             {field.changePercent! > 0 ? '+' : ''}{field.changePercent}%
           </span>

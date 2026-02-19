@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import type { ReturnDocument } from '../../types';
+import { Tooltip, IconInfo } from '../ProConnectLibrary';
 import './DocumentSummary.css';
+
+const CONFIDENCE_TOOLTIP = 'OCR confidence indicates how accurately the document was scanned and extracted. Lower values may need manual verification.';
 
 interface DocumentSummaryProps {
   documents: ReturnDocument[];
@@ -29,7 +32,7 @@ export const DocumentSummary: React.FC<DocumentSummaryProps> = ({
   documents,
   onDocumentClick,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const importedDocs = documents.filter((d) => d.importStatus === 'imported' || d.importStatus === 'ready');
 
@@ -51,18 +54,18 @@ export const DocumentSummary: React.FC<DocumentSummaryProps> = ({
 
       {isExpanded && (
         <div className="doc-summary-body">
-          {/* Callout banner */}
-          <div className="doc-summary-callout">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="callout-icon">
-              <circle cx="8" cy="8" r="7" stroke="#0077C5" strokeWidth="1.5"/>
-              <path d="M8 5V8.5M8 11H8.01" stroke="#0077C5" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
-            <span className="callout-text">
-              To make corrections, open the source document and edit the extracted values. Changes will automatically recalculate the 1040.
-            </span>
-          </div>
-
-          {/* Document list */}
+          {/* Column header with confidence label + tooltip */}
+          {importedDocs.some((d) => d.ocrConfidence != null) && (
+            <div className="doc-summary-list-header">
+              <span className="doc-summary-header-doc">Document</span>
+              <Tooltip content={CONFIDENCE_TOOLTIP} position="top">
+                <span className="doc-summary-header-confidence">
+                  Confidence
+                  <IconInfo size={12} color="#64748b" className="doc-summary-confidence-info" />
+                </span>
+              </Tooltip>
+            </div>
+          )}
           <div className="doc-summary-list">
             {importedDocs.map((doc) => (
               <button

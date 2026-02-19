@@ -85,9 +85,34 @@
 }
 
 .callout-text {
-  font-size: 12px;
+  font-size: 13px;
   color: #1e40af;
   line-height: 1.5;
+}
+
+/* List header with confidence label */
+.doc-summary-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.doc-summary-header-confidence {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: help;
+}
+
+.doc-summary-confidence-info {
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 /* Document list */
@@ -138,7 +163,7 @@
 }
 
 .doc-item-meta {
-  font-size: 11px;
+  font-size: 12px;
   color: #94a3b8;
 }
 

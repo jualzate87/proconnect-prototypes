@@ -357,25 +357,20 @@
 }
 
 .extracted-field-confidence {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 2px 6px;
+  padding: 2px 8px;
   border-radius: 6px;
 }
 
-.extracted-field-confidence.high {
-  color: #166534;
-  background: #dcfce7;
-}
-
-.extracted-field-confidence.medium {
-  color: #92400e;
-  background: #fef3c7;
-}
-
-.extracted-field-confidence.low {
+.extracted-field-confidence.warning {
   color: #991b1b;
   background: #fce8e8;
+}
+
+.extracted-field-confidence.caution {
+  color: #92400e;
+  background: #fef3c7;
 }
 
 .extracted-field-value-row {

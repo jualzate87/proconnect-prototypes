@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import type { ReviewIssue, IssueCategory } from '../../types';
+import { IconGraph, IconSearch, IconSecurity, IconDocument, IconCalc, IconChevronRight, IconInfo, IconCircleAlertFill } from '../ProConnectLibrary';
 import './IssueCategoryList.css';
 
 interface IssueCategoryListProps {
   issues: ReviewIssue[];
   onIssueClick?: (issue: ReviewIssue) => void;
   onCategoryExpand?: (fieldIds: string[]) => void;
+  onExpandedCategoryChange?: (category: IssueCategory | null) => void;
   onIssueCorrect?: (issueId: string, note?: string) => void;
   onIssueAction?: (issue: ReviewIssue, action: string) => void;
 }
 
-const categoryConfig: Record<IssueCategory, { label: string; icon: string }> = {
-  'yoy-analysis': { label: 'YoY Analysis', icon: '📈' },
-  'scan-quality': { label: 'Scan Quality & Inputs', icon: '🔍' },
-  'irs-compliance': { label: 'IRS Compliance', icon: '🛡️' },
-  'credits-deductions': { label: 'Credits & Deductions', icon: '💲' },
+const categoryConfig: Record<IssueCategory, { label: string; Icon: React.ComponentType<{ size?: number; color?: string }> }> = {
+  'yoy-analysis': { label: 'YoY Analysis', Icon: IconGraph },
+  'scan-quality': { label: 'Scan Quality & Inputs', Icon: IconSearch },
+  'irs-compliance': { label: 'IRS Compliance', Icon: IconSecurity },
 };
 
 const getActionConfig = (category: IssueCategory) => {
   switch (category) {
     case 'yoy-analysis':
-      return { label: 'View sources', icon: '📄', action: 'view-sources' };
+      return { label: 'View sources', Icon: IconDocument, action: 'view-sources' };
     case 'scan-quality':
-      return { label: 'View document', icon: '🔎', action: 'view-document' };
+      return { label: 'View document', Icon: IconSearch, action: 'view-document' };
     case 'irs-compliance':
-      return { label: 'View calculation', icon: '🧮', action: 'view-calculation' };
-    case 'credits-deductions':
-      return { label: 'View details', icon: '📋', action: 'view-details' };
+      return { label: 'View calculation', Icon: IconCalc, action: 'view-calculation' };
   }
 };
 
@@ -34,6 +33,7 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
   issues,
   onIssueClick,
   onCategoryExpand,
+  onExpandedCategoryChange,
   onIssueCorrect,
   onIssueAction,
 }) => {
@@ -46,16 +46,13 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
 
   const handleToggle = (category: IssueCategory) => {
     const isExpanding = expandedCategory !== category;
-    setExpandedCategory(isExpanding ? category : null);
+    const newCategory = isExpanding ? category : null;
+    setExpandedCategory(newCategory);
     setExpandedIssueId(null);
 
-    if (isExpanding) {
-      const categoryIssues = issues.filter((i) => i.category === category);
-      const fieldIds = categoryIssues.flatMap((i) => i.affectedFields);
-      onCategoryExpand?.(fieldIds);
-    } else {
-      onCategoryExpand?.([]);
-    }
+    // Only highlight fields when a specific card is expanded, not when category opens
+    onCategoryExpand?.([]);
+    onExpandedCategoryChange?.(newCategory);
   };
 
   const handleIssueExpand = (issue: ReviewIssue, e: React.MouseEvent) => {
@@ -83,7 +80,9 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
               className="issue-category-header"
               onClick={() => handleToggle(category)}
             >
-              <span className="issue-category-icon">{config.icon}</span>
+              <span className="issue-category-icon">
+                {React.createElement(config.Icon, { size: 16, color: '#64748b' })}
+              </span>
               <span className="issue-category-label">{config.label}</span>
               {openCount > 0 && (
                 <span className="issue-category-badge">{openCount}</span>
@@ -116,20 +115,51 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
                         <div className="issue-card-title-row">
                           <span className={`issue-severity-dot ${issue.severity}`} />
                           <span className="issue-card-title">{issue.title}</span>
+                          <div className="issue-card-header-actions" onClick={(e) => e.stopPropagation()}>
+                            {issue.whyItMatters && (
+                              <button
+                                className="issue-card-icon-btn"
+                                onClick={(e) => { e.stopPropagation(); if (!isIssueExpanded) handleIssueExpand(issue, e); }}
+                                aria-label="Learn why"
+                              >
+                                <IconInfo size={14} />
+                              </button>
+                            )}
+                            <button
+                              className="issue-card-icon-btn"
+                              onClick={() => onIssueAction?.(issue, actionConfig.action)}
+                              aria-label="View detail"
+                            >
+                              <span className="action-icon">{React.createElement(actionConfig.Icon, { size: 14, color: '#475569' })}</span>
+                            </button>
+                            <button
+                              className="issue-card-see-details-btn"
+                              onClick={(e) => { e.stopPropagation(); handleIssueExpand(issue, e); }}
+                              aria-label={isIssueExpanded ? 'Collapse' : 'See details'}
+                            >
+                              See details
+                              <span className={`issue-card-expand-icon ${isIssueExpanded ? 'expanded' : ''}`}>
+                                <IconChevronRight size={14} />
+                              </span>
+                            </button>
+                          </div>
                         </div>
                         {isCorrect && (
                           <span className="issue-card-correct-badge">✓ Correct</span>
                         )}
                       </div>
 
-                      {/* Description / explanation */}
+                      {/* Description (collapsed) or explanation (expanded) */}
                       <p className="issue-card-description">
-                        {issue.explanation || issue.description}
+                        {isIssueExpanded && issue.explanation ? issue.explanation : issue.description}
                       </p>
 
-                      {/* Estimated tax impact */}
+                      {/* Tax impact — single line compact */}
                       {issue.estimatedTaxImpact && (
-                        <span className="issue-tax-impact">{issue.estimatedTaxImpact}</span>
+                        <div className="issue-tax-impact-inline">
+                          <IconCircleAlertFill size={14} color="#92400e" />
+                          <span>Tax impact: {issue.estimatedTaxImpact}</span>
+                        </div>
                       )}
 
                       {/* Expanded details */}
@@ -212,7 +242,9 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
                           className="issue-action-btn contextual"
                           onClick={() => onIssueAction?.(issue, actionConfig.action)}
                         >
-                          <span className="action-icon">{actionConfig.icon}</span>
+                          <span className="action-icon">
+                            {React.createElement(actionConfig.Icon, { size: 14, color: '#475569' })}
+                          </span>
                           {actionConfig.label}
                         </button>
 

@@ -58,11 +58,15 @@ const formatValue = (value: number | string): string => {
   return value;
 };
 
-const getConfidenceClass = (conf: number) => {
-  if (conf >= 90) return 'high';
-  if (conf >= 75) return 'medium';
-  return 'low';
+/** Returns validation note and CSS class. Only show badge when confidence < 90. */
+const getConfidenceNote = (conf: number): { label: string; class: string } | null => {
+  if (conf >= 90) return null;
+  if (conf < 75) return { label: 'Low scan confidence', class: 'warning' };
+  return { label: 'Double-check this field', class: 'caution' };
 };
+
+/** Only highlight fields with low confidence in the document view. */
+const shouldHighlightField = (confidence: number) => confidence < 90;
 
 export const SourceDocumentTrowser: React.FC<SourceDocumentTrowserProps> = ({
   source,
@@ -142,7 +146,7 @@ export const SourceDocumentTrowser: React.FC<SourceDocumentTrowserProps> = ({
                   </div>
                   <div className="mock-doc-body">
                     {extractedFields.map((field) => (
-                      <div key={field.id} className={`mock-doc-field ${field.isHighlighted ? 'highlighted' : ''}`}>
+                      <div key={field.id} className={`mock-doc-field ${shouldHighlightField(field.confidence) ? 'highlighted' : ''}`}>
                         <span className="mock-doc-field-label">{field.label}</span>
                         <span className="mock-doc-field-value">
                           {typeof field.value === 'number' ? field.value.toLocaleString('en-US') : field.value}
@@ -188,13 +192,17 @@ export const SourceDocumentTrowser: React.FC<SourceDocumentTrowserProps> = ({
             <div className="trowser-tab-content">
               {activeTab === 'extracted' && (
                 <div className="extracted-fields-list">
-                  {extractedFields.map((field) => (
-                    <div key={field.id} className={`extracted-field-row ${field.isHighlighted ? 'highlighted' : ''}`}>
+                  {extractedFields.map((field) => {
+                    const confidenceNote = getConfidenceNote(field.confidence);
+                    return (
+                    <div key={field.id} className={`extracted-field-row ${shouldHighlightField(field.confidence) ? 'highlighted' : ''}`}>
                       <div className="extracted-field-top">
                         <span className="extracted-field-label">{field.label}</span>
-                        <span className={`extracted-field-confidence ${getConfidenceClass(field.confidence)}`}>
-                          {field.confidence}%
-                        </span>
+                        {confidenceNote && (
+                          <span className={`extracted-field-confidence ${confidenceNote.class}`}>
+                            {confidenceNote.label}
+                          </span>
+                        )}
                       </div>
                       {editingField === field.id ? (
                         <div className="extracted-field-edit-section">
@@ -241,7 +249,8 @@ export const SourceDocumentTrowser: React.FC<SourceDocumentTrowserProps> = ({
                         <span className="field-flows-to">Flows to: 1040 {field.flowsTo}</span>
                       )}
                     </div>
-                  ))}
+                  );
+                  })}
                 </div>
               )}
 

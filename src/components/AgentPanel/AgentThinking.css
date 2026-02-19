@@ -56,7 +56,7 @@
 }
 
 .active-dot {
-  background-color: var(--color-primary);
+  background-color: var(--ai-color-sparkle, #7C3AED);
   animation: dot-pulse 1s ease-in-out infinite;
 }
 
@@ -91,7 +91,7 @@
 
 .thinking-cursor {
   animation: blink 0.8s step-end infinite;
-  color: var(--color-primary);
+  color: var(--ai-color-sparkle, #7C3AED);
   font-weight: bold;
 }
 

@@ -16,10 +16,11 @@ const formatCurrency = (value: number | string): string => {
   return '$' + value.toLocaleString('en-US');
 };
 
-const getConfidenceClass = (confidence: number): string => {
-  if (confidence >= 90) return 'high';
-  if (confidence >= 75) return 'medium';
-  return 'low';
+/** Returns validation note and CSS class. Only show when confidence < 90. */
+const getConfidenceNote = (confidence: number): { label: string; class: string } | null => {
+  if (confidence >= 90) return null;
+  if (confidence < 75) return { label: 'Low scan confidence', class: 'warning' };
+  return { label: 'Double-check this field', class: 'caution' };
 };
 
 export const FieldPopover: React.FC<FieldPopoverProps> = ({
@@ -55,25 +56,36 @@ export const FieldPopover: React.FC<FieldPopoverProps> = ({
           </button>
         </div>
 
-        {/* Year over Year Comparison */}
+        {/* Year over Year — Prior, Current, Net change (same format as prior/current), % badge */}
         {field.priorYearValue !== undefined && (
           <div className="popover-yoy">
             <h4 className="popover-section-title">Year-over-Year Comparison</h4>
             <div className="yoy-comparison">
               <div className="yoy-year">
-                <span className="yoy-year-label">2024 (Current)</span>
-                <span className="yoy-year-value">{formatCurrency(field.currentValue)}</span>
-              </div>
-              <div className="yoy-arrow">→</div>
-              <div className="yoy-year">
                 <span className="yoy-year-label">2023 (Prior)</span>
                 <span className="yoy-year-value prior">{formatCurrency(field.priorYearValue)}</span>
               </div>
-              {field.changePercent && (
-                <div className={`yoy-change ${field.changePercent > 0 ? 'positive' : 'negative'}`}>
-                  {field.changePercent > 0 ? '+' : ''}{field.changePercent}%
-                </div>
-              )}
+              <div className="yoy-arrow">→</div>
+              <div className="yoy-year">
+                <span className="yoy-year-label">2024 (Current)</span>
+                <span className="yoy-year-value">{formatCurrency(field.currentValue)}</span>
+              </div>
+              {field.changePercent !== undefined &&
+                typeof field.priorYearValue === 'number' &&
+                typeof field.currentValue === 'number' && (
+                  <div className="yoy-year yoy-net-change-block">
+                    <span className="yoy-year-label">Net Change</span>
+                    <div className="yoy-net-change-row">
+                      <span className="yoy-year-value yoy-net-change-value">
+                        {(field.currentValue - field.priorYearValue >= 0 ? '+' : '') +
+                          formatCurrency(field.currentValue - field.priorYearValue)}
+                      </span>
+                      <span className={`yoy-percent-badge ${field.changePercent >= 0 ? 'positive' : 'negative'}`}>
+                        {field.changePercent >= 0 ? '+' : ''}{field.changePercent}%
+                      </span>
+                    </div>
+                  </div>
+                )}
             </div>
           </div>
         )}
@@ -106,7 +118,9 @@ export const FieldPopover: React.FC<FieldPopoverProps> = ({
         {field.sources && field.sources.length > 0 && (
           <div className="popover-sources">
             <h4 className="popover-section-title">Source Documents</h4>
-            {field.sources.map((source, idx) => (
+            {field.sources.map((source, idx) => {
+              const confidenceNote = getConfidenceNote(source.confidence);
+              return (
               <button
                 key={idx}
                 className="popover-source-item"
@@ -118,15 +132,18 @@ export const FieldPopover: React.FC<FieldPopoverProps> = ({
                 </div>
                 <div className="source-item-right">
                   <span className="source-value">{formatCurrency(source.extractedValue)}</span>
-                  <span className={`source-confidence ${getConfidenceClass(source.confidence)}`}>
-                    {source.confidence}% conf.
-                  </span>
+                  {confidenceNote && (
+                    <span className={`source-confidence ${confidenceNote.class}`}>
+                      {confidenceNote.label}
+                    </span>
+                  )}
                 </div>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="source-chevron">
                   <path d="M5 3L9 7L5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-            ))}
+            );
+            })}
           </div>
         )}
 
