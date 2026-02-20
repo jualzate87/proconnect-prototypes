@@ -19,19 +19,24 @@ const PANEL_WIDTH_DEFAULT = 384;
 
 const POPOVER_WIDTH = 360;
 const POPOVER_HEIGHT_EST = 400;
-const POPOVER_OFFSET = 16;
+const POPOVER_GAP = 16;
 
-/** Shared popover position: always above the field, centered. Same for all triggers. */
-function getPopoverPosition(fieldEl: HTMLElement): { top: number; left: number } {
+export type PopoverPosition = { top: number; left: number };
+
+/** Returns position for popover: 16px above field top (or below if no room). Top-based, no vertical clamping. */
+function getPopoverPosition(fieldEl: HTMLElement): PopoverPosition {
   const rect = fieldEl.getBoundingClientRect();
-  let top = rect.top - POPOVER_HEIGHT_EST - POPOVER_OFFSET;
-  let left = rect.left + rect.width / 2 - POPOVER_WIDTH / 2;
 
-  if (top < 16) {
-    top = rect.bottom + POPOVER_OFFSET;
+  let top: number;
+  const spaceAbove = rect.top;
+  if (spaceAbove >= 200) {
+    top = rect.top - POPOVER_HEIGHT_EST - POPOVER_GAP;
+  } else {
+    top = rect.bottom + POPOVER_GAP;
   }
+
+  let left = rect.left + rect.width / 2 - POPOVER_WIDTH / 2;
   left = Math.max(16, Math.min(left, window.innerWidth - POPOVER_WIDTH - 16));
-  top = Math.max(16, Math.min(top, window.innerHeight - POPOVER_HEIGHT_EST - 16));
 
   return { top, left };
 }
@@ -58,14 +63,14 @@ export const ReturnReviewLayout: React.FC = () => {
 
   // Field popover state
   const [selectedField, setSelectedField] = useState<Form1040Field | null>(null);
-  const [popoverPos, setPopoverPos] = useState({ top: 0, left: 0 });
+  const [popoverPos, setPopoverPos] = useState<PopoverPosition>({ top: 0, left: 0 });
 
   // Source trowser state
   const [selectedSource, setSelectedSource] = useState<SourceReference | null>(null);
 
   // Calculation popover state
   const [calcIssue, setCalcIssue] = useState<ReviewIssue | null>(null);
-  const [calcPos, setCalcPos] = useState({ top: 0, left: 0 });
+  const [calcPos, setCalcPos] = useState<PopoverPosition>({ top: 0, left: 0 });
 
   // Highlighted fields from agent panel (context-aware: only when category expanded)
   const [highlightedFieldIds, setHighlightedFieldIds] = useState<string[]>([]);
@@ -244,10 +249,18 @@ export const ReturnReviewLayout: React.FC = () => {
         if (field) handleFieldClick(field);
       }
     } else if (action === 'view-calculation') {
-      setCalcPos({
-        top: window.innerHeight / 2 - 200,
-        left: Math.min(window.innerWidth / 2 - 210, window.innerWidth - 450),
-      });
+      const field = fields.find((f) => issue.affectedFields.includes(f.id));
+      const fieldEl = field && formRef.current
+        ? (formRef.current.querySelector(`[data-field-id="${field.id}"]`) as HTMLElement | null)
+        : null;
+      if (fieldEl) {
+        setCalcPos(getPopoverPosition(fieldEl));
+      } else {
+        setCalcPos({
+          top: window.innerHeight / 2 - 200,
+          left: Math.min(window.innerWidth / 2 - 210, window.innerWidth - 450),
+        });
+      }
       setCalcIssue(issue);
     }
   }, [fields, handleFieldClick]);
