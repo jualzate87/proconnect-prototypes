@@ -14,8 +14,8 @@ export const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // Check if already authenticated in this session
-    const auth = sessionStorage.getItem('prototype_auth');
+    // Check if already authenticated (persists across tabs and sessions)
+    const auth = localStorage.getItem('prototype_auth');
     if (auth === 'true') {
       setIsAuthenticated(true);
     }
@@ -25,7 +25,7 @@ export const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children
     e.preventDefault();
     
     if (password === CORRECT_PASSWORD) {
-      sessionStorage.setItem('prototype_auth', 'true');
+      localStorage.setItem('prototype_auth', 'true');
       setIsAuthenticated(true);
       setError(false);
     } else {

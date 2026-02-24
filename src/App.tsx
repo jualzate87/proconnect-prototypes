@@ -9,6 +9,8 @@ import { APIHealth } from './components/APIHealth/APIHealth';
 import { APIPortalTrowser } from './components/Trowsers/APIPortalTrowser';
 import { FirmBrandingTrowser } from './components/Trowsers/FirmBrandingTrowser';
 import { PasswordProtection } from './components/Auth/PasswordProtection';
+import { LaunchReturn } from './components/ReturnView/LaunchReturn';
+import { ReturnReviewLayout } from './components/ReturnReview/ReturnReviewLayout';
 import { IconShowcase } from './components/IconShowcase/IconShowcase';
 
 function App() {
@@ -36,6 +38,12 @@ function App() {
               <Route path="health" element={<APIHealth />} />
             </Route>
           </Route>
+
+          {/* Agentic Review: Launch Return (within its own layout, no settings sidebar) */}
+          <Route path="/return/:clientId/launch" element={<LaunchReturn />} />
+
+          {/* Agentic Review: Return Review (standalone new-tab experience) */}
+          <Route path="/return/:clientId/review" element={<ReturnReviewLayout />} />
           <Route path="icons" element={<IconShowcase />} />
         </Routes>
         

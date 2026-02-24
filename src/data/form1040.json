@@ -1,0 +1,280 @@
+{
+  "clientName": "Jordan Wells",
+  "ssn": "111-11-1111",
+  "address": "333 Easy Street",
+  "cityStateZip": "Middlefield, CA 98756",
+  "filingStatus": "single",
+  "fields": [
+    {
+      "id": "line-1a",
+      "line": "1a",
+      "label": "Total amount from Form(s) W-2, box 1",
+      "section": "income",
+      "currentValue": 124265,
+      "priorYearValue": 145000,
+      "changePercent": -15,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "isHighlighted": true,
+      "sources": [
+        {
+          "documentId": "doc-w2-bing",
+          "documentName": "W2 Bing",
+          "documentType": "W-2",
+          "extractedValue": 60000,
+          "confidence": 72,
+          "page": 1,
+          "fieldName": "Wages, tips, other compensation"
+        },
+        {
+          "documentId": "doc-w2-techcircle",
+          "documentName": "W2 Tech Circle",
+          "documentType": "W-2",
+          "extractedValue": 64304,
+          "confidence": 96,
+          "page": 1,
+          "fieldName": "Wages, tips, other compensation"
+        }
+      ]
+    },
+    {
+      "id": "line-1b",
+      "line": "1b",
+      "label": "Household employee wages not reported on Form(s) W-2",
+      "section": "income",
+      "currentValue": 0,
+      "priorYearValue": 0,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "sources": []
+    },
+    {
+      "id": "line-1z",
+      "line": "1z",
+      "label": "Add lines 1a through 1h",
+      "section": "income",
+      "currentValue": 124265,
+      "priorYearValue": 145000,
+      "changePercent": -15,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "calculationComponents": ["line-1a", "line-1b"],
+      "sources": []
+    },
+    {
+      "id": "line-2b",
+      "line": "2b",
+      "label": "Taxable interest",
+      "section": "income",
+      "currentValue": 4535,
+      "priorYearValue": 3200,
+      "changePercent": 42,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "isHighlighted": true,
+      "sources": [
+        {
+          "documentId": "doc-1099-int",
+          "documentName": "Form1099-INT",
+          "documentType": "1099-INT",
+          "extractedValue": 4535,
+          "confidence": 91,
+          "page": 1,
+          "fieldName": "Interest income"
+        }
+      ]
+    },
+    {
+      "id": "line-3a",
+      "line": "3a",
+      "label": "Qualified dividends",
+      "section": "income",
+      "currentValue": 45,
+      "priorYearValue": 120,
+      "changePercent": -63,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "sources": [
+        {
+          "documentId": "doc-1099-div",
+          "documentName": "Form1099-DIV",
+          "documentType": "1099-DIV",
+          "extractedValue": 45,
+          "confidence": 94,
+          "page": 1,
+          "fieldName": "Qualified dividends"
+        }
+      ]
+    },
+    {
+      "id": "line-3b",
+      "line": "3b",
+      "label": "Ordinary dividends",
+      "section": "income",
+      "currentValue": 531,
+      "priorYearValue": 480,
+      "changePercent": 11,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "isHighlighted": true,
+      "sources": [
+        {
+          "documentId": "doc-1099-div",
+          "documentName": "Form1099-DIV",
+          "documentType": "1099-DIV",
+          "extractedValue": 531,
+          "confidence": 94,
+          "page": 1,
+          "fieldName": "Total ordinary dividends"
+        }
+      ]
+    },
+    {
+      "id": "line-7",
+      "line": "7",
+      "label": "Capital gain or (loss)",
+      "section": "income",
+      "currentValue": 602,
+      "priorYearValue": -1200,
+      "changePercent": 150,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "sources": []
+    },
+    {
+      "id": "line-9",
+      "line": "9",
+      "label": "Total income",
+      "section": "income",
+      "currentValue": 129933,
+      "priorYearValue": 147600,
+      "changePercent": -12,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "calculationComponents": ["line-1z", "line-2b", "line-3b", "line-7"],
+      "sources": []
+    },
+    {
+      "id": "line-11",
+      "line": "11",
+      "label": "Adjusted gross income",
+      "section": "adjustments",
+      "currentValue": 129933,
+      "priorYearValue": 147600,
+      "changePercent": -12,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "calculationComponents": ["line-9"],
+      "sources": []
+    },
+    {
+      "id": "line-12",
+      "line": "12",
+      "label": "Standard deduction or itemized deductions",
+      "section": "deductions",
+      "currentValue": 14600,
+      "priorYearValue": 13850,
+      "changePercent": 5,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "sources": []
+    },
+    {
+      "id": "line-15",
+      "line": "15",
+      "label": "Taxable income",
+      "section": "deductions",
+      "currentValue": 115333,
+      "priorYearValue": 133750,
+      "changePercent": -14,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "calculationComponents": ["line-11", "line-12"],
+      "sources": []
+    },
+    {
+      "id": "line-16",
+      "line": "16",
+      "label": "Tax",
+      "section": "tax-credits",
+      "currentValue": 24186,
+      "priorYearValue": 28433,
+      "changePercent": -15,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "calculationComponents": ["line-15"],
+      "sources": []
+    },
+    {
+      "id": "line-24",
+      "line": "24",
+      "label": "Total tax",
+      "section": "tax-credits",
+      "currentValue": 24186,
+      "priorYearValue": 28433,
+      "changePercent": -15,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "calculationComponents": ["line-16"],
+      "sources": []
+    },
+    {
+      "id": "line-25a",
+      "line": "25a",
+      "label": "Federal income tax withheld from W-2s",
+      "section": "payments",
+      "currentValue": 19800,
+      "priorYearValue": 24500,
+      "changePercent": -19,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "isHighlighted": true,
+      "sources": [
+        {
+          "documentId": "doc-w2-bing",
+          "documentName": "W2 Bing",
+          "documentType": "W-2",
+          "extractedValue": 10000,
+          "confidence": 72,
+          "page": 1,
+          "fieldName": "Federal income tax withheld"
+        },
+        {
+          "documentId": "doc-w2-techcircle",
+          "documentName": "W2 Tech Circle",
+          "documentType": "W-2",
+          "extractedValue": 9800,
+          "confidence": 96,
+          "page": 1,
+          "fieldName": "Federal income tax withheld"
+        }
+      ]
+    },
+    {
+      "id": "line-33",
+      "line": "33",
+      "label": "Total payments",
+      "section": "payments",
+      "currentValue": 19800,
+      "priorYearValue": 24500,
+      "changePercent": -19,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "calculationComponents": ["line-25a"],
+      "sources": []
+    },
+    {
+      "id": "line-37",
+      "line": "37",
+      "label": "Amount you owe",
+      "section": "refund",
+      "currentValue": 4386,
+      "priorYearValue": 3933,
+      "changePercent": 12,
+      "reviewStatus": "unreviewed",
+      "personalReview": false,
+      "calculationComponents": ["line-24", "line-33"],
+      "sources": []
+    }
+  ]
+}

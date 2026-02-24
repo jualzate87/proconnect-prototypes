@@ -113,8 +113,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           )}
         </div>
 
-        {/* Actions for assistant messages */}
-        {isAssistant && (
+        {/* Actions for assistant messages — only render when at least one action is provided */}
+        {isAssistant && (onCopy || onRetry || (showFeedback && onFeedback)) && (
           <div className="pc-chat-msg__actions">
             {onCopy && (
               <button

@@ -1,0 +1,245 @@
+.calc-popover-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 150;
+  pointer-events: none; /* Allow scrolling while popover is open */
+}
+
+.calc-popover {
+  position: fixed;
+  z-index: 151;
+  pointer-events: auto;
+  width: 420px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  padding: 0;
+}
+
+/* Header */
+.calc-popover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.calc-popover-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calc-popover-icon {
+  font-size: 18px;
+}
+
+.calc-popover-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.calc-popover-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.calc-popover-close:hover {
+  background: #f1f5f9;
+}
+
+/* Explanation */
+.calc-popover-explanation {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Calculation steps */
+.calc-steps {
+  padding: 12px 16px;
+}
+
+.calc-steps-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.calc-step {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: background 0.1s ease;
+}
+
+.calc-step:nth-child(even) {
+  background: #f8fafc;
+}
+
+.calc-step:last-child {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  font-weight: 600;
+}
+
+.calc-step-label {
+  font-size: 12px;
+  color: #475569;
+  flex: 1;
+}
+
+.calc-step-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.calc-step-formula {
+  font-size: 10px;
+  color: #94a3b8;
+  font-family: 'Courier New', monospace;
+}
+
+.calc-step-result {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+/* Penalty section */
+.calc-penalty {
+  padding: 12px 16px;
+  background: #fffbeb;
+  border-top: 1px solid #fef3c7;
+}
+
+.calc-penalty-header {
+  font-size: 11px;
+  font-weight: 600;
+  color: #92400e;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.calc-penalty-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.calc-penalty-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.calc-penalty-label {
+  font-size: 12px;
+  color: #92400e;
+}
+
+.calc-penalty-desc {
+  font-size: 12px;
+  color: #78716c;
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+
+/* Safe harbor visualization */
+.safe-harbor-viz {
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: white;
+  border-radius: 8px;
+}
+
+.safe-harbor-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.safe-harbor-bar {
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.safe-harbor-fill.current {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+  border-radius: 6px;
+  transition: width 1s ease;
+}
+
+.safe-harbor-threshold-line {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: #00a651;
+}
+
+.safe-harbor-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.safe-harbor-current {
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.safe-harbor-target {
+  color: #00a651;
+  font-weight: 500;
+}
+
+/* Q4 recommendation */
+.calc-q4-rec {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #1e40af;
+  line-height: 1.4;
+}
+
+.calc-q4-rec strong {
+  color: #0077C5;
+}

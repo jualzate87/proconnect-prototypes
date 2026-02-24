@@ -26,6 +26,9 @@
 export { GlobalNav } from './layout/GlobalNav';
 export type { NavItem, NavSection } from './layout/GlobalNav';
 
+export { ProConnectSidebarLogo } from './layout/ProConnectSidebarLogo';
+export type { ProConnectSidebarLogoProps } from './layout/ProConnectSidebarLogo';
+
 export { TopBar } from './layout/TopBar';
 
 export { RailPanel } from './layout/RailPanel';

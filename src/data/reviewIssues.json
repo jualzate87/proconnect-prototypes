@@ -1,0 +1,191 @@
+[
+  {
+    "id": "issue-yoy-wages",
+    "category": "yoy-analysis",
+    "severity": "high",
+    "title": "Significant income drop",
+    "description": "Wages dropped by $21.5k (-15%) vs Prior Year.",
+    "explanation": "Bing Equipment W-2 dropped $22k ($82k → $60k); Tech Circle stable. Could be reduced hours, role change, or scan error.",
+    "rootCause": "Bing W-2 shows $22k reduction with low scan confidence (72%). Verify against source document.",
+    "affectedFields": ["line-1a", "line-1z", "line-9", "line-11"],
+    "suggestedAction": "Verify the W2 Bing wages amount ($60,000) against the source document. The scan confidence is low (72%). Confirm with the client whether the income reduction is expected.",
+    "status": "open",
+    "whyItMatters": "A 15% income drop is significant and could indicate missing income documents, data extraction errors, or unreported income. The IRS cross-references W-2 data, so any discrepancy will trigger a notice.",
+    "estimatedTaxImpact": "~$4,600 lower tax liability from the $20.7k wage drop (lower taxable income)",
+    "details": [
+      { "label": "Bing Equipment W-2 (2024)", "value": "$60,000" },
+      { "label": "Bing Equipment W-2 (2023)", "value": "$82,000" },
+      { "label": "Tech Circle W-2 (2024)", "value": "$64,304" },
+      { "label": "Tech Circle W-2 (2023)", "value": "$63,000" },
+      { "label": "Net change", "value": "-$20,735 (-14.3%)" }
+    ],
+    "calculations": [
+      { "label": "2024 Total W-2 Wages", "formula": "$60,000 + $64,304", "result": "$124,265" },
+      { "label": "2023 Total W-2 Wages", "formula": "$82,000 + $63,000", "result": "$145,000" },
+      { "label": "Year-over-Year Change", "formula": "$124,265 - $145,000", "result": "-$20,735 (-14.3%)" }
+    ]
+  },
+  {
+    "id": "issue-interest-review",
+    "category": "yoy-analysis",
+    "severity": "high",
+    "title": "Taxable interest — verify sources",
+    "description": "Interest rose 42% ($3,200 → $4,535). Chase Bank 1099-INT from last year not imported — if account is active, interest may be understated.",
+    "explanation": "Reported interest is up; Chase 1099-INT ($1,200 prior year) is missing. Confirm account status and that all 1099-INTs are collected.",
+    "rootCause": "Chase 1099-INT missing. Interest increase could be rates or new accounts — verify completeness.",
+    "affectedFields": ["line-2b"],
+    "suggestedAction": "Confirm with client whether Chase account was closed. Ensure all 1099-INTs are collected. If Chase is active, add ~$1,200 to Line 2b.",
+    "status": "open",
+    "whyItMatters": "Missing 1099-INTs trigger IRS CP2000 notices. Verify interest sources to avoid underreporting.",
+    "estimatedTaxImpact": "~$264 additional tax if Chase interest ($1,200) is unreported",
+    "missingDocuments": ["Chase Bank 1099-INT (2023: $1,200)"],
+    "details": [
+      { "label": "2024 reported (Line 2b)", "value": "$4,535" },
+      { "label": "2023 total", "value": "$3,200" },
+      { "label": "Chase (prior year)", "value": "$1,200 — not received" },
+      { "label": "If Chase active", "value": "~$5,735 total" }
+    ]
+  },
+  {
+    "id": "issue-scan-w2bing",
+    "category": "scan-quality",
+    "severity": "medium",
+    "title": "Low scan confidence on W2-Bing.pdf",
+    "description": "OCR confidence is 72% for the W2-Bing document. The wages field ($60,000) may not be accurately extracted.",
+    "explanation": "W2-Bing OCR confidence is 72% on Box 1 (Wages). ~28% chance $60,000 is wrong.",
+    "rootCause": "Low-resolution scan or photo. Verify wages against document image.",
+    "affectedFields": ["line-1a", "line-25a"],
+    "suggestedAction": "Open the W2-Bing source document to verify the wages amount. Compare the extracted $60,000 against what's visible on the document image. If incorrect, edit the value in the source extraction panel.",
+    "status": "open",
+    "whyItMatters": "Inaccurate data extraction leads to incorrect tax calculations. If the wages are wrong, federal withholding, Social Security, and Medicare calculations will also be wrong, potentially resulting in an incorrect refund or balance due.",
+    "estimatedTaxImpact": "Could vary $500–$5,000+ depending on correct wages; low OCR confidence on W2-Bing",
+    "details": [
+      { "label": "Document", "value": "W2-Bing.pdf" },
+      { "label": "OCR Confidence", "value": "72%" },
+      { "label": "Extracted wages (Box 1)", "value": "$60,000" },
+      { "label": "Extracted withholding (Box 2)", "value": "$10,000" },
+      { "label": "Affected 1040 lines", "value": "Line 1a (Wages), Line 25a (Withholding)" }
+    ]
+  },
+  {
+    "id": "issue-address-mismatch",
+    "category": "scan-quality",
+    "severity": "low",
+    "title": "Potential address discrepancy",
+    "description": "Address on W2-Bing (331 Easy Street) may differ from the return address (333 Easy Street).",
+    "explanation": "W2-Bing shows 331 Easy Street; return has 333. Likely OCR error or address change.",
+    "rootCause": "Address mismatch can trigger IRS letters. Verify with client.",
+    "affectedFields": [],
+    "suggestedAction": "Cross-reference the address against the W-2 addresses and prior year return. Confirm with the client that 333 Easy Street, Middlefield, CA 98756 is their current address.",
+    "status": "open",
+    "whyItMatters": "Address typos and mismatches are one of the most common causes of IRS letters and delayed refunds. A simple verification step can prevent weeks of client frustration.",
+    "estimatedTaxImpact": "No tax change; may delay refund if IRS flags address mismatch",
+    "details": [
+      { "label": "Return address", "value": "333 Easy Street, Middlefield, CA 98756" },
+      { "label": "W2-Bing address", "value": "331 Easy Street, Middlefield, CA 98756" },
+      { "label": "Prior year address", "value": "333 Easy Street, Middlefield, CA 98756" }
+    ]
+  },
+  {
+    "id": "issue-withholding",
+    "category": "irs-compliance",
+    "severity": "medium",
+    "title": "Under-withholding: balance due + penalty risk",
+    "preferredAction": "view-document",
+    "preferredActionLabel": "View W-2s",
+    "description": "Withholding ($19,800) is 82% of tax — below 90% safe harbor. Two W-2 jobs withhold at lower brackets than combined income. Client owes $4,386; ~$350 penalty may apply.",
+    "explanation": "Each employer withholds as if sole income. Combined $124K pushes into higher bracket — systematic under-withholding. Shortfall $4,386; neither 90% current-year nor 100% prior-year threshold met.",
+    "rootCause": "Multi-job withholding gap: each W-2 withheld at lower brackets. Combined income taxed higher than either job alone.",
+    "affectedFields": ["line-25a", "line-24", "line-37"],
+    "suggestedAction": "Inform the client about the $4,386 balance due and potential penalty. Recommend W-4 Step 2 'Two jobs' at both employers, or use the IRS Tax Withholding Estimator. Check for any estimated payments not yet documented.",
+    "status": "open",
+    "whyItMatters": "The IRS charges an underpayment penalty when safe harbor thresholds aren't met. Multi-job gaps are a common cause — proactive W-4 adjustment prevents recurrence.",
+    "estimatedTaxImpact": "~$350 underpayment penalty + $4,386 balance due",
+    "estimatedPenalty": {
+      "amount": 350,
+      "calculation": "Shortfall of $4,386 × ~8% annualized rate, prorated across quarters",
+      "quarterlyPayment": 6047,
+      "safeHarborThreshold": 21767,
+      "currentWithholding": 19800
+    },
+    "calculations": [
+      { "label": "Total tax liability (Line 24)", "result": "$24,186" },
+      { "label": "Total withholding (Line 25a)", "result": "$19,800" },
+      { "label": "Shortfall", "formula": "$24,186 - $19,800", "result": "$4,386" },
+      { "label": "90% safe harbor", "result": "$21,767" },
+      { "label": "Estimated penalty", "result": "~$350" },
+      { "label": "Recommended Q4 payment", "result": "$6,047" }
+    ],
+    "details": [
+      { "label": "W2-Bing", "value": "$60,000 wages / $10,000 withheld" },
+      { "label": "W2-Tech Circle", "value": "$64,304 wages / $9,800 withheld" },
+      { "label": "Total withholding", "value": "$19,800 (82% of tax)" },
+      { "label": "Effective rate", "value": "15.9% vs ~19.5% required" }
+    ]
+  },
+  {
+    "id": "issue-credits-charitable",
+    "category": "irs-compliance",
+    "severity": "low",
+    "title": "Charitable giving high relative to income — IRS audit trigger",
+    "description": "Charitable deductions ($8,000) are 6.2% of AGI. Typical range is 3–5%. High ratios trigger IRS scrutiny.",
+    "explanation": "Schedule A charitable of $8,000 vs. AGI $129,933 = 6.2%. IRS flags ratios above ~5% as potential overstatement. Verify documentation even if legitimate.",
+    "rootCause": "Charitable-to-AGI ratio (6.2%) exceeds typical 3–5% range; disproportionate deductions are a known audit trigger.",
+    "affectedFields": ["line-12"],
+    "suggestedAction": "Obtain receipts and written acknowledgments for all charitable contributions. Confirm the $8,000 is accurate and properly documented. High ratios require strong substantiation.",
+    "status": "open",
+    "whyItMatters": "Charitable deductions disproportionate to income are one of the top IRS audit triggers. Even legitimate deductions should be well-documented with receipts and acknowledgment letters.",
+    "estimatedTaxImpact": "Audit risk if unsubstantiated; potential disallowance of excess charitable deduction if documentation is insufficient",
+    "details": [
+      { "label": "Charitable (Schedule A)", "value": "$8,000" },
+      { "label": "AGI", "value": "$129,933" },
+      { "label": "Charitable/AGI ratio", "value": "6.2% (typical 3–5%)" }
+    ],
+    "calculations": [
+      { "label": "Charitable deduction", "result": "$8,000" },
+      { "label": "AGI", "result": "$129,933" },
+      { "label": "Charitable/AGI ratio", "formula": "$8,000 ÷ $129,933", "result": "6.2%" },
+      { "label": "Typical range", "result": "3–5% of AGI" }
+    ]
+  },
+  {
+    "id": "issue-yoy-qualified-dividends",
+    "category": "yoy-analysis",
+    "severity": "medium",
+    "title": "Qualified dividends dropped 63%",
+    "description": "Qualified dividends fell from $120 to $45 (-63%). Confirm this reflects the client's investment activity.",
+    "explanation": "Qualified dividends down $75 (-63%). Could reflect portfolio rebalancing, stock sales, or reduced dividend payouts. Often correlates with capital gains changes.",
+    "rootCause": "$45 vs $120 prior year. May be related to capital gains — selling dividend-paying stocks can shift income from dividends to gains.",
+    "affectedFields": ["line-3a", "line-9", "line-11"],
+    "suggestedAction": "Confirm with the client whether the dividend drop reflects portfolio changes (e.g., selling dividend stocks, shifting to growth). Cross-check with capital gains — realized gains often offset dividend reductions.",
+    "status": "open",
+    "whyItMatters": "A 63% drop in qualified dividends is significant. It may be legitimate (portfolio rebalancing, stock sales) but could also indicate missing 1099-DIV forms or extraction errors. Qualified dividends receive favorable tax treatment, so accuracy matters.",
+    "estimatedTaxImpact": "~$17 lower tax from $75 dividend reduction (qualified rate ~22%)",
+    "details": [
+      {"label": "2024 Qualified dividends (Line 3a)", "value": "$45"},
+      {"label": "2023 Qualified dividends", "value": "$120"},
+      {"label": "Change", "value": "-$75 (-63%)"},
+      {"label": "Form 1099-DIV", "value": "Form1099-DIV (94% confidence)"}
+    ]
+  },
+  {
+    "id": "issue-yoy-capital-gains",
+    "category": "yoy-analysis",
+    "severity": "medium",
+    "title": "Capital gains swung from loss to gain",
+    "description": "Capital gain or (loss) went from a $1,200 loss to a $602 gain (+150%). Verify Schedule D and sale documentation.",
+    "explanation": "Prior year had a $1,200 capital loss; this year shows a $602 gain. Swing of $1,802. Likely stock sales or realized gains.",
+    "rootCause": "$602 gain vs $1,200 loss prior year. Client may have sold appreciated securities. Verify Schedule D and cost basis.",
+    "affectedFields": ["line-7", "line-9", "line-11"],
+    "suggestedAction": "Review Schedule D and confirm all capital transactions are documented. The swing from loss to gain often reflects realized gains from stock sales — verify cost basis and holding periods for proper tax treatment.",
+    "status": "open",
+    "whyItMatters": "A swing from capital loss to gain affects taxable income and could change the tax outcome. Ensure Schedule D is complete and all sales are reported with correct basis.",
+    "estimatedTaxImpact": "~$132 additional tax from $602 gain vs prior-year loss (22% bracket)",
+    "details": [
+      {"label": "2024 Capital gain (loss) (Line 7)", "value": "$602"},
+      {"label": "2023 Capital gain (loss)", "value": "-$1,200"},
+      {"label": "Swing", "value": "+$1,802 (loss to gain)"},
+      {"label": "Schedule D", "value": "Attach if required"}
+    ]
+  }
+]
