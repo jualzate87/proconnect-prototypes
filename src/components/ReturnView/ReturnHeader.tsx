@@ -70,7 +70,13 @@ export const ReturnHeader: React.FC<ReturnHeaderProps> = ({
     <div className="return-header">
       <div className="return-header-top">
         <div className="return-header-left">
-          <span className="return-header-firm">JOHNSON TAX</span>
+          <button
+            className="return-header-firm-btn"
+            onClick={() => navigate('/home')}
+            type="button"
+          >
+            JOHNSON TAX
+          </button>
         </div>
         <div className="return-header-right-actions">
           <button className="return-header-icon-btn" aria-label="Help">

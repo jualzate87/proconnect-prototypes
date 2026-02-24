@@ -18,13 +18,13 @@ interface NavSection {
 const navSections: NavSection[] = [
   {
     items: [
-      { path: '/', label: 'Welcome' },
+      { path: '/home', label: 'Welcome' },
     ],
   },
   {
     title: 'TAX',
     items: [
-      { path: '/', label: 'Tax returns' },
+      { path: '/home', label: 'Tax returns' },
       { path: '#', label: 'Clients' },
       { path: '#', label: 'E-file Dashboard' },
       { path: '#', label: 'Intuit Link' },
@@ -52,7 +52,7 @@ export const Sidebar: React.FC = () => {
     <aside className={`sidebar ${isCollapsed ? 'sidebar-collapsed' : ''}`}>
       <button
         className="sidebar-logo"
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/home')}
         aria-label="Go to Tax Hub"
       >
         <ProConnectSidebarLogo className="sidebar-logo-badge" />

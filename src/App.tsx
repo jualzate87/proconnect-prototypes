@@ -28,7 +28,11 @@ function App() {
     <PasswordProtection>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
-          <Route path="/" element={<SettingsLayout onOpenTrowser={handleOpenTrowser} />}>
+          {/* Default entry: Launch Return with documents already uploaded */}
+          <Route path="/" element={<Navigate to="/return/jordan-wells/launch" replace />} />
+
+          {/* Tax Hub / Settings (accessible via Back to returns, sidebar, etc.) */}
+          <Route path="/home" element={<SettingsLayout onOpenTrowser={handleOpenTrowser} />}>
             <Route index element={<Home />} />
             <Route path="settings/api-portal">
               <Route index element={<Navigate to="catalog" replace />} />
@@ -39,7 +43,7 @@ function App() {
             </Route>
           </Route>
 
-          {/* Agentic Review: Launch Return (within its own layout, no settings sidebar) */}
+          {/* Agentic Review: Launch Return (documents uploaded, ready to review) */}
           <Route path="/return/:clientId/launch" element={<LaunchReturn />} />
 
           {/* Agentic Review: Return Review (standalone new-tab experience) */}

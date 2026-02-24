@@ -13,11 +13,23 @@
   border-bottom: 1px solid var(--color-border-light);
 }
 
-.return-header-firm {
+.return-header-firm,
+.return-header-firm-btn {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   letter-spacing: 0.5px;
+}
+
+.return-header-firm-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.return-header-firm-btn:hover {
+  color: var(--color-primary);
 }
 
 .return-header-right-actions {
