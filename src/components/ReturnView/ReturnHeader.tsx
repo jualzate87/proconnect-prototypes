@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Dropdown } from '../ProConnectLibrary/ui/Dropdown';
 import type { DropdownItem } from '../ProConnectLibrary/ui/Dropdown';
 import './ReturnHeader.css';
@@ -58,8 +57,6 @@ export const ReturnHeader: React.FC<ReturnHeaderProps> = ({
   prepTime,
   onAuditLogClick,
 }) => {
-  const navigate = useNavigate();
-
   const handleReturnAction = (item: DropdownItem) => {
     if (item.id === 'audit-log') {
       onAuditLogClick?.();
@@ -70,13 +67,7 @@ export const ReturnHeader: React.FC<ReturnHeaderProps> = ({
     <div className="return-header">
       <div className="return-header-top">
         <div className="return-header-left">
-          <button
-            className="return-header-firm-btn"
-            onClick={() => navigate('/home')}
-            type="button"
-          >
-            JOHNSON TAX
-          </button>
+          <span className="return-header-firm">JOHNSON TAX</span>
         </div>
         <div className="return-header-right-actions">
           <button className="return-header-icon-btn" aria-label="Help">
@@ -185,7 +176,7 @@ export const ReturnHeader: React.FC<ReturnHeaderProps> = ({
               Prep time: {prepTime}
             </span>
           )}
-          <button className="return-header-refresh-btn" onClick={() => navigate(0)}>
+          <button className="return-header-refresh-btn" onClick={() => window.location.reload()}>
             Refresh forms
           </button>
         </div>

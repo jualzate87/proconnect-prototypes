@@ -321,7 +321,7 @@ export function IconShowcase() {
 
   return (
     <div className="icon-showcase">
-      <Link to="/home" className="icon-showcase__back-link">
+      <Link to="/return/jordan-wells/launch" className="icon-showcase__back-link">
         <IconArrowBack size={16} /> Back to app
       </Link>
 
