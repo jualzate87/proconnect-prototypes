@@ -101,6 +101,9 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
     setExpandedIssueId(isExpanding ? issue.id : null);
     if (isExpanding) {
       onIssueClick?.(issue);
+      onCategoryExpand?.(issue.affectedFields ?? []);
+    } else {
+      onCategoryExpand?.([]);
     }
   };
 

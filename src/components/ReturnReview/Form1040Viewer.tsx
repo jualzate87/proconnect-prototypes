@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Form1040Field, IssueCategory } from '../../types';
+import { IconCircleAlertFill } from '../ProConnectLibrary';
 import './Form1040Viewer.css';
 
 interface Form1040ViewerProps {
@@ -49,6 +50,9 @@ export const Form1040Viewer: React.FC<Form1040ViewerProps> = ({
     const isActive = activeFieldId === field.id;
     const hasChange = field.changePercent && Math.abs(field.changePercent) >= 5;
     const isHovered = hoveredFieldId === field.id;
+    const showAttentionBadge =
+      (expandedCategory === 'scan-quality' || expandedCategory === 'irs-compliance') &&
+      highlightedFieldIds.includes(field.id);
     const isPersonallyReviewed = field.personalReview;
     const isCorrected = field.reviewStatus === 'corrected';
 
@@ -92,6 +96,11 @@ export const Form1040Viewer: React.FC<Form1040ViewerProps> = ({
         {hasChange && expandedCategory === 'yoy-analysis' && (
           <span className={`field-change-badge ${field.changePercent! > 0 ? 'positive' : 'negative'} ${getChangeClass(field.changePercent!)}`}>
             {field.changePercent! > 0 ? '+' : ''}{field.changePercent}%
+          </span>
+        )}
+        {showAttentionBadge && (
+          <span className="field-attention-badge" title="Related to issue">
+            <IconCircleAlertFill size={12} color="currentColor" />
           </span>
         )}
       </span>
