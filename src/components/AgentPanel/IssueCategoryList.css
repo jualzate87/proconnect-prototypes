@@ -5,6 +5,7 @@
 }
 
 .issue-category {
+  min-width: 220px;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid #e2e8f0;
@@ -99,8 +100,8 @@
 
 .issue-card {
   position: relative;
+  min-width: 220px;
   padding: 12px 14px;
-  padding-right: 100px; /* Space for See details button */
   border-radius: 10px;
   background-color: #f8fafc;
   cursor: pointer;
@@ -109,6 +110,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  overflow: hidden;
 }
 
 .issue-card:hover {
@@ -126,16 +128,21 @@
   opacity: 0.75;
 }
 
-.issue-card.high {
-  border-left-color: #ef4444;
+/* YoY-style stroke colors (no blue) */
+.issue-card.change-severe {
+  border-left-color: #e65100;
 }
 
-.issue-card.medium {
-  border-left-color: #f59e0b;
+.issue-card.change-moderate {
+  border-left-color: #ff9800;
 }
 
-.issue-card.low {
-  border-left-color: #3b82f6;
+.issue-card.change-minor {
+  border-left-color: #f5a623;
+}
+
+.issue-card.change-subtle {
+  border-left-color: #e2e8f0;
 }
 
 /* Card header */
@@ -145,7 +152,7 @@
   align-items: flex-start;
   margin-bottom: 4px;
   padding-right: 0;
-  min-width: 0; /* Allow title to shrink and not overlap See details */
+  min-width: 0;
 }
 
 .issue-card-title-row {
@@ -154,7 +161,6 @@
   gap: 6px;
   flex: 1;
   min-width: 0;
-  padding-right: 8px; /* Extra buffer from See details button */
 }
 
 .issue-severity-dot {
@@ -164,16 +170,20 @@
   flex-shrink: 0;
 }
 
-.issue-severity-dot.high {
-  background: #ef4444;
+.issue-severity-dot.change-severe {
+  background: #e65100;
 }
 
-.issue-severity-dot.medium {
-  background: #f59e0b;
+.issue-severity-dot.change-moderate {
+  background: #ff9800;
 }
 
-.issue-severity-dot.low {
-  background: #3b82f6;
+.issue-severity-dot.change-minor {
+  background: #f5a623;
+}
+
+.issue-severity-dot.change-subtle {
+  background: #94a3b8;
 }
 
 .issue-card-title {
@@ -261,29 +271,30 @@
   line-height: 1.4;
 }
 
-/* See details button — absolute top-right inside card, tertiary, blue border on hover */
-.issue-card-see-details-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-primary, #0077C5);
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+/* See details — filled primary blue */
+.issue-action-btn.see-details {
+  background: #0077C5;
+  border: 2px solid #0077C5;
+  color: white;
+  font-weight: 600;
 }
 
-.issue-card-see-details-btn:hover,
-.issue-card-see-details-btn:focus {
-  border-color: var(--color-primary, #0077C5);
-  background: rgba(0, 119, 197, 0.06);
+.issue-action-btn.see-details:hover {
+  background: #005a94;
+  border-color: #005a94;
+  color: white;
+}
+
+.issue-action-btn.see-details.active {
+  background: #004d7a;
+  border-color: #004d7a;
+  color: white;
+}
+
+.issue-action-btn.see-details.active:hover {
+  background: #003d62;
+  border-color: #003d62;
+  color: white;
 }
 
 .issue-card-expand-icon {
@@ -292,6 +303,11 @@
   align-items: center;
   color: #94a3b8;
   transition: transform 0.2s ease;
+}
+
+/* Chevron white when inside filled blue See details button */
+.issue-action-btn.see-details .issue-card-expand-icon {
+  color: white;
 }
 
 .issue-card-expand-icon.expanded {
@@ -466,38 +482,51 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
-  border: 1px solid;
+  border: 2px solid;
 }
 
+/* Secondary/outlined — View document, View sources, etc. */
 .issue-action-btn.contextual {
-  background: white;
-  border-color: #e2e8f0;
-  color: #475569;
+  background: transparent;
+  border-color: #0077C5;
+  color: #0077C5;
 }
 
 .issue-action-btn.contextual:hover {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
+  background: rgba(0, 119, 197, 0.08);
+  border-color: #005a94;
+  color: #005a94;
+}
+
+.issue-action-btn.contextual:active {
+  background: rgba(0, 119, 197, 0.12);
 }
 
 .action-icon {
   font-size: 13px;
 }
 
+/* Mark as correct — tertiary/passive secondary: grey stroke and font */
 .issue-action-btn.mark-correct {
-  background: white;
-  border-color: #00a651;
-  color: #00a651;
+  background: transparent;
+  border: 2px solid #94a3b8;
+  color: #64748b;
 }
 
 .issue-action-btn.mark-correct:hover {
-  background: #dcfce7;
+  background: rgba(148, 163, 184, 0.08);
+  border-color: #64748b;
+  color: #475569;
+}
+
+.issue-action-btn.mark-correct:active {
+  background: rgba(148, 163, 184, 0.12);
 }
 
 /* Mark as correct confirmation */
@@ -520,34 +549,49 @@
 }
 
 .confirm-correct-btn {
-  padding: 4px 10px;
+  padding: 6px 12px;
   background: #00a651;
   color: white;
-  border: none;
+  border: 2px solid #00a651;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+  transition: all 0.15s ease;
 }
 
 .confirm-correct-btn:hover {
   background: #009147;
+  border-color: #009147;
+}
+
+.confirm-correct-btn:active {
+  background: #00803a;
+  border-color: #00803a;
 }
 
 .cancel-correct-btn {
-  padding: 4px 8px;
-  background: none;
-  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
+  background: transparent;
+  border: 2px solid #0077C5;
   border-radius: 4px;
-  font-size: 11px;
-  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0077C5;
   cursor: pointer;
   white-space: nowrap;
+  transition: all 0.15s ease;
 }
 
 .cancel-correct-btn:hover {
-  background: #f1f5f9;
+  background: rgba(0, 119, 197, 0.08);
+  border-color: #005a94;
+  color: #005a94;
+}
+
+.cancel-correct-btn:active {
+  background: rgba(0, 119, 197, 0.12);
 }
 
 .issue-correct-label {

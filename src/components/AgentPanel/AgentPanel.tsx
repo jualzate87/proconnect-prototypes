@@ -82,6 +82,8 @@ interface AgentPanelProps {
   onFieldHighlight?: (fieldIds: string[]) => void;
   onExpandedCategoryChange?: (category: IssueCategory | null) => void;
   onDocumentClick?: (documentId: string) => void;
+  onDocumentReview?: (documentId: string, reviewed: boolean) => void;
+  fields?: import('../../types').Form1040Field[];
   onClose?: () => void;
 }
 
@@ -99,6 +101,8 @@ export const AgentPanel: React.FC<AgentPanelProps> = ({
   onFieldHighlight,
   onExpandedCategoryChange,
   onDocumentClick,
+  onDocumentReview,
+  fields = [],
   onClose,
 }) => {
   const [agentState, setAgentState] = useState<AgentState>('loading');
@@ -309,6 +313,12 @@ export const AgentPanel: React.FC<AgentPanelProps> = ({
               I've reviewed Jordan Wells' 2024 return. Here's a summary of the imported documents and the issues I found.
             </p>
 
+            <DocumentSummary
+              documents={documents}
+              onDocumentClick={onDocumentClick}
+              onDocumentReview={onDocumentReview}
+            />
+
             <div className="agent-panel-corrections-callout">
               <span className="corrections-callout-icon" aria-hidden>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -323,13 +333,9 @@ export const AgentPanel: React.FC<AgentPanelProps> = ({
 
             <ReviewProgressCard issues={issues} />
 
-            <DocumentSummary
-              documents={documents}
-              onDocumentClick={onDocumentClick}
-            />
-
             <IssueCategoryList
               issues={issues}
+              fields={fields}
               onIssueClick={onIssueClick}
               onCategoryExpand={(fieldIds) => onFieldHighlight?.(fieldIds)}
               onExpandedCategoryChange={onExpandedCategoryChange}

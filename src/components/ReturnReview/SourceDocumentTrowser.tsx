@@ -7,6 +7,8 @@ interface SourceDocumentTrowserProps {
   isOpen: boolean;
   onClose: () => void;
   onSave?: (newValue: number | string) => void;
+  /** 1040 field IDs flagged in scan issues for this document. Only these get low-confidence highlight. */
+  issueAffectedFieldIds?: string[];
 }
 
 type TrowserTab = 'extracted' | 'prior-year';
@@ -65,14 +67,32 @@ const getConfidenceNote = (conf: number): { label: string; class: string } | nul
   return { label: 'Double-check this field', class: 'caution' };
 };
 
-/** Only highlight fields with low confidence in the document view. */
-const shouldHighlightField = (confidence: number) => confidence < 90;
+/** Map flowsTo (e.g. "Line 1a") to 1040 field ID (e.g. "line-1a"). */
+const flowsToToFieldId = (flowsTo: string | null): string | null => {
+  if (!flowsTo) return null;
+  const m = flowsTo.match(/Line\s+(\d+[a-z]?)/i);
+  if (!m) return null;
+  return `line-${m[1].toLowerCase()}`;
+};
+
+/** Only highlight/flag fields that are in scan issues AND have low confidence. */
+const shouldHighlightField = (
+  confidence: number,
+  flowsTo: string | null,
+  issueAffectedFieldIds: string[] | undefined
+): boolean => {
+  if (confidence >= 90) return false;
+  if (!issueAffectedFieldIds?.length) return false;
+  const fieldId = flowsToToFieldId(flowsTo);
+  return fieldId != null && issueAffectedFieldIds.includes(fieldId);
+};
 
 export const SourceDocumentTrowser: React.FC<SourceDocumentTrowserProps> = ({
   source,
   isOpen,
   onClose,
   onSave,
+  issueAffectedFieldIds,
 }) => {
   const [activeTab, setActiveTab] = useState<TrowserTab>('extracted');
   const [editingField, setEditingField] = useState<string | null>(null);
@@ -146,7 +166,7 @@ export const SourceDocumentTrowser: React.FC<SourceDocumentTrowserProps> = ({
                   </div>
                   <div className="mock-doc-body">
                     {extractedFields.map((field) => (
-                      <div key={field.id} className={`mock-doc-field ${shouldHighlightField(field.confidence) ? 'highlighted' : ''}`}>
+                      <div key={field.id} className={`mock-doc-field ${shouldHighlightField(field.confidence, field.flowsTo, issueAffectedFieldIds) ? 'highlighted' : ''}`}>
                         <span className="mock-doc-field-label">{field.label}</span>
                         <span className="mock-doc-field-value">
                           {typeof field.value === 'number' ? field.value.toLocaleString('en-US') : field.value}
@@ -193,9 +213,10 @@ export const SourceDocumentTrowser: React.FC<SourceDocumentTrowserProps> = ({
               {activeTab === 'extracted' && (
                 <div className="extracted-fields-list">
                   {extractedFields.map((field) => {
-                    const confidenceNote = getConfidenceNote(field.confidence);
+                    const isIssueFlagged = shouldHighlightField(field.confidence, field.flowsTo, issueAffectedFieldIds);
+                    const confidenceNote = isIssueFlagged ? getConfidenceNote(field.confidence) : null;
                     return (
-                    <div key={field.id} className={`extracted-field-row ${shouldHighlightField(field.confidence) ? 'highlighted' : ''}`}>
+                    <div key={field.id} className={`extracted-field-row ${isIssueFlagged ? 'highlighted' : ''}`}>
                       <div className="extracted-field-top">
                         <span className="extracted-field-label">{field.label}</span>
                         {confidenceNote && (

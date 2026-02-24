@@ -19,11 +19,32 @@ const PANEL_WIDTH_DEFAULT = 384;
 
 const POPOVER_WIDTH = 360;
 const POPOVER_HEIGHT_EST = 400;
-const POPOVER_GAP = 16;
+const POPOVER_GAP = 8;
 
 export type PopoverPosition = { top: number; left: number };
 
-/** Returns position for popover: 16px above field top (or below if no room). Top-based, no vertical clamping. */
+/** Returns the topmost (smallest rect.top) field element from the given IDs. */
+function getTopmostFieldElement(
+  formRef: React.RefObject<HTMLDivElement | null>,
+  fieldIds: string[]
+): HTMLElement | null {
+  if (!formRef.current || fieldIds.length === 0) return null;
+  let topmost: HTMLElement | null = null;
+  let minTop = Infinity;
+  for (const id of fieldIds) {
+    const el = formRef.current.querySelector(`[data-field-id="${id}"]`) as HTMLElement | null;
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < minTop) {
+        minTop = rect.top;
+        topmost = el;
+      }
+    }
+  }
+  return topmost;
+}
+
+/** Returns position for popover: 8px above field top (or below if no room). Top-based, no vertical clamping. */
 function getPopoverPosition(fieldEl: HTMLElement): PopoverPosition {
   const rect = fieldEl.getBoundingClientRect();
 
@@ -60,6 +81,9 @@ export const ReturnReviewLayout: React.FC = () => {
   const [isResizing, setIsResizing] = useState(false);
   const [fields, setFields] = useState<Form1040Field[]>(formData.fields as Form1040Field[]);
   const [issues, setIssues] = useState<ReviewIssue[]>(issuesData as ReviewIssue[]);
+  const [documents, setDocuments] = useState<ReturnDocument[]>(
+    (clientData.documents as ReturnDocument[]).map((d) => ({ ...d }))
+  );
 
   // Field popover state
   const [selectedField, setSelectedField] = useState<Form1040Field | null>(null);
@@ -79,9 +103,36 @@ export const ReturnReviewLayout: React.FC = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const lastWidthRef = useRef(panelWidth);
 
+  // Reposition popover when form scrolls so it stays 8px above the topmost highlighted field
+  useEffect(() => {
+    if (!selectedField) return;
+    const scrollEl = formRef.current?.querySelector('.form-1040-viewer');
+    if (!scrollEl) return;
+    const updatePos = () => {
+      const ids = highlightedFieldIds.length > 0 ? highlightedFieldIds : [selectedField.id];
+      const fieldEl = getTopmostFieldElement(formRef, ids);
+      if (fieldEl) setPopoverPos(getPopoverPosition(fieldEl));
+    };
+    scrollEl.addEventListener('scroll', updatePos, { passive: true });
+    return () => scrollEl.removeEventListener('scroll', updatePos);
+  }, [selectedField, highlightedFieldIds]);
+
   useEffect(() => {
     lastWidthRef.current = panelWidth;
   }, [panelWidth]);
+
+  // Escape to close popover when open
+  useEffect(() => {
+    if (!selectedField && !calcIssue) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedField(null);
+        setCalcIssue(null);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [selectedField, calcIssue]);
 
   useEffect(() => {
     if (!isResizing) return;
@@ -180,6 +231,36 @@ export const ReturnReviewLayout: React.FC = () => {
     );
   }, [selectedSource]);
 
+  const PREPARER_NAME = 'Sonia Miller';
+
+  const getIssueAffectedFieldIdsForDocument = useCallback(
+    (documentId: string): string[] => {
+      const ids = new Set<string>();
+      for (const issue of issues.filter((i) => i.category === 'scan-quality')) {
+        for (const fid of issue.affectedFields) {
+          const field = fields.find((f) => f.id === fid);
+          if (field?.sources?.some((s) => s.documentId === documentId)) ids.add(fid);
+        }
+      }
+      return Array.from(ids);
+    },
+    [issues, fields]
+  );
+
+  const handleDocumentReview = useCallback((documentId: string, reviewed: boolean) => {
+    setDocuments((prev) =>
+      prev.map((d) =>
+        d.id === documentId
+          ? {
+              ...d,
+              reviewedBy: reviewed ? PREPARER_NAME : undefined,
+              reviewedAt: reviewed ? new Date().toISOString() : undefined,
+            }
+          : d
+      )
+    );
+  }, []);
+
   const handleDocumentClick = useCallback((documentId: string) => {
     // Find a source reference for this document from any field
     const field = fields.find((f) =>
@@ -190,7 +271,7 @@ export const ReturnReviewLayout: React.FC = () => {
       setSelectedSource(source);
     } else {
       // Create a minimal source reference for documents without field mappings
-      const doc = (clientData.documents as ReturnDocument[]).find((d) => d.id === documentId);
+      const doc = documents.find((d) => d.id === documentId);
       if (doc) {
         setSelectedSource({
           documentId: doc.id,
@@ -203,20 +284,21 @@ export const ReturnReviewLayout: React.FC = () => {
         });
       }
     }
-  }, [fields]);
+  }, [fields, documents]);
 
   const handleIssueClick = useCallback((issue: ReviewIssue) => {
     setHighlightedFieldIds(issue.affectedFields);
-    const field = fields.find((f) => issue.affectedFields.includes(f.id));
-    if (field && formRef.current) {
-      const fieldEl = formRef.current.querySelector(
-        `[data-field-id="${field.id}"]`
-      ) as HTMLElement | null;
-      fieldEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      if (fieldEl) {
-        setPopoverPos(getPopoverPosition(fieldEl));
-        setSelectedField(field);
-      }
+    const fieldEl = getTopmostFieldElement(formRef, issue.affectedFields);
+    if (fieldEl) {
+      const fieldId = fieldEl.getAttribute('data-field-id');
+      const field = fieldId ? fields.find((f) => f.id === fieldId) : undefined;
+      fieldEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setPopoverPos(getPopoverPosition(fieldEl));
+        });
+      });
+      if (field) setSelectedField(field);
     }
   }, [fields]);
 
@@ -312,13 +394,15 @@ export const ReturnReviewLayout: React.FC = () => {
           width={panelWidth}
           isResizing={isResizing}
           issues={issues}
-          documents={clientData.documents as ReturnDocument[]}
+          documents={documents}
+          fields={fields}
           onIssueClick={handleIssueClick}
           onIssueCorrect={handleIssueCorrect}
           onIssueAction={handleIssueAction}
           onFieldHighlight={setHighlightedFieldIds}
           onExpandedCategoryChange={setExpandedCategory}
           onDocumentClick={handleDocumentClick}
+          onDocumentReview={handleDocumentReview}
           onClose={() => setIsAgentOpen(false)}
         />
       </div>
@@ -341,6 +425,7 @@ export const ReturnReviewLayout: React.FC = () => {
           isOpen={!!selectedSource}
           onClose={() => setSelectedSource(null)}
           onSave={handleSourceSave}
+          issueAffectedFieldIds={getIssueAffectedFieldIdsForDocument(selectedSource.documentId)}
         />
       )}
 

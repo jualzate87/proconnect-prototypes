@@ -26,24 +26,24 @@
     ]
   },
   {
-    "id": "issue-missing-1099",
+    "id": "issue-interest-review",
     "category": "yoy-analysis",
     "severity": "high",
-    "title": "Potential missing document: Chase Bank 1099-INT",
-    "description": "A 1099-INT from Chase Bank was present last year but not imported this year.",
-    "explanation": "Chase 1099-INT ($1,200) was filed last year but not imported this year. If account is active, interest may be understated.",
-    "rootCause": "Chase 1099-INT missing from import. Client may have closed account or document not yet uploaded.",
+    "title": "Taxable interest — verify sources",
+    "description": "Interest rose 42% ($3,200 → $4,535). Chase Bank 1099-INT from last year not imported — if account is active, interest may be understated.",
+    "explanation": "Reported interest is up; Chase 1099-INT ($1,200 prior year) is missing. Confirm account status and that all 1099-INTs are collected.",
+    "rootCause": "Chase 1099-INT missing. Interest increase could be rates or new accounts — verify completeness.",
     "affectedFields": ["line-2b"],
-    "suggestedAction": "Contact the client to confirm if the Chase Bank account was closed or if the 1099-INT was simply not uploaded yet.",
+    "suggestedAction": "Confirm with client whether Chase account was closed. Ensure all 1099-INTs are collected. If Chase is active, add ~$1,200 to Line 2b.",
     "status": "open",
-    "whyItMatters": "Missing income documents lead to underreported income. The IRS receives copies of all 1099s and will issue a CP2000 notice for any unreported interest income, plus penalties and interest.",
-    "estimatedTaxImpact": "~$264 additional tax if $1,200 Chase interest is unreported (22% bracket)",
-    "missingDocuments": ["Chase Bank 1099-INT (2023: $1,200 interest income)"],
+    "whyItMatters": "Missing 1099-INTs trigger IRS CP2000 notices. Verify interest sources to avoid underreporting.",
+    "estimatedTaxImpact": "~$264 additional tax if Chase interest ($1,200) is unreported",
+    "missingDocuments": ["Chase Bank 1099-INT (2023: $1,200)"],
     "details": [
-      { "label": "2023 Chase Bank interest", "value": "$1,200" },
-      { "label": "2024 Chase Bank interest", "value": "Not received" },
-      { "label": "Current taxable interest (Line 2b)", "value": "$4,535" },
-      { "label": "Potential corrected amount", "value": "$5,735" }
+      { "label": "2024 reported (Line 2b)", "value": "$4,535" },
+      { "label": "2023 total", "value": "$3,200" },
+      { "label": "Chase (prior year)", "value": "$1,200 — not received" },
+      { "label": "If Chase active", "value": "~$5,735 total" }
     ]
   },
   {
@@ -87,18 +87,20 @@
     ]
   },
   {
-    "id": "issue-irs-withholding",
+    "id": "issue-withholding",
     "category": "irs-compliance",
     "severity": "medium",
-    "title": "Under-withholding: safe harbor risk",
-    "description": "Total federal withholding ($19,800) is only 82% of total tax liability ($24,186). Client may owe an underpayment penalty.",
-    "explanation": "Withholding ($19,800) is 82% of tax ($24,186). Below 90% safe harbor. ~$350 penalty may apply.",
-    "rootCause": "Shortfall of $4,386. Neither 90% current-year nor 100% prior-year threshold met.",
+    "title": "Under-withholding: balance due + penalty risk",
+    "preferredAction": "view-document",
+    "preferredActionLabel": "View W-2s",
+    "description": "Withholding ($19,800) is 82% of tax — below 90% safe harbor. Two W-2 jobs withhold at lower brackets than combined income. Client owes $4,386; ~$350 penalty may apply.",
+    "explanation": "Each employer withholds as if sole income. Combined $124K pushes into higher bracket — systematic under-withholding. Shortfall $4,386; neither 90% current-year nor 100% prior-year threshold met.",
+    "rootCause": "Multi-job withholding gap: each W-2 withheld at lower brackets. Combined income taxed higher than either job alone.",
     "affectedFields": ["line-25a", "line-24", "line-37"],
-    "suggestedAction": "Inform the client about the $4,386 balance due and potential underpayment penalty. Recommend adjusting W-4 withholdings for the current year to prevent recurrence. Consider if estimated tax payments were made but not yet documented.",
+    "suggestedAction": "Inform the client about the $4,386 balance due and potential penalty. Recommend W-4 Step 2 'Two jobs' at both employers, or use the IRS Tax Withholding Estimator. Check for any estimated payments not yet documented.",
     "status": "open",
-    "whyItMatters": "The IRS charges an underpayment penalty (currently ~8% annualized) when taxpayers don't meet safe harbor withholding thresholds. Flagging this early allows the preparer to advise the client and check for any estimated payments that may offset the shortfall.",
-    "estimatedTaxImpact": "~$350 underpayment penalty + $4,386 balance due (withholding 82% of tax, below 90% safe harbor)",
+    "whyItMatters": "The IRS charges an underpayment penalty when safe harbor thresholds aren't met. Multi-job gaps are a common cause — proactive W-4 adjustment prevents recurrence.",
+    "estimatedTaxImpact": "~$350 underpayment penalty + $4,386 balance due",
     "estimatedPenalty": {
       "amount": 350,
       "calculation": "Shortfall of $4,386 × ~8% annualized rate, prorated across quarters",
@@ -110,17 +112,15 @@
       { "label": "Total tax liability (Line 24)", "result": "$24,186" },
       { "label": "Total withholding (Line 25a)", "result": "$19,800" },
       { "label": "Shortfall", "formula": "$24,186 - $19,800", "result": "$4,386" },
-      { "label": "90% safe harbor threshold", "formula": "$24,186 × 90%", "result": "$21,767" },
-      { "label": "100% prior year threshold", "result": "$28,433" },
-      { "label": "Estimated underpayment penalty", "result": "~$350" },
-      { "label": "Recommended Q4 estimated payment", "result": "$6,047" }
+      { "label": "90% safe harbor", "result": "$21,767" },
+      { "label": "Estimated penalty", "result": "~$350" },
+      { "label": "Recommended Q4 payment", "result": "$6,047" }
     ],
     "details": [
-      { "label": "W2-Bing withholding", "value": "$10,000" },
-      { "label": "W2-Tech Circle withholding", "value": "$9,800" },
-      { "label": "Total withholding", "value": "$19,800" },
-      { "label": "Total tax liability", "value": "$24,186" },
-      { "label": "Withholding ratio", "value": "82% (below 90% safe harbor)" }
+      { "label": "W2-Bing", "value": "$60,000 wages / $10,000 withheld" },
+      { "label": "W2-Tech Circle", "value": "$64,304 wages / $9,800 withheld" },
+      { "label": "Total withholding", "value": "$19,800 (82% of tax)" },
+      { "label": "Effective rate", "value": "15.9% vs ~19.5% required" }
     ]
   },
   {
@@ -149,38 +149,43 @@
     ]
   },
   {
-    "id": "issue-withholding-gap",
-    "category": "irs-compliance",
+    "id": "issue-yoy-qualified-dividends",
+    "category": "yoy-analysis",
     "severity": "medium",
-    "title": "Multi-job withholding gap",
-    "description": "Taxpayer has two W-2 jobs. Combined withholding may not account for higher marginal bracket from total income.",
-    "explanation": "Two jobs withhold at lower brackets. Combined $124K pushes into higher bracket — systematic under-withholding.",
-    "rootCause": "Each employer withholds as if sole income. Recommend W-4 Step 2 'Two jobs' or Tax Withholding Estimator.",
-    "affectedFields": ["line-25a", "line-24"],
-    "suggestedAction": "Advise the client to submit updated W-4 forms to both employers, checking the 'Two jobs' box on Step 2, or use the IRS Tax Withholding Estimator to calculate the additional withholding needed.",
+    "title": "Qualified dividends dropped 63%",
+    "description": "Qualified dividends fell from $120 to $45 (-63%). Confirm this reflects the client's investment activity.",
+    "explanation": "Qualified dividends down $75 (-63%). Could reflect portfolio rebalancing, stock sales, or reduced dividend payouts. Often correlates with capital gains changes.",
+    "rootCause": "$45 vs $120 prior year. May be related to capital gains — selling dividend-paying stocks can shift income from dividends to gains.",
+    "affectedFields": ["line-3a", "line-9", "line-11"],
+    "suggestedAction": "Confirm with the client whether the dividend drop reflects portfolio changes (e.g., selling dividend stocks, shifting to growth). Cross-check with capital gains — realized gains often offset dividend reductions.",
     "status": "open",
-    "whyItMatters": "Multi-job withholding gaps are one of the most common causes of surprise tax bills. Proactive W-4 adjustment prevents this from recurring next year.",
-    "estimatedTaxImpact": "Drives the $4,386 balance due; two jobs withhold at lower brackets than combined income",
+    "whyItMatters": "A 63% drop in qualified dividends is significant. It may be legitimate (portfolio rebalancing, stock sales) but could also indicate missing 1099-DIV forms or extraction errors. Qualified dividends receive favorable tax treatment, so accuracy matters.",
+    "estimatedTaxImpact": "~$17 lower tax from $75 dividend reduction (qualified rate ~22%)",
     "details": [
-      { "label": "Job 1 (Bing Equipment)", "value": "$60,000 wages / $10,000 withheld" },
-      { "label": "Job 2 (Tech Circle)", "value": "$64,304 wages / $9,800 withheld" },
-      { "label": "Combined income", "value": "$124,265" },
-      { "label": "Effective withholding rate", "value": "15.9%" },
-      { "label": "Required rate for this income", "value": "~19.5%" }
+      {"label": "2024 Qualified dividends (Line 3a)", "value": "$45"},
+      {"label": "2023 Qualified dividends", "value": "$120"},
+      {"label": "Change", "value": "-$75 (-63%)"},
+      {"label": "Form 1099-DIV", "value": "Form1099-DIV (94% confidence)"}
     ]
   },
   {
-    "id": "issue-interest-spike",
+    "id": "issue-yoy-capital-gains",
     "category": "yoy-analysis",
-    "severity": "low",
-    "title": "Taxable interest increased 42%",
-    "description": "Taxable interest rose from $3,200 to $4,535 (+42%). Verify this is consistent with the client's savings activity.",
-    "explanation": "Interest up $1,335 (+42%). Likely higher rates; confirm no new accounts missing 1099-INT.",
-    "rootCause": "$4,535 vs $3,200 prior year. Verify all interest sources documented.",
-    "affectedFields": ["line-2b"],
-    "suggestedAction": "Confirm with the client whether the interest increase is from existing accounts (higher rates) or new accounts. If new accounts exist, ensure all 1099-INTs are collected.",
+    "severity": "medium",
+    "title": "Capital gains swung from loss to gain",
+    "description": "Capital gain or (loss) went from a $1,200 loss to a $602 gain (+150%). Verify Schedule D and sale documentation.",
+    "explanation": "Prior year had a $1,200 capital loss; this year shows a $602 gain. Swing of $1,802. Likely stock sales or realized gains.",
+    "rootCause": "$602 gain vs $1,200 loss prior year. Client may have sold appreciated securities. Verify Schedule D and cost basis.",
+    "affectedFields": ["line-7", "line-9", "line-11"],
+    "suggestedAction": "Review Schedule D and confirm all capital transactions are documented. The swing from loss to gain often reflects realized gains from stock sales — verify cost basis and holding periods for proper tax treatment.",
     "status": "open",
-    "whyItMatters": "A 42% increase in interest income is notable. While likely explained by rate increases, it's worth confirming no additional interest income sources are missing.",
-    "estimatedTaxImpact": "~$295 additional tax from $1,335 interest increase (22% bracket)"
+    "whyItMatters": "A swing from capital loss to gain affects taxable income and could change the tax outcome. Ensure Schedule D is complete and all sales are reported with correct basis.",
+    "estimatedTaxImpact": "~$132 additional tax from $602 gain vs prior-year loss (22% bracket)",
+    "details": [
+      {"label": "2024 Capital gain (loss) (Line 7)", "value": "$602"},
+      {"label": "2023 Capital gain (loss)", "value": "-$1,200"},
+      {"label": "Swing", "value": "+$1,802 (loss to gain)"},
+      {"label": "Schedule D", "value": "Attach if required"}
+    ]
   }
 ]

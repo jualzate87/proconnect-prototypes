@@ -8,6 +8,7 @@ const CONFIDENCE_TOOLTIP = 'OCR confidence indicates how accurately the document
 interface DocumentSummaryProps {
   documents: ReturnDocument[];
   onDocumentClick?: (documentId: string) => void;
+  onDocumentReview?: (documentId: string, reviewed: boolean) => void;
 }
 
 const docTypeIcons: Record<string, string> = {
@@ -31,8 +32,10 @@ const getConfidenceClass = (confidence: number | undefined | null): string => {
 export const DocumentSummary: React.FC<DocumentSummaryProps> = ({
   documents,
   onDocumentClick,
+  onDocumentReview,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hoveredDocId, setHoveredDocId] = useState<string | null>(null);
 
   const importedDocs = documents.filter((d) => d.importStatus === 'imported' || d.importStatus === 'ready');
 
@@ -67,35 +70,78 @@ export const DocumentSummary: React.FC<DocumentSummaryProps> = ({
             </div>
           )}
           <div className="doc-summary-list">
-            {importedDocs.map((doc) => (
-              <button
-                key={doc.id}
-                className="doc-summary-item"
-                onClick={() => onDocumentClick?.(doc.id)}
-              >
-                <span className="doc-item-icon">
-                  {docTypeIcons[doc.type] || docTypeIcons['other']}
-                </span>
-                <div className="doc-item-info">
-                  <span className="doc-item-name">{doc.name}</span>
-                  <span className="doc-item-meta">
-                    {doc.type}
-                    {doc.pages ? ` · ${doc.pages} ${doc.pages === 1 ? 'page' : 'pages'}` : ''}
-                  </span>
+            {importedDocs.map((doc) => {
+              const isReviewed = !!doc.reviewedBy;
+              const isHovered = hoveredDocId === doc.id;
+              return (
+                <div
+                  key={doc.id}
+                  className="doc-summary-item-row"
+                  onMouseEnter={() => setHoveredDocId(doc.id)}
+                  onMouseLeave={() => setHoveredDocId(null)}
+                >
+                  <button
+                    className="doc-summary-item"
+                    onClick={() => onDocumentClick?.(doc.id)}
+                  >
+                    <span className="doc-item-icon">
+                      {docTypeIcons[doc.type] || docTypeIcons['other']}
+                    </span>
+                    <div className="doc-item-info">
+                      <span className="doc-item-name">{doc.name}</span>
+                      <span className="doc-item-meta">
+                        {doc.type}
+                        {doc.pages ? ` · ${doc.pages} ${doc.pages === 1 ? 'page' : 'pages'}` : ''}
+                      </span>
+                      {doc.reviewedBy && (
+                        <span className="doc-item-reviewed">Reviewed by {doc.reviewedBy}</span>
+                      )}
+                    </div>
+                    {doc.ocrConfidence !== undefined && doc.ocrConfidence !== null && (
+                      <span className={`doc-item-confidence ${getConfidenceClass(doc.ocrConfidence)}`}>
+                        {doc.ocrConfidence}%
+                      </span>
+                    )}
+                    {isReviewed && (
+                      <button
+                        type="button"
+                        className="doc-item-reviewed-check"
+                        title="Reviewed — click to clear"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDocumentReview?.(doc.id, false);
+                        }}
+                        aria-label={`Clear reviewed status for ${doc.name}`}
+                      >
+                        ✓
+                      </button>
+                    )}
+                    {isHovered && !isReviewed && (
+                      <button
+                        type="button"
+                        className="doc-item-review-btn"
+                        title="Mark as reviewed"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDocumentReview?.(doc.id, true);
+                        }}
+                        aria-label={`Mark ${doc.name} as reviewed`}
+                      >
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M2.5 6L5 8.5L9.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                    )}
+                    <span className="doc-item-action">
+                      View
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M4 2L8 6L4 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                  </button>
                 </div>
-                {doc.ocrConfidence !== undefined && doc.ocrConfidence !== null && (
-                  <span className={`doc-item-confidence ${getConfidenceClass(doc.ocrConfidence)}`}>
-                    {doc.ocrConfidence}%
-                  </span>
-                )}
-                <span className="doc-item-action">
-                  View
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M4 2L8 6L4 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
-              </button>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

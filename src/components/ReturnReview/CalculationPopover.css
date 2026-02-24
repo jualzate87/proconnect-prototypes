@@ -3,11 +3,13 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.2);
   z-index: 150;
+  pointer-events: none; /* Allow scrolling while popover is open */
 }
 
 .calc-popover {
   position: fixed;
   z-index: 151;
+  pointer-events: auto;
   width: 420px;
   max-height: 80vh;
   overflow-y: auto;

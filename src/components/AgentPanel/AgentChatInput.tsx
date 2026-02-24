@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { ReviewIssue } from '../../types';
-import { IconIntuitAssist, IconSend, IconAttach } from '../ProConnectLibrary';
+import { IconSend, IconAttach } from '../ProConnectLibrary';
 import './AgentChatInput.css';
 
 interface AgentChatInputProps {
@@ -58,6 +58,7 @@ export const AgentChatInput: React.FC<AgentChatInputProps> = ({
     <div className="agent-chat-input-container">
       {/* Suggestion chips */}
       <div className="suggestion-chips-container">
+        <h3 className="suggestion-chips-header">Suggested questions</h3>
         <div className="suggestion-chips-scroll">
           {suggestions.map((suggestion, idx) => (
             <button
@@ -65,7 +66,6 @@ export const AgentChatInput: React.FC<AgentChatInputProps> = ({
               className="suggestion-chip"
               onClick={() => handleSend(suggestion)}
             >
-              <IconIntuitAssist size={16} color="var(--ai-color-sparkle, #7C3AED)" className="chip-sparkle" />
               {suggestion}
             </button>
           ))}

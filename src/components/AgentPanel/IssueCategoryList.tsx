@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
-import type { ReviewIssue, IssueCategory } from '../../types';
+import React, { useState, useLayoutEffect } from 'react';
+import type { ReviewIssue, IssueCategory, Form1040Field } from '../../types';
 import { IconGraph, IconSearch, IconSecurity, IconDocument, IconCalc, IconChevronRight, IconCircleAlertFill } from '../ProConnectLibrary';
 import './IssueCategoryList.css';
 
 interface IssueCategoryListProps {
   issues: ReviewIssue[];
+  fields?: Form1040Field[];
+  preparerName?: string;
   onIssueClick?: (issue: ReviewIssue) => void;
   onCategoryExpand?: (fieldIds: string[]) => void;
   onExpandedCategoryChange?: (category: IssueCategory | null) => void;
   onIssueCorrect?: (issueId: string, note?: string) => void;
   onIssueAction?: (issue: ReviewIssue, action: string) => void;
+}
+
+/** Returns YoY-style change class for card stroke. No blue. */
+function getIssueChangeClass(issue: ReviewIssue, fields: Form1040Field[]): 'change-severe' | 'change-moderate' | 'change-minor' | 'change-subtle' {
+  if (issue.category === 'yoy-analysis' && issue.affectedFields.length > 0) {
+    const maxAbs = issue.affectedFields.reduce((max, fid) => {
+      const f = fields.find((x) => x.id === fid);
+      const pct = f?.changePercent;
+      if (pct == null) return max;
+      return Math.max(max, Math.abs(pct));
+    }, 0);
+    if (maxAbs >= 20) return 'change-severe';
+    if (maxAbs >= 10) return 'change-moderate';
+    if (maxAbs >= 5) return 'change-minor';
+    return 'change-subtle';
+  }
+  // Scan / IRS: map severity to orange scale (no blue)
+  if (issue.severity === 'high') return 'change-severe';
+  if (issue.severity === 'medium') return 'change-moderate';
+  return 'change-minor';
 }
 
 const categoryConfig: Record<IssueCategory, { label: string; Icon: React.ComponentType<{ size?: number; color?: string }> }> = {
@@ -18,7 +40,14 @@ const categoryConfig: Record<IssueCategory, { label: string; Icon: React.Compone
   'irs-compliance': { label: 'IRS Compliance', Icon: IconSecurity },
 };
 
-const getActionConfig = (category: IssueCategory) => {
+const getActionConfig = (category: IssueCategory, issue?: ReviewIssue) => {
+  if (issue?.preferredAction && issue?.preferredActionLabel) {
+    return {
+      label: issue.preferredActionLabel,
+      Icon: IconDocument,
+      action: issue.preferredAction,
+    };
+  }
   switch (category) {
     case 'yoy-analysis':
       return { label: 'View sources', Icon: IconDocument, action: 'view-sources' };
@@ -29,8 +58,12 @@ const getActionConfig = (category: IssueCategory) => {
   }
 };
 
+const DEFAULT_PREPARER = 'Sonia Miller';
+
 export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
   issues,
+  fields = [],
+  preparerName = DEFAULT_PREPARER,
   onIssueClick,
   onCategoryExpand,
   onExpandedCategoryChange,
@@ -41,6 +74,13 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
   const [expandedIssueId, setExpandedIssueId] = useState<string | null>(null);
   const [confirmingCorrectId, setConfirmingCorrectId] = useState<string | null>(null);
   const [resolutionNote, setResolutionNote] = useState('');
+
+  // Auto-populate note when confirm opens (useLayoutEffect runs before paint so input shows value immediately)
+  useLayoutEffect(() => {
+    if (confirmingCorrectId) {
+      setResolutionNote(`Reviewed by ${preparerName}`);
+    }
+  }, [confirmingCorrectId, preparerName]);
 
   const categories = Object.keys(categoryConfig) as IssueCategory[];
 
@@ -101,30 +141,19 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
               <div className="issue-category-body">
                 {categoryIssues.map((issue) => {
                   const isIssueExpanded = expandedIssueId === issue.id;
-                  const actionConfig = getActionConfig(category);
+                  const actionConfig = getActionConfig(category, issue);
                   const isCorrect = issue.status === 'correct' || issue.status === 'resolved';
 
                   return (
                     <div
                       key={issue.id}
-                      className={`issue-card ${issue.severity} ${isIssueExpanded ? 'issue-expanded' : ''} ${isCorrect ? 'issue-correct' : ''}`}
+                      className={`issue-card ${getIssueChangeClass(issue, fields)} ${isIssueExpanded ? 'issue-expanded' : ''} ${isCorrect ? 'issue-correct' : ''}`}
                       onClick={(e) => handleIssueExpand(issue, e)}
                     >
-                      {/* See details — absolute top-right inside card */}
-                      <button
-                        className="issue-card-see-details-btn"
-                        onClick={(e) => { e.stopPropagation(); handleIssueExpand(issue, e); }}
-                        aria-label={isIssueExpanded ? 'Collapse' : 'See details'}
-                      >
-                        See details
-                        <span className={`issue-card-expand-icon ${isIssueExpanded ? 'expanded' : ''}`}>
-                          <IconChevronRight size={14} />
-                        </span>
-                      </button>
                       {/* Card header */}
                       <div className="issue-card-header">
                         <div className="issue-card-title-row">
-                          <span className={`issue-severity-dot ${issue.severity}`} />
+                          <span className={`issue-severity-dot ${getIssueChangeClass(issue, fields)}`} />
                           <span className="issue-card-title">{issue.title}</span>
                         </div>
                         {isCorrect && (
@@ -222,6 +251,16 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
                       {/* Action buttons */}
                       <div className="issue-card-actions" onClick={(e) => e.stopPropagation()}>
                         <button
+                          className={`issue-action-btn see-details ${isIssueExpanded ? 'active' : ''}`}
+                          onClick={(e) => { e.stopPropagation(); handleIssueExpand(issue, e); }}
+                          aria-label={isIssueExpanded ? 'Hide details' : 'See details'}
+                        >
+                          {isIssueExpanded ? 'Hide details' : 'See details'}
+                          <span className={`issue-card-expand-icon ${isIssueExpanded ? 'expanded' : ''}`}>
+                            <IconChevronRight size={14} />
+                          </span>
+                        </button>
+                        <button
                           className="issue-action-btn contextual"
                           onClick={() => onIssueAction?.(issue, actionConfig.action)}
                         >
@@ -265,7 +304,10 @@ export const IssueCategoryList: React.FC<IssueCategoryListProps> = ({
                           ) : (
                             <button
                               className="issue-action-btn mark-correct"
-                              onClick={() => setConfirmingCorrectId(issue.id)}
+                              onClick={() => {
+                                setResolutionNote(`Reviewed by ${preparerName}`);
+                                setConfirmingCorrectId(issue.id);
+                              }}
                             >
                               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                                 <path d="M3 7L6 10L11 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

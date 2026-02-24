@@ -39,7 +39,7 @@ export const FieldPopover: React.FC<FieldPopoverProps> = ({
 
   return (
     <>
-      <div className="popover-backdrop" onClick={onClose} />
+      <div className="popover-backdrop" aria-hidden="true" />
       <div
         className="field-popover"
         style={{ top: position.top, left: position.left }}

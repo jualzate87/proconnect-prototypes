@@ -174,6 +174,8 @@ export interface ReturnDocument {
   uploadDate: string;
   ocrConfidence?: number; // 0-100
   pages?: number;
+  reviewedBy?: string;
+  reviewedAt?: string;
 }
 
 export interface Form1040Field {
@@ -222,6 +224,9 @@ export interface ReviewIssue {
   estimatedPenalty?: PenaltyBreakdown; // for IRS compliance issues
   estimatedTaxImpact?: string; // e.g., "~$490 impact on total tax"
   details?: IssueDetail[]; // structured detail items for progressive disclosure
+  /** Override action when issue links to source docs (e.g., withholding → W-2s) */
+  preferredAction?: 'view-document' | 'view-sources';
+  preferredActionLabel?: string;
 }
 
 export interface CalculationStep {
