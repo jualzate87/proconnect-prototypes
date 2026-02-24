@@ -12,8 +12,8 @@ import './LaunchReturn.css';
 type ImportState = 'idle' | 'importing' | 'success';
 
 export const LaunchReturn: React.FC = () => {
-  // Start with documents already uploaded — prototype entry point
-  const [importState, setImportState] = useState<ImportState>('success');
+  // Start at Launch Return with documents in list — user clicks "Import ready documents" to proceed
+  const [importState, setImportState] = useState<ImportState>('idle');
   const [documents, setDocuments] = useState<ReturnDocument[]>(
     returnData.documents as ReturnDocument[]
   );
