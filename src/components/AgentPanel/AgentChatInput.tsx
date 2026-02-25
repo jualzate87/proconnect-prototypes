@@ -79,7 +79,7 @@ export const AgentChatInput: React.FC<AgentChatInputProps> = ({
         <input
           type="text"
           className="chat-input-field"
-          placeholder="Ask Intuit Assist..."
+          placeholder="Ask the assistant..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
@@ -95,7 +95,7 @@ export const AgentChatInput: React.FC<AgentChatInputProps> = ({
         </button>
       </div>
       <p className="agent-chat-disclaimer">
-        Intuit Assist can make mistakes. Review important information.
+        The assistant can make mistakes. Review important information.
       </p>
     </div>
   );

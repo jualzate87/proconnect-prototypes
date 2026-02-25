@@ -1,0 +1,10 @@
+.session-watermark {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font-size: 11px;
+  color: var(--color-text-tertiary, #999);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 9999;
+}

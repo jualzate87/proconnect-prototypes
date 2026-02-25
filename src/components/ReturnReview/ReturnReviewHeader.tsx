@@ -35,7 +35,7 @@ export const ReturnReviewHeader: React.FC<ReturnReviewHeaderProps> = ({
       <div className="review-header-right">
         {!isReviewActive && onStartReview && (
           <button className="review-header-start-btn" onClick={onStartReview}>
-            <span className="intuit-assist-icon">
+            <span className="assist-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M10 2L12.5 7.5L18 10L12.5 12.5L10 18L7.5 12.5L2 10L7.5 7.5L10 2Z" fill="currentColor"/>
               </svg>

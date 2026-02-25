@@ -39,7 +39,7 @@ export const AIInsightCard: React.FC<AIInsightCardProps> = ({
         <span className="pc-ai-insight__icon">
           {icon || <IconSparkle size={16} />}
         </span>
-        <span className="pc-ai-insight__badge">Intuit Assist</span>
+        <span className="pc-ai-insight__badge">AI</span>
         {onDismiss && (
           <button className="pc-ai-insight__dismiss" onClick={onDismiss} aria-label="Dismiss">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

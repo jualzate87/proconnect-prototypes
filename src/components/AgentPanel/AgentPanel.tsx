@@ -261,13 +261,13 @@ export const AgentPanel: React.FC<AgentPanelProps> = ({
           : undefined
       }
     >
-      {/* Header — Intuit Assist branding */}
+      {/* Header — Review Assistant branding */}
       <div className="agent-panel-header">
         <div className="agent-panel-header-left">
           <Avatar name="IA" variant="ai" size="sm" />
           <div className="agent-panel-title">
             <IconIntuitAssist size={14} color="var(--ai-color-sparkle, #7C3AED)" className="agent-panel-sparkle" />
-            <span className="agent-panel-title-text">Intuit Assist</span>
+            <span className="agent-panel-title-text">Tax Assistant</span>
           </div>
         </div>
         <div className="agent-panel-header-actions">
@@ -385,7 +385,7 @@ export const AgentPanel: React.FC<AgentPanelProps> = ({
                 <ChatMessage key={msg.id} message={msg} showFeedback={false} />
               ))}
               {isAgentThinking && (
-                <TypingIndicator label="Intuit Assist is thinking" showAvatar />
+                <TypingIndicator label="Thinking..." showAvatar />
               )}
               <div ref={chatEndRef} aria-hidden />
             </div>

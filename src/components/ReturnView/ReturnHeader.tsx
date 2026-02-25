@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSession } from '../../context/SessionContext';
 import { Dropdown } from '../ProConnectLibrary/ui/Dropdown';
 import type { DropdownItem } from '../ProConnectLibrary/ui/Dropdown';
 import './ReturnHeader.css';
@@ -30,7 +31,7 @@ const returnActionsSections = [
       { id: 'invoice', label: 'Invoice' },
       { id: 'invoice-qb', label: 'Invoice via QuickBooks' },
       { id: 'support-tools', label: 'Customer Support Tools' },
-      { id: 'send-intuit', label: 'Send to Intuit' },
+      { id: 'send-intuit', label: 'Submit return' },
     ],
   },
   {
@@ -57,6 +58,7 @@ export const ReturnHeader: React.FC<ReturnHeaderProps> = ({
   prepTime,
   onAuditLogClick,
 }) => {
+  const { firmName } = useSession();
   const handleReturnAction = (item: DropdownItem) => {
     if (item.id === 'audit-log') {
       onAuditLogClick?.();
@@ -67,7 +69,7 @@ export const ReturnHeader: React.FC<ReturnHeaderProps> = ({
     <div className="return-header">
       <div className="return-header-top">
         <div className="return-header-left">
-          <span className="return-header-firm">JOHNSON TAX</span>
+          <span className="return-header-firm">{firmName || 'JOHNSON TAX'}</span>
         </div>
         <div className="return-header-right-actions">
           <button className="return-header-icon-btn" aria-label="Help">

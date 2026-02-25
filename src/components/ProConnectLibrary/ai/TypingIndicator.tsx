@@ -11,7 +11,7 @@ interface TypingIndicatorProps {
 }
 
 export const TypingIndicator: React.FC<TypingIndicatorProps> = ({
-  label = 'Intuit Assist is thinking',
+  label = 'Thinking...',
   showAvatar = true,
   className = '',
 }) => {
